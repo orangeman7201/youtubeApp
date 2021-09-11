@@ -5,16 +5,12 @@ class MoviesController < ApiController
 
   def index
     movies = Movie.all
+    # movies = Movie.select(:id, :title, :duration, :url, :comment) 上のやつこういう書き方もできて.select意向のデータしかフロントに送られない
     render json: movies
   end
 
   def show
+    @movie = Movie.find(params[:id])
     render json: @movie
   end
-
-  private
-
-    def set_movie
-      @movie = Movie.find(params[:id])
-    end
 end

@@ -1,21 +1,12 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-export default {
-  data: function () {
-    return {
-      message: "Hello Vue!"
-    }
-  }
-}
 </script>
 
 <style scoped>
-p {
+div {
   font-size: 2em;
   text-align: center;
 }
