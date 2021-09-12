@@ -13,4 +13,14 @@ class MoviesController < ApiController
     @movie = Movie.find(params[:id])
     render json: @movie
   end
+
+  def create
+
+  end
+
+  private
+
+  def employee_params
+    params.fetch(:movie, {'データが送信されていません'})
+  end
 end

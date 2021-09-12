@@ -12,6 +12,7 @@
           <td>{{movie.duration}}</td>
         </tr>
     </table>
+    <router-link to="/movies/new" >新しい動画を追加</router-link>
   </div>
 </template>
 
