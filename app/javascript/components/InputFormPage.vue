@@ -27,6 +27,22 @@ export default {
     }  
   },
   methods: {
+    calculateDuration: function(duration) {
+      // durationは'PT8H2M29S'のような形で送られてくる。なぜかSecondは＋１秒される。
+      if(duration.includes('H')) {
+        let hour = Number(duration.match(/T(.*)H/)[1]);
+        let minute = Number(duration.match(/H(.*)M/)[1]);
+        let second = Number(duration.match(/M(.*)S/)[1]);
+        return hour*3600 + minute*60 + (second - 1);
+      }else if(duration.includes('M')) {
+        let minute = Number(duration.match(/T(.*)M/)[1]);
+        let second = Number(duration.match(/M(.*)S/)[1]);
+        return minute*60 + (second - 1);
+      }else{
+        let second = Number(duration.match(/T(.*)S/)[1]);
+        return second - 1;
+      }
+    },
     submitData: function() {
       if( this.url === '' ) {
         alert('urlを入力してください')
@@ -38,16 +54,15 @@ export default {
         apiUrl += '?id=' + Id;
         apiUrl += '&key=' + Key;
         apiUrl += '&part=snippet,contentDetails'
-        // apiUrl += '&part=snippet,contentDetails,statistics,status'
   
-         axios
+        axios
           .get(apiUrl)
           .then(response => {
             let e = response.data;
             // ↓動画のサムネイルを取得できる
             // this.json = e.items[0].snippet.thumbnails.standard.url
             this.movie.title = e.items[0].snippet.title
-            this.movie.duration = e.items[0].contentDetails.duration
+            this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
             axios
               .post('/movies', this.movie)
               .then(response => {
@@ -67,7 +82,7 @@ export default {
 
         console.log(this.movie)
       }
-    }
+    },
   }
 }
 </script>
