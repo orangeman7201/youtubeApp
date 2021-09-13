@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_09_10_171605) do
     t.string "title"
     t.text "comment"
     t.datetime "date"
+    t.string "thumbnail"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -7,6 +7,7 @@ class CreateMovies < ActiveRecord::Migration[6.1]
       t.string :title
       t.text :comment
       t.datetime :date
+      t.string :thumbnail
 
       t.timestamps
     end
