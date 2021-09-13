@@ -90,7 +90,6 @@ export default {
 
 <style scoped>
 div {
-  font-size: 2em;
   text-align: center;
 }
 </style>
