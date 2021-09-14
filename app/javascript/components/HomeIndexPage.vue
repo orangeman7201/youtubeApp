@@ -16,7 +16,7 @@
           <th>thumbnail</th>
           <th>duration</th>
         </tr>
-        <tr v-for="movie in movies" :key="movie.id">
+        <tr v-for="movie in storeMovies" :key="movie.id">
           <router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">{{ movie.id }}</router-link>
           <td>{{movie.title}}</td>
           <td>
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 
 export default {
   data: function () {
@@ -47,22 +46,23 @@ export default {
     }
   },
   mounted () {
-    axios
-      .get('/movies.json')
-      .then(response => (this.movies = response.data))
+    this.$store.dispatch('getData')
   },
   computed: {
     totalDuration: function() {
       let sum = 0;
-      for(let id = 0; id < this.movies.length; id++) {
-        sum += this.movies[id].duration
+      for(let id = 0; id < this.storeMovies.length; id++) {
+        sum += this.storeMovies[id].duration
       }
       return sum;
+    },
+    storeMovies: function() {
+      return this.$store.getters.storeMovies;
     }
   },
   methods: {
     check: function() {
-      console.log(this.movies)
+      console.log(this.storeMovies)
     }
   }
   

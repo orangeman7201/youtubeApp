@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from '../app.vue'
 import router from '../router.js';
 import Vuetify from "vuetify"; 
+import store from '../store';
 import "vuetify/dist/vuetify.min.css"; 
 
 Vue.config.productionTip = true
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     el,
     router,
+    store,
     vuetify,
     render: h => h(App)
   }).$mount()
