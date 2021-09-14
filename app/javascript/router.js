@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import HomeIndexPage from './components/HomeIndexPage.vue';
 import MovieDetailPage from './components/MovieDetailPage.vue';
 import InputFormPage from './components/InputFormPage.vue';
+import Chart from './components/Chart.vue';
+import ChartMethods from './components/ChartMethods.vue';
 // import MovieNewPage from './components/MovieNewPage.vue';
 
 Vue.use(Router);
@@ -12,6 +14,8 @@ export default new Router ({
      {path: '/', component: HomeIndexPage}, 
      {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 
      {path: '/movies/new', component: InputFormPage}, 
+     {path: '/movies/chart', component: Chart}, 
+     {path: '/movies/chartmethods', component: ChartMethods}, 
     //  {path: '/movies/new', name: 'MovieNewPage',component: MovieNewPage}, 
   ]
 })
