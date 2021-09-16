@@ -38,15 +38,36 @@ export default {
     },
     storeMovies: function() {
       return this.$store.getters.storeMovies;
+    },
+    storeMoviesForChart: function() {
+      let storeMoviesForChart = [];
+      this.storeMovies.forEach(element => {
+        const info = {};
+        if(element.date != null) {
+          info.date = element.date.slice(0, 10)
+        }else{
+          info.date = element.date
+        }
+        info.duration = element.duration
+        storeMoviesForChart.push(info);
+      })
+      let newAarray = [];
+      this.dateArray.forEach(element => {
+        let obj = {};
+        obj.date = element;
+        obj.duration = 0;
+        newAarray.push(obj)
+      })
+      storeMoviesForChart.forEach(input => {
+        newAarray.forEach(create => {
+          if(input.date == create.date) {
+            create.duration += input.duration
+          }
+        })
+      })
     }
   },
   methods: {
-    check: function() {
-      const result = this.storeMovies.filter(function(value) {
-          return value.date === this.dateArray
-      });
-      console.log(result);
-    },
     Today: function() {
       if(fitToday == this.storeMovies[9].date.slice(0, 10)) {
         console.log('成功')
