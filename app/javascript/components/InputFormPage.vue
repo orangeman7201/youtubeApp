@@ -63,7 +63,6 @@ export default {
             this.movie.thumbnail = e.items[0].snippet.thumbnails.standard.url
             this.movie.title = e.items[0].snippet.title
             this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
-            console.log(this.movie.thumbnail)
             axios
               .post('/movies', this.movie)
               .then(response => {
