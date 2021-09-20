@@ -6,17 +6,19 @@ import InputFormPage from './components/InputFormPage.vue';
 import Chart from './components/Chart.vue';
 import ChartMethods from './components/ChartMethods.vue';
 import SignUpForm from './components/SignUpForm.vue';
+import LoginForm from './components/LoginForm.vue';
 // import MovieNewPage from './components/MovieNewPage.vue';
 
 Vue.use(Router);
 
 export default new Router ({
   routes: [
-     {path: '/', name: 'HomeIndexPage', component: HomeIndexPage}, 
+     {path: '/movies/index', name: 'HomeIndexPage', component: HomeIndexPage}, 
      {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 
      {path: '/movies/new', component: InputFormPage}, 
      {path: '/movies/chart', component: Chart}, 
      {path: '/movies/chartmethods', component: ChartMethods}, 
-     {path: '/signup', component: SignUpForm}, 
+     {path: '/', component: SignUpForm}, 
+     {path: '/login', name: 'LoginForm', component: LoginForm}, 
   ]
 })

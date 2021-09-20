@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :movies, only: [:index, :show, :create]
   resources :users
-  resources :sessions, only: [:index, :show, :create, :destroy, :new]
+  resources :sessions
+
+  post "sessions/logout", to: "sessions#destroy"
 
 end

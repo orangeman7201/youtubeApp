@@ -3,9 +3,14 @@ class MoviesController < ApiController
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
-    movies = Movie.all
-    # movies = Movie.select(:id, :title, :duration, :url, :comment) 上のやつこういう書き方もできて.select意向のデータしかフロントに送られない
-    render json: movies
+    # debugger
+    user = User.find_by(id: session[:user_id])
+    if user
+      movies = Movie.all
+      render json: movies
+    else
+      render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def show
