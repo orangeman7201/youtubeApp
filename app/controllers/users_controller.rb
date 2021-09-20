@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    debugger
     new_user = User.create(name: params[:name], email: params[:email], password: params[:password], password_confirmation: params[:passwordConfirmation])
     if new_user.save
       
@@ -17,11 +18,5 @@ class UsersController < ApplicationController
       render json:{ errors: new_user.errors.full_messages }, status: :unprocessable_entity
     end
   end
-  
-  
-  private
-  # def user_params
-  #   debugger
-  #   params.fetch(:user, {}).permit(:name, :email, :password, :passwordConfirmation)
-  # end
+
 end

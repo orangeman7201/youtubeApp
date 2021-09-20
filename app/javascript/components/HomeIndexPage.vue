@@ -40,11 +40,6 @@
 <script>
 
 export default {
-  data: function () {
-    return {
-      movies: []
-    }
-  },
   mounted () {
     this.$store.dispatch('getData')
   },
