@@ -12,7 +12,7 @@ Vue.use(Router);
 
 export default new Router ({
   routes: [
-     {path: '/', component: HomeIndexPage}, 
+     {path: '/', name: 'HomeIndexPage', component: HomeIndexPage}, 
      {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 
      {path: '/movies/new', component: InputFormPage}, 
      {path: '/movies/chart', component: Chart}, 
