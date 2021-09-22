@@ -3,13 +3,18 @@ class MoviesController < ApiController
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
-    # debugger
-    user = User.find_by(id: session[:user_id])
-    if user
+    if user_id = session[:user_id]
+      user = User.find_by(id: user_id)
       movies = Movie.all
       render json: movies
-    else
-      render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
+    elsif user_id = cookies.signed[:user_id]
+      user = User.find_by(id: user_id)
+      if user && user.authenticate(remember_digest: User.digest(cookies[:remember_token]))
+        log_in(user)
+        movies = Movie.all
+      else
+        render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
+      end
     end
   end
 
