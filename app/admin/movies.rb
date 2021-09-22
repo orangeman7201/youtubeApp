@@ -5,7 +5,7 @@ ActiveAdmin.register Movie do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :user_id, :url, :duration, :title, :comment, :date
+  permit_params :user_id, :url, :duration, :title, :comment, :date, :user_id
   #
   # or
   #

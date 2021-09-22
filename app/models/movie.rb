@@ -1,4 +1,5 @@
 class Movie < ApplicationRecord
+  belongs_to :user
   # validates :user_id, inclusion: { } これは後でUserModel作ったときに設定する
   # validates :url, exclusion: { in: nil, message: "空欄です" }
   # validates :duration, exclusion: { in: nil, message: "空欄です" }

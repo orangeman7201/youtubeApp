@@ -5,13 +5,14 @@ class MoviesController < ApiController
   def index
     if user_id = session[:user_id]
       user = User.find_by(id: user_id)
-      movies = Movie.all
+      movies = user.movies
       render json: movies
     elsif user_id = cookies.signed[:user_id]
       user = User.find_by(id: user_id)
       if user && user.authenticate(remember_digest: User.digest(cookies[:remember_token]))
         log_in(user)
-        movies = Movie.all
+        movies = user.movies
+        render json: movies
       else
         render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
       end

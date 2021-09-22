@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <div v-if="error === ''"></div>
+    <div v-else>URLを入力してください</div>
     <form @submit.prevent="submitData">
       <label for="url">URL</label>
       <input id="url" type="text" v-model="movie.url">
@@ -14,10 +16,7 @@
 
 <script>
 import axios from 'axios';
-axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-};
+axios.defaults.withCredentials = true
 
 export default {
   data: function () {
@@ -29,6 +28,7 @@ export default {
         comment: '',
         thumbnail: '',
       },
+      error: '',
     }  
   },
   methods: {
@@ -49,9 +49,10 @@ export default {
       }
     },
     submitData: function() {
-      if( this.url === '' ) {
-        alert('urlを入力してください')
+      if( this.movie.url === '' ) {
+        this.error = 'error';
       } else {
+        this.error = '';
         const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
         let Id = this.movie.url.slice(32)
   
