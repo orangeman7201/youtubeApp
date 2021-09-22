@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-include SessionsHelper
 
   def new
   end
@@ -9,7 +8,8 @@ include SessionsHelper
     if user && user.authenticate(params[:session][:password])
       # helperに詳細記述。sessionメソッドにUser.idを渡している
       log_in(user)
-    else
+      remember(user)
+    else 
       render json:{ errors: user.errors.full_messages }, status: :unprocessable_entity 
     end
   end

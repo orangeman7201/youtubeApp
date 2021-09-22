@@ -13,12 +13,12 @@ Vue.use(Router);
 
 export default new Router ({
   routes: [
-     {path: '/movies/index', name: 'HomeIndexPage', component: HomeIndexPage}, 
+     {path: '/', name: 'HomeIndexPage', component: HomeIndexPage}, 
      {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 
      {path: '/movies/new', component: InputFormPage}, 
      {path: '/movies/chart', component: Chart}, 
      {path: '/movies/chartmethods', component: ChartMethods}, 
-     {path: '/', component: SignUpForm}, 
+     {path: '/signup', component: SignUpForm}, 
      {path: '/login', name: 'LoginForm', component: LoginForm}, 
   ]
 })
