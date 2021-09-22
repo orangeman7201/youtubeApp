@@ -12,4 +12,9 @@ module SessionsHelper
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
+
+  def current_user
+    User.find_by(email: params[:session][:email].downcase)
+  end
+
 end

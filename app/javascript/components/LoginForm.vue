@@ -19,10 +19,13 @@
 
 <script>
 import axios from 'axios';
-axios.defaults.headers.common = {
+
+let config = {
+  headers: {
     'X-Requested-With': 'XMLHttpRequest',
     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-};
+  }
+}
 
 export default {
   data: function () {
@@ -37,7 +40,7 @@ export default {
   methods: {
     submitData: function() { 
       axios
-        .post('/sessions', this.loginInfo)
+        .post('/sessions', this.loginInfo, config)
         .then(response => {
           // let e = response.data
           console.log(response)
