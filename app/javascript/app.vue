@@ -17,10 +17,26 @@
 
 <script>
 import axios from 'axios';
-axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-};
+
+// axios.defaults.headers.common = {
+//     'X-Requested-With': 'XMLHttpRequest',
+//     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+// };
+
+// const axiosPost = axios.create({
+//     xsrfHeaderName: 'X-CSRF-Token',
+//     withCredentials: true
+// })
+
+// axios.interceptors.request.use((config) => {
+//   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
+//     config.headers['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+//   }
+//   return config;
+// }, (error) => {
+//   return Promise.reject(error);
+// });
+
 
 export default {
   methods: {
