@@ -11,16 +11,16 @@
     </div>
     <table>
         <tr>
-          <th>id</th>
           <th>title</th>
           <th>thumbnail</th>
           <th>duration</th>
         </tr>
         <tr v-for="movie in storeMovies" :key="movie.id">
-          <router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">{{ movie.id }}</router-link>
-          <td>{{movie.title}}</td>
+          <td><router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">{{movie.title}}</router-link></td>
           <td>
-            <img :src="movie.thumbnail">
+            <router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">
+             <img :src="movie.thumbnail">
+            </router-link>
           </td>
           <td>
             <span v-if="movie.duration >= 3600">

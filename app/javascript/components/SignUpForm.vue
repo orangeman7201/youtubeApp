@@ -25,12 +25,10 @@
 
 <script>
 import axios from 'axios';
-let config = {
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-  }
-}
+// axios.defaults.headers.common = {
+//     'X-Requested-With': 'XMLHttpRequest',
+//     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+// };
 
 export default {
   data: function () {
@@ -47,7 +45,7 @@ export default {
   methods: {
     submitData: function() { 
       axios
-        .post('/users', this.user, config)
+        .post('/users', this.user)
         .then(response => {
           // let e = response.data
           console.log(response)

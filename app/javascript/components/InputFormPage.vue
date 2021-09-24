@@ -16,7 +16,21 @@
 
 <script>
 import axios from 'axios';
-axios.defaults.withCredentials = true
+axios.interceptors.request.use((config) => {
+  if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
+    config.headers['X-Requested-With'] = 'XMLHttpReq'
+    config.headers['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  }
+  console.log(config)
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+// axios.defaults.headers.common = {
+//     'X-Requested-With': 'XMLHttpRequest',
+//     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+// };
 
 export default {
   data: function () {
@@ -60,7 +74,7 @@ export default {
         apiUrl += '?id=' + Id;
         apiUrl += '&key=' + Key;
         apiUrl += '&part=snippet,contentDetails'
-  
+        
         axios
           .get(apiUrl)
           .then(response => {

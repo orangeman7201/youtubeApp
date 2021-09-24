@@ -3,6 +3,7 @@ class MoviesController < ApiController
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
+
     if user_id = session[:user_id]
       user = User.find_by(id: user_id)
       movies = user.movies
@@ -25,12 +26,14 @@ class MoviesController < ApiController
   end
 
   def create
-    logger.debug(movie_params)
     movieData = Movie.new(movie_params)
+    # ここにUserIDを仕込めればいい
+    movieData.user_id = session[:user_id]
+    # こんな感じか
+    # session[:user_id]
     if movieData.save
       render json: movieData, status: :created
     else
-      # ↓あんまり理解できていない。なぜmovie.errorsになるのか？movieはいったいどこから出現したのか？
       render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
     end
   end

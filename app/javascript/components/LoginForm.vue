@@ -19,13 +19,21 @@
 
 <script>
 import axios from 'axios';
+// axios.defaults.headers.common = {
+//     'X-Requested-With': 'XMLHttpRequest',
+//     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+// };
 
-let config = {
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+axios.interceptors.request.use((config) => {
+  if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
+    config.headers['X-Requested-With'] = 'XMLHttpReq'
+    config.headers['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   }
-}
+  console.log(config)
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 export default {
   data: function () {
@@ -40,12 +48,13 @@ export default {
   methods: {
     submitData: function() { 
       axios
-        .post('/sessions', this.loginInfo, config)
+        .post('/sessions', this.loginInfo)
         .then(response => {
           // let e = response.data
           console.log(response)
           console.log('成功です')
           this.$router.push({name: 'HomeIndexPage' })
+          // console.log(axios.config)
           // this.$router.push({name: 'HomeIndexPage', params: { id: e.id } })
         })
         .catch(error => {

@@ -6,13 +6,11 @@
           <div id="app">
             <table>
               <tr>
-                <th>id</th>
                 <th>title</th>
                 <th>duration</th>
                 <th>thumbnail</th>
               </tr>
               <tr v-for="movie in movies" :key="movie.id">
-                <td>{{movie.id}}</td>
                 <td>{{movie.title}}</td>
                 <td>
                   <span v-if="movie.duration >= 3600">
