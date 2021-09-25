@@ -1,12 +1,11 @@
 class UsersController < ApplicationController
-  def show
-    # find(params)にする必要がある
-    @user = User.(params[:id])
-    render json: @movie
-    # ↑これは必要なのか？Getリクエストの時に（user/1.jsonではないのか)
-  end
 
   def new
+  end
+
+  def show
+    @user = User.find(params[:id])
+    render json: @user
   end
 
   def create
