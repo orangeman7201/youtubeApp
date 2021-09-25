@@ -28,18 +28,19 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
-      user: []
+      user: {}
     }
   },
   mounted () {
-      axios
+    axios
       .get(`/users/${this.$route.params.id}.json`)
-      .then(response => (this.user.push(response.data)))
+      // .then(response => console.log(response.dat)
+      .then(response => (this.user = response.data))
     },
   methods: {
     submitData: function() {
       axios
-        .post('/request', this.user)
+        .post('/requests/create', this.user)
         .then(response => {
           let e = response.data
           this.$router.push({name: 'HomeIndexPage' })

@@ -4,7 +4,7 @@
     <div v-else>ユーザーが見つかりません</div>
     <form @submit.prevent="submitData">
       <label for="comment">ユーザー名を入力してください</label>
-      <input id="comment" type="text" v-model="inputUserName">
+      <input id="comment" type="text" v-model="inputUserName.userId">
       <button type="submit">検索</button>
     </form>
   </div>
@@ -25,21 +25,23 @@ axios.interceptors.request.use((config) => {
 export default {
   data: function () {
     return {
-      inputUseName: '',
+      inputUserName: {
+        userId: ''
+      },
       error: ''
     }  
   },
   methods: {
     submitData: function() {
-      if( this.inputUseName === '' ) {
+      if( this.inputUserName === '' ) {
         this.error = 'error';
       } else {
         this.error = '';
         axios
-          .post('/request', this.inputUserName)
+          .post('/requests', this.inputUserName)
           .then(response => {
-            let e = response.data
-            this.$router.push({name: 'UserDetailPage', params: { id: e.id } })
+            let e = response;
+            this.$router.push({name: 'UserDetailPage', params: { id: e.data.id } })
           })
           .catch(error => {
             console.error(error);
