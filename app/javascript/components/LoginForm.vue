@@ -29,7 +29,6 @@ axios.interceptors.request.use((config) => {
     config.headers['X-Requested-With'] = 'XMLHttpReq'
     config.headers['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   }
-  console.log(config)
   return config;
 }, (error) => {
   return Promise.reject(error);
@@ -54,8 +53,6 @@ export default {
           console.log(response)
           console.log('成功です')
           this.$router.push({name: 'HomeIndexPage' })
-          // console.log(axios.config)
-          // this.$router.push({name: 'HomeIndexPage', params: { id: e.id } })
         })
         .catch(error => {
           console.error(error.response.data.errors);

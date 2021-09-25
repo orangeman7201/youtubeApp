@@ -21,7 +21,6 @@ axios.interceptors.request.use((config) => {
     config.headers['X-Requested-With'] = 'XMLHttpReq'
     config.headers['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   }
-  console.log(config)
   return config;
 }, (error) => {
   return Promise.reject(error);

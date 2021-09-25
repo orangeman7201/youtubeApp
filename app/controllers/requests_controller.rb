@@ -2,11 +2,12 @@ class RequestsController < ApplicationController
 
   def create
     # ワンちゃんVueのデータ名とRequestのFormUserIdの名称が一致していないとダメやった気がするので後で確認
-    request = Request.new(from_user_id: session[:user_id], to_user_id: input_user_params)
+    request = Request.new(from_user_id: session[:user_id], to_user_id: params[:id])
+    request.save
   end
   
   def serch
-    input_user  =  User.find_by(id: input_user_params)
+    input_user  =  User.find_by(id: params[:userId])
     render json: input_user
   end
   
