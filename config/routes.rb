@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   resources :sessions
 
   post "sessions/logout", to: "sessions#destroy"
+  post "users/serch", to "requests#serch"
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_110143) do
+ActiveRecord::Schema.define(version: 2021_09_25_045004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 2021_09_22_110143) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
   end
 
+  create_table "firends", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "firend_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "movies", force: :cascade do |t|
     t.string "url"
     t.integer "duration"
@@ -40,6 +47,13 @@ ActiveRecord::Schema.define(version: 2021_09_22_110143) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
     t.index ["user_id", "created_at"], name: "index_movies_on_user_id_and_created_at"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.integer "from_user_id"
+    t.integer "to_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

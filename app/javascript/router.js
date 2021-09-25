@@ -7,6 +7,8 @@ import Chart from './components/Chart.vue';
 import ChartMethods from './components/ChartMethods.vue';
 import SignUpForm from './components/SignUpForm.vue';
 import LoginForm from './components/LoginForm.vue';
+import UserSerchPage from './components/UserSerchPage.vue';
+import UserDetailPage from './components/UserDetailPage.vue';
 // import MovieNewPage from './components/MovieNewPage.vue';
 
 Vue.use(Router);
@@ -20,5 +22,7 @@ export default new Router ({
      {path: '/movies/chartmethods', component: ChartMethods}, 
      {path: '/signup', component: SignUpForm}, 
      {path: '/login', name: 'LoginForm', component: LoginForm}, 
+     {path: '/user/serch', name: 'UserSerchPage', component: UserSerchPage}, 
+     {path: '/user/:id(\\d+)', name: 'UserDetailPage', component: UserDetailPage}, 
   ]
 })
