@@ -28,9 +28,9 @@ class MoviesController < ApiController
     movieData = Movie.new(movie_params)
     movieData.user_id = session[:user_id]
     user = User.find(session[:user_id])
-    user.total_duration += movieData.duration
     if movieData.save
-      user.save
+      current_total_duration = user.total_duration + movieData.duration
+      user.update_attribute(:total_duration, current_total_duration)
       render json: movieData, status: :created
     else
       render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
@@ -40,6 +40,11 @@ class MoviesController < ApiController
   def update
     movie = Movie.find(params[:id])
     movie.update(comment: params[:comment])
+  end
+
+  def destroy
+    movie = Movie.find(params[:id])
+    movie.destroy
   end
 
   private

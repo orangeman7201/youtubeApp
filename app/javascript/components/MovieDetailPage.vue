@@ -30,6 +30,7 @@
                 <td><input type="text" v-model="movie.comment"></td>
               </tr>
               <button @click="submitData">保存</button>
+              <button @click="deleteData">削除</button>
             </table>
           </div>
         <!-- </v-flex>
@@ -58,6 +59,20 @@ export default {
       if(confirm('保存しますか？')){
         axios
           .patch(`/movies/${this.$route.params.id}.json`, this.movie)
+          .then(response => {
+            console.log(response);
+            this.$router.push({name: 'HomeIndexPage' })
+          })
+          .catch(error => {
+            console.log(error)
+            this.error = error
+          })
+      }
+    },
+    deleteData: function() {
+      if(confirm('削除しますか？')){
+        axios
+          .delete(`/movies/${this.$route.params.id}.json`, this.movie)
           .then(response => {
             console.log(response);
             this.$router.push({name: 'HomeIndexPage' })

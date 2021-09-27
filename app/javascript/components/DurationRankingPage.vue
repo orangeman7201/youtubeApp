@@ -1,18 +1,5 @@
 <template>
   <div id="app">
-    <div v-if="this.requests.length === 0">友達申請はありません</div>
-    <table v-else>
-      <tr>
-        <th>フレンド申請</th>
-      </tr>
-      <tr v-for="request in requests" :key="request.id">
-        <td>{{request.name}}</td>
-        <td>
-          <button @click="accept(request)">承認する</button>
-          <button @click="reject(request)">承認しない</button>
-        </td>
-      </tr>
-    </table>
     <div v-if="this.friends.length === 0">まだ友達はいません</div>
     <table v-else>
       <tr>
