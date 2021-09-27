@@ -26,11 +26,6 @@ axios.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-// axios.defaults.headers.common = {
-//     'X-Requested-With': 'XMLHttpRequest',
-//     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-// };
-
 export default {
   data: function () {
     return {
@@ -44,6 +39,17 @@ export default {
       error: '',
     }  
   },
+  mounted () {
+    axios
+      .get('/movies.json')
+      .then(res => {
+        console.log(res)
+      })
+      .catch(error => {
+        this.$router.push({name: 'LoginForm' })
+        console.log(error)
+      })
+    },
   methods: {
     calculateDuration: function(duration) {
       // durationは'PT8H2M29S'のような形で送られてくる。なぜかSecondは＋１秒される。

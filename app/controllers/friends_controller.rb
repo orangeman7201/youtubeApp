@@ -1,4 +1,9 @@
 class FriendsController < ApplicationController
+  def index
+    user = User.find(session[:user_id])
+    friends = user.friends
+    render json: friends
+  end
 
   def create
     Friend.create(user_id: session[:user_id], friend_user_id: params[:id])

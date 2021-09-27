@@ -11,9 +11,11 @@
     </div>
     <table>
         <tr>
-          <th>title</th>
-          <th>thumbnail</th>
-          <th>duration</th>
+          <th>タイトル</th>
+          <th></th>
+          <th>再生時間</th>
+          <th>視聴日</th>
+          <th>コメント</th>
         </tr>
         <tr v-for="movie in storeMovies" :key="movie.id">
           <td><router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">{{movie.title}}</router-link></td>
@@ -30,6 +32,8 @@
               {{Math.floor(movie.duration/60%60)}}分
             </span>{{movie.duration%60}}秒
           </td>
+          <td>{{movie.created_at}}</td>
+          <td>{{movie.comment}}</td>
         </tr>
     </table>
     <router-link to="/movies/new" >新しい動画を追加</router-link>
