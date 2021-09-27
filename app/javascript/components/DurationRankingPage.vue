@@ -1,12 +1,11 @@
 <template>
   <div id="app">
-    <div v-if="this.friends.length === 0">まだ友達はいません</div>
-    <table v-else>
+    <table>
       <tr>
-        <th>友達一覧</th>
-        <th>今日の視聴時間</th>
+        <th>視聴時間ランキング</th>
       </tr>
-      <tr v-for="friend in friends" :key="friend.id">
+      <tr v-for="(friend, index) in filteredFriends" :key="friend.id">
+        <td>{{index + 1}}位</td>
         <td>{{friend.name}}</td>
         <td>
           <span v-if="friend.total_duration >= 3600">
@@ -27,26 +26,36 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
-      requests: {},
-      friends: {}
+      friends: []
     }  
   },
   mounted () {
-    this.getRequests();
     this.getFriends();
+    this.getMyData();
   },
-
+  computed: {
+    filteredFriends: function() {
+      const filteredFriends = this.friends.sort((a, b) => {
+        return b.total_duration - a.total_duration
+      })
+      return filteredFriends
+    }
+  },
   methods: {
-    getRequests: function() {
-      axios
-        .get(`/requests.json`)
-        .then(response => (this.requests = response.data))
-    },
     getFriends: function() {
       axios
         .get(`/friends.json`)
-        .then(response => (this.friends = response.data))
+        .then(response => {
+          response.data.forEach(element => {
+            this.friends.push(element)
+          });
+        });
     },
+    getMyData: function() {
+      axios
+        .post(`/users/self.json`)
+        .then(response => (this.friends.push(response.data)));
+      },
     check: function() {
       console.log(this.friends)
     },
