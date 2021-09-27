@@ -6,6 +6,7 @@
       <v-spacer></v-spacer>
        <v-btn @click="$router.push('/users/serch')">ユーザー検索</v-btn>
        <v-btn @click="$router.push('/freinds/requests')">友達申請</v-btn>
+       <v-btn @click="$router.push('/freinds/index')">友達一覧</v-btn>
        <v-btn @click="$router.push('/signup')">ユーザー新規登録</v-btn>
        <v-btn @click="$router.push('/movies/new')">新規作成</v-btn>
        <v-btn @click="$router.push('/movies/chart')">グラフ</v-btn>

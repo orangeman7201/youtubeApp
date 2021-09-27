@@ -1,17 +1,23 @@
 <template>
-  <v-app>
+  <!-- <v-app>
     <v-container>
       <v-layout>
-        <v-flex md>
+        <v-flex md> -->
           <div id="app">
+            <div v-if="this.error !== ''">{{this.error}}</div>
             <table>
               <tr>
-                <th>title</th>
-                <th>duration</th>
-                <th>thumbnail</th>
+                <th>タイトル</th>
+                <th>サムネ</th>
+                <th>再生時間</th>
+                <th>視聴日時</th>
+                <th>コメント</th>
               </tr>
-              <tr v-for="movie in movies" :key="movie.id">
+              <tr>
                 <td>{{movie.title}}</td>
+                <td>
+                  <img :src="movie.thumbnail">
+                </td>
                 <td>
                   <span v-if="movie.duration >= 3600">
                     {{Math.floor(movie.duration/3600)}}時間
@@ -20,16 +26,16 @@
                     {{Math.floor(movie.duration/60%60)}}分
                   </span>{{movie.duration%60}}秒
                 </td>
-                <td>
-                  <img :src="movie.thumbnail">
-                </td>
+                <td>{{movie.created_at}}</td>
+                <td><input type="text" v-model="movie.comment"></td>
               </tr>
+              <button @click="submitData">保存</button>
             </table>
           </div>
-        </v-flex>
+        <!-- </v-flex>
       </v-layout>
     </v-container>
-  </v-app>
+  </v-app> -->
 </template>
 
 <script>
@@ -38,14 +44,31 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
-      movies: []
+      movie: {},
+      error: ""
     }
   },
   mounted () {
-      axios
-      .get(`/movies/${this.$route.params.id}.json`)
-      .then(response => (this.movies.push(response.data)))
-    },
+    axios
+    .get(`/movies/${this.$route.params.id}.json`)
+    .then(response => (this.movie = response.data))
+  },
+  methods: {
+    submitData: function() {
+      if(confirm('保存しますか？')){
+        axios
+          .patch(`/movies/${this.$route.params.id}.json`, this.movie)
+          .then(response => {
+            console.log(response);
+            this.$router.push({name: 'HomeIndexPage' })
+          })
+          .catch(error => {
+            console.log(error)
+            this.error = error
+          })
+      }
+    }
+  }
 }
 </script>
 

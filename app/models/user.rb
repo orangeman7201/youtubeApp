@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_many :passive_requests, class_name:"Request", foreign_key: "to_user_id", dependent: :destroy
   has_many :requested, through: :passive_requests, source: :from_user
   has_many :request, through: :active_requests, source: :to_user
+  has_many :active_friend, class_name: "Friend", foreign_key: "user_id", dependent: :destroy
+  has_many :passive_friend, class_name: "Friend", foreign_key: "friend_user_id", dependent: :destroy
+  has_many :friends, through: :active_friend, source: :friend_user
 
   attr_accessor :remember_token
   before_save { self.email = self.email.downcase }

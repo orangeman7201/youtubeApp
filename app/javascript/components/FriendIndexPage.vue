@@ -13,6 +13,17 @@
         </td>
       </tr>
     </table>
+    <div v-if="this.friends.length === 0">まだ友達はいません</div>
+    <table v-else>
+      <tr>
+        <th>友達一覧</th>
+        <th>今日の視聴時間</th>
+      </tr>
+      <tr v-for="friend in friends" :key="friend.id">
+        <td>{{friend.name}}</td>
+        <td>{{friend.total_duration}}</td>
+      </tr>
+    </table>
     <button @click="check"></button>
   </div>
 </template>
@@ -22,15 +33,26 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
-      requests: {}
+      requests: {},
+      friends: {}
     }  
   },
   mounted () {
-    axios
-      .get(`/requests.json`)
-      .then(response => (this.requests = response.data))
-    },
+    this.getRequests();
+    this.getFriends();
+  },
+
   methods: {
+    getRequests: function() {
+      axios
+        .get(`/requests.json`)
+        .then(response => (this.requests = response.data))
+    },
+    getFriends: function() {
+      axios
+        .get(`/friends.json`)
+        .then(response => (this.friends = response.data))
+    },
     check: function() {
       console.log(this.requests)
     },

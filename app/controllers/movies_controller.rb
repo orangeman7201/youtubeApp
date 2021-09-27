@@ -25,7 +25,6 @@ class MoviesController < ApiController
   end
 
   def create
-    debugger
     movieData = Movie.new(movie_params)
     movieData.user_id = session[:user_id]
     user = User.find(session[:user_id])
@@ -36,6 +35,11 @@ class MoviesController < ApiController
     else
       render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def update
+    movie = Movie.find(params[:id])
+    movie.update(comment: params[:comment])
   end
 
   private
