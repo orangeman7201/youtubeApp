@@ -11,6 +11,7 @@ import UserDetailPage from './components/UserDetailPage.vue';
 import UserSerchForm from './components/UserSerchForm.vue';
 import FriendRequestPage from './components/FriendRequestPage.vue';
 import FriendIndexPage from './components/FriendIndexPage.vue';
+import DurationRankingPage from './components/DurationRankingPage.vue';
 
 Vue.use(Router);
 
@@ -27,5 +28,6 @@ export default new Router ({
      {path: '/users/serch', name: 'UserSerchForm', component: UserSerchForm}, 
      {path: '/freinds/requests', name: 'FriendRequestPage', component: FriendRequestPage}, 
      {path: '/freinds/index', name: 'FriendIndexPage', component: FriendIndexPage}, 
+     {path: '/friends/ranking', name: 'DurationRankingPage', component: DurationRankingPage}, 
   ]
 })

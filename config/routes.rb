@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   get "requests", to: "requests#index"
   post "requests/create", to: "requests#create"
   post "requests/destroy", to: "requests#destroy"
-
+  post "users/self", to: "users#self"
 end
