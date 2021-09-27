@@ -9,6 +9,7 @@ import SignUpForm from './components/SignUpForm.vue';
 import LoginForm from './components/LoginForm.vue';
 import UserDetailPage from './components/UserDetailPage.vue';
 import UserSerchForm from './components/UserSerchForm.vue';
+import FriendRequestPage from './components/FriendRequestPage.vue';
 // import MovieNewPage from './components/MovieNewPage.vue';
 
 Vue.use(Router);
@@ -24,5 +25,6 @@ export default new Router ({
      {path: '/login', name: 'LoginForm', component: LoginForm}, 
      {path: '/users/:id(\\d+)', name: 'UserDetailPage', component: UserDetailPage}, 
      {path: '/users/serch', name: 'UserSerchForm', component: UserSerchForm}, 
+     {path: '/freinds/requests', name: 'FriendRequestPage', component: FriendRequestPage}, 
   ]
 })
