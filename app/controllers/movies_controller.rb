@@ -3,7 +3,6 @@ class MoviesController < ApiController
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
-
     if user_id = session[:user_id]
       user = User.find_by(id: user_id)
       movies = user.movies
@@ -26,12 +25,13 @@ class MoviesController < ApiController
   end
 
   def create
+    debugger
     movieData = Movie.new(movie_params)
-    # ここにUserIDを仕込めればいい
     movieData.user_id = session[:user_id]
-    # こんな感じか
-    # session[:user_id]
+    user = User.find(session[:user_id])
+    user.total_duration += movieData.duration
     if movieData.save
+      user.save
       render json: movieData, status: :created
     else
       render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity

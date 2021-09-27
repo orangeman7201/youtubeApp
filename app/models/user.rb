@@ -1,5 +1,10 @@
 class User < ApplicationRecord
   has_many :movies, dependent: :destroy
+  has_many :active_requests, class_name:"Request", foreign_key: "from_user_id", dependent: :destroy
+  has_many :passive_requests, class_name:"Request", foreign_key: "to_user_id", dependent: :destroy
+  has_many :requested, through: :passive_requests, source: :from_user
+  has_many :request, through: :active_requests, source: :to_user
+
   attr_accessor :remember_token
   before_save { self.email = self.email.downcase }
 
