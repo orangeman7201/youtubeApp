@@ -1,44 +1,48 @@
 <template>
-  <div id="app">
-    <div>
-      <p>合計視聴時間</p>
-      <span v-if="totalDuration >= 3600">
-        {{Math.floor(totalDuration/3600)}}時間
-      </span>
-      <span v-if="totalDuration >= 60">
-        {{Math.floor(totalDuration/60%60)}}分
-      </span>{{totalDuration%60}}秒
-    </div>
-    <table>
-        <tr>
-          <th>タイトル</th>
-          <th></th>
-          <th>再生時間</th>
-          <th>視聴日</th>
-          <th>コメント</th>
-        </tr>
-        <tr v-for="movie in storeMovies" :key="movie.id">
-          <td><router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">{{movie.title}}</router-link></td>
-          <td>
+  <v-app id="app">
+    <v-container id="typography-view" fluid tag="section">
+
+      <v-row align="center" justify="center" class="display-4 my-5 pa-5">
+        <v-card class="pa-5">
+          <p class="display-2 mb-1">合計視聴時間</p>
+          <span v-if="totalDuration >= 3600">
+            {{Math.floor(totalDuration/3600)}}時間
+          </span>
+          <span v-if="totalDuration >= 60">
+            {{Math.floor(totalDuration/60%60)}}分
+          </span>{{totalDuration%60}}秒
+        </v-card>
+      </v-row>
+
+      <v-row v-for="movie in storeMovies" :key="movie.id"  class="my-5">
+        <v-card class="mx-auto">
+          <v-col cols="4">
             <router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">
-             <img :src="movie.thumbnail">
+            <img :src="movie.thumbnail" width="480" height="360">
+            <p class="headline">
+              <span v-if="movie.duration >= 3600">
+                {{Math.floor(movie.duration/3600)}}時間
+              </span>
+              <span v-if="movie.duration >= 60">
+                {{Math.floor(movie.duration/60%60)}}分
+              </span>{{movie.duration%60}}秒
+            </p>
             </router-link>
-          </td>
-          <td>
-            <span v-if="movie.duration >= 3600">
-              {{Math.floor(movie.duration/3600)}}時間
-            </span>
-            <span v-if="movie.duration >= 60">
-              {{Math.floor(movie.duration/60%60)}}分
-            </span>{{movie.duration%60}}秒
-          </td>
-          <td>{{movie.created_at}}</td>
-          <td>{{movie.comment}}</td>
-        </tr>
-    </table>
+          </v-col>
+          <v-col cols="8" class="display-2">
+              <router-link :to="{ name: 'MovieDetailPage', params: { id: movie.id } }">{{movie.title}}</router-link>
+              <span class="headline">1時間前</span>
+              <v-devider></v-devider>
+              <!-- <span class="headline">{{movie.created_at}}</span> -->
+              <p>{{movie.comment}}</p>
+          </v-col>
+        </v-card>
+      </v-row>
     <router-link to="/movies/new" >新しい動画を追加</router-link>
     <button @click="check"></button>
-  </div>
+
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -67,10 +71,3 @@ export default {
   
 }
 </script>
-
-<style scoped>
-div {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
