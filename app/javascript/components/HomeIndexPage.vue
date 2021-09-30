@@ -65,56 +65,22 @@
 </template>
 
 <script>
-  // import { mdiPlusCircle } from '@mdi/js';
 
 export default {
-  data: function () {
-    return {
-      storeMovies: [
-    {
-        "id": 9,
-        "url": "https://www.youtube.com/watch?v=2F1c3colJ7k",
-        "duration": 528,
-        "title": "新入生歓迎会に無関係の人間がガチで潜入してみた",
-        "comment": "おもしろかった4",
-        "date": null,
-        "thumbnail": "https://i.ytimg.com/vi/2F1c3colJ7k/sddefault.jpg",
-        "created_at": "2021-09-27T17:02:49.948Z",
-        "updated_at": "2021-09-27T17:02:49.948Z",
-        "user_id": 3
-    },
-    {
-        "id": 12,
-        "url": "https://www.youtube.com/watch?v=PN0ohcyn5sA",
-        "duration": 28948,
-        "title": "4K 焚き火のパチパチ音と湧き水のちょろちょろ音８時間 “ Bonfire and spring water”",
-        "comment": "おもしろかった4",
-        "date": null,
-        "thumbnail": "https://i.ytimg.com/vi/PN0ohcyn5sA/sddefault.jpg",
-        "created_at": "2021-09-29T04:20:04.298Z",
-        "updated_at": "2021-09-29T04:20:04.298Z",
-        "user_id": 3
-    },
-    {
-        "id": 13,
-        "url": "https://www.youtube.com/watch?v=2F1c3colJ7k",
-        "duration": 528,
-        "title": "新入生歓迎会に無関係の人間がガチで潜入してみた",
-        "comment": "おもしろかったおもしろかったおもしろかったおもしろかったおもしろかったおもしろかったおもしろかったおもしろかったおもしろかったおもしろかった",
-        "date": null,
-        "thumbnail": "https://i.ytimg.com/vi/2F1c3colJ7k/sddefault.jpg",
-        "created_at": "2021-09-29T07:09:00.158Z",
-        "updated_at": "2021-09-29T07:09:20.182Z",
-        "user_id": 3
-    }
-]
-    }
+  mounted () {
+    this.$store.dispatch('getData')
   },
   computed: {
     totalDuration: function() {
-      let sum = 72010;
+      let sum = 0;
+      for(let id = 0; id < this.storeMovies.length; id++) {
+        sum += this.storeMovies[id].duration
+      }
       return sum;
     },
+    storeMovies: function() {
+      return this.$store.getters.storeMovies;
+    }
   },
   methods: {
     check: function() {
