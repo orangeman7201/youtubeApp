@@ -1,20 +1,34 @@
 <template>
-  <div id="app">
-    <form @submit.prevent="submitData">
-      <div v-if="errors.length != 0">
-        <ul v-for="e in errors" :key="e">
-          <li><font color="red">{{ e }}</font></li>
-        </ul>
-    </div>
-      <label for="email">メールアドレス</label>
-      <input id="email" type="text" v-model="loginInfo.email">
-
-      <label for="password">パスワード</label>
-      <input id="password" type="text" v-model="loginInfo.password">
-
-      <button type="submit">ログイン</button>
-    </form>
-  </div>
+  <v-container fluid class="grey lighten-3">
+    <v-card >
+      <v-form @submit.prevent="submitData" class="ma-5"> 
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                v-model="loginInfo.email"
+                :rules="emailRules"
+                label="e-mail"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="loginInfo.password"
+                label="パスワード"
+                required
+                :append-icon="toggle.icon"
+                :type="toggle.type"
+                autocomplete="on"
+                @click:append="show = !show"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="d-flex justify-center">
+              <v-btn type="submit" class="white--text green accent-3">ログイン</v-btn>
+            </v-col>
+          </v-row>
+      </v-form>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -42,7 +56,19 @@ export default {
         password: '',
       },
       errors: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+      show: false,
     }  
+  },
+  computed: {
+    toggle () {
+      const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
+      const type = this.show ? 'text' : 'password'
+      return { icon, type }
+    }
   },
   methods: {
     submitData: function() { 
@@ -65,9 +91,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-div {
-  text-align: center;
-}
-</style>
