@@ -1,17 +1,28 @@
 <template>
-  <div id="app">
-    <div v-if="error === ''"></div>
-    <div v-else>URLを入力してください</div>
-    <form @submit.prevent="submitData">
-      <label for="url">URL</label>
-      <input id="url" type="text" v-model="movie.url">
-
-      <label for="comment">コメント</label>
-      <input id="comment" type="text" v-model="movie.comment">
-
-      <button type="submit">新しい動画を追加</button>
-    </form>
-  </div>
+  <v-container fluid class="grey lighten-3">
+    <v-card >
+      <v-form class="ma-5"> 
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                v-model="movie.url"
+                label="url"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="movie.comment"
+                label="コメント"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="d-flex justify-center">
+              <v-btn @submit.prevent="check" class="white--text green accent-3">保存</v-btn>
+            </v-col>
+          </v-row>
+      </v-form>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -103,9 +114,10 @@ export default {
             console.error(error);
             console.error('youtubeAPIの方の通信エラーです');
           });
-
-        console.log(this.movie)
       }
+    },
+    check: function() {
+      console.log(this.movie)
     },
   }
 }

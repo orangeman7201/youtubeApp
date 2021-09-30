@@ -1,18 +1,29 @@
 <template>
   <v-app>
-    <v-app-bar color="green accent-3" dark app>
-      <v-btn icon  color="#EEEEEE" :to="'/'"></v-btn>
-      <v-toolbar-title @click="$router.push('/')">Home</v-toolbar-title>
-      <v-spacer></v-spacer>
-       <v-btn @click="$router.push('/friends/ranking')">ランキング</v-btn>
-       <v-btn @click="$router.push('/users/serch')">ユーザー検索</v-btn>
-       <v-btn @click="$router.push('/freinds/requests')">友達申請</v-btn>
-       <v-btn @click="$router.push('/freinds/index')">友達一覧</v-btn>
-       <v-btn @click="$router.push('/signup')">ユーザー新規登録</v-btn>
-       <v-btn @click="$router.push('/movies/new')">新規作成</v-btn>
-       <v-btn @click="$router.push('/movies/chart')">グラフ</v-btn>
-       <v-btn @click="logout">ログアウト</v-btn>
-    </v-app-bar>
+    <v-navigation-drawer permanent app color="green accent-3">
+      <v-list>
+
+        <v-list-item  class="white">
+          {{user.name}}
+        </v-list-item>
+
+        <v-list-item  v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
+          <v-list-item-action>
+            <v-icon class="white--text">{{list.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>{{list.title}}</v-list-item-content>
+        </v-list-item>
+
+        <v-list-item>
+          <v-btn router to="/movies/new">動画を追加</v-btn>
+        </v-list-item>
+
+        <v-list-item>
+          <v-btn @click="logout">ログアウト</v-btn>
+        </v-list-item>
+
+      </v-list>
+    </v-navigation-drawer>
   <v-main>
     <router-view></router-view>
   </v-main>
@@ -23,6 +34,18 @@
 import axios from 'axios';
 
 export default {
+  data: function() {
+    return {
+      user: {name: 'akita'},
+      lists: [
+        {icon: 'mdi-home', title: 'ホーム', route: '/'},
+        {icon: 'mdi-magnify', title: 'ユーザー検索', route: '/users/serch'},
+        {icon: 'mdi-account-multiple', title: '友達一覧', route: '/freinds/index'},
+        {icon: 'mdi-clipboard-account', title: 'ユーザー新規登録', route: '/signup'},
+        {icon: 'mdi-chart-line', title: 'グラフ', route: '/movies/chart'},
+      ]
+    }
+  },
   methods: {
     logout: function() { 
       if(confirm('ログアウトしますか')) {
