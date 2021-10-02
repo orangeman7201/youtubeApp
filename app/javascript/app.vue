@@ -11,7 +11,7 @@
           <v-list-item-action>
             <v-icon class="white--text">{{list.icon}}</v-icon>
           </v-list-item-action>
-          <v-list-item-content>{{list.title}}</v-list-item-content>
+          <v-list-item-content class="white--text">{{list.title}}</v-list-item-content>
         </v-list-item>
 
         <v-list-item>
