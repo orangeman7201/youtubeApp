@@ -53,7 +53,7 @@
               </div>
                 <v-divider></v-divider>
               <div class="ma-3">
-                <p>{{movie.comment}}</p>
+                <p class="text-body-1">{{movie.comment}}</p>
               </div>
             </v-col>
 

@@ -1,8 +1,11 @@
 <template>
   <v-container fluid class="grey lighten-3">
     <v-card >
-      <v-form class="ma-5"> 
+      <v-form @submit.prevent="submitData" class="ma-5"> 
           <v-row>
+            <v-col cols="12" v-if="error !== ''">
+              <p class="red--text mt-5 text-h6">動画が見つかりません</p>
+            </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="movie.url"
@@ -17,7 +20,7 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" class="d-flex justify-center">
-              <v-btn @submit.prevent="check" class="white--text green accent-3">保存</v-btn>
+              <v-btn type="submit" class="white--text green accent-3 mb-5">保存</v-btn>
             </v-col>
           </v-row>
       </v-form>

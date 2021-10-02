@@ -1,25 +1,28 @@
 <template>
-  <v-app>
-    <v-container>
-      <v-layout>
-        <v-flex md>
-          <div id="app">
-            <form @submit.prevent="submitData">
-              <table>
-                <tr>
-                  <th>ユーザー名</th>
-                </tr>
-                <tr>
-                  <td>{{user.name}}</td>
-                  <td><button type="submit">申請</button></td>
-                </tr>
-              </table>
-            </form>
-          </div>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-app>
+  <v-container fluid class="grey lighten-3">
+    <v-card >
+      <v-form @submit.prevent="submitData" class="ma-5"> 
+          <v-row>
+            <v-col cols="12">
+              <p>{{user.name}}</p>
+            </v-col>
+            <v-col cols="12" class="d-flex justify-center">
+              <p>申請しますか？</p>
+            </v-col>
+
+              <v-row align="center" justify="center" class="mb-5">
+                  <v-btn type="submit" class="white--text green accent-3">申請</v-btn>
+                <v-col cols="1">
+                </v-col>
+                <v-col cols="1">
+                  <v-btn router to="/users/serch" class="white--text green accent-3">戻る</v-btn>
+                </v-col>
+              </v-row>
+
+          </v-row>
+      </v-form>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
