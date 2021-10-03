@@ -5,9 +5,9 @@ import axios from 'axios';
 export default {
   extends: Line,
   
-  mounted () {
-    this.getData();
-    console.log(this.oneWeekDurationArray)
+  async mounted () {
+    await this.getData();
+    console.log(this.chartData)
     this.renderChart(this.chartData, this.options)
   },
   data: function () {
@@ -45,17 +45,12 @@ export default {
         const stepObj = {x: date, y: 0}
         stepArray.push(stepObj)
       })
-      this.movies.forEach(element => {
-          console.log(element)
-        })
       stepArray.forEach(stepObj => {
-        // this.movies.forEach(movie => {
-        //   console.log(movie)
-        //   // if(stepObj.x === movie.created_at.slice(0, 10)) {
-        //   //   stepObj.y += movie.duration
-        //   //   console.log('if文中')
-        //   // }
-        // })
+        this.movies.forEach(movie => {
+          if(stepObj.x === movie.created_at.slice(0, 10)) {
+            stepObj.y += movie.duration
+          }
+        })
         durationArray.push(stepObj)
       })
       return durationArray
