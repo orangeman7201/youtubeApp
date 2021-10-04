@@ -14,10 +14,11 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field
+              <v-textarea
                 v-model="movie.comment"
                 label="コメント"
-              ></v-text-field>
+                outlined
+              ></v-textarea>
             </v-col>
             <v-col cols="12" class="d-flex justify-center">
               <v-btn type="submit" class="white--text green accent-3 mb-5">保存</v-btn>
