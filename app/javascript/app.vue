@@ -14,11 +14,11 @@
           <v-list-item-content class="white--text">{{list.title}}</v-list-item-content>
         </v-list-item>
 
-        <v-list-item>
+        <v-list-item class="mt-7">
           <v-btn router to="/movies/new">動画を追加</v-btn>
         </v-list-item>
 
-        <v-list-item>
+        <v-list-item class="mt-7">
           <v-btn @click="logout">ログアウト</v-btn>
         </v-list-item>
 

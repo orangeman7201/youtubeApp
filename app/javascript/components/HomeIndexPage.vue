@@ -20,13 +20,13 @@
       <v-card class="mx-10 pa-5">
         <v-row align="center" justify="end">
           <v-col cols="1" >
-            <v-btn fab class="green accent-3 white--text">
+            <v-btn fab class="green accent-3 white--text" @click="routerNew">
               <v-icon class="text-h4">mdi-plus</v-icon>
             </v-btn>
           </v-col>
         </v-row>
 
-        <v-card v-for="movie in storeMovies" :key="movie.id" width="93%" class="ma-10 px-15 pb-10 pt-7" elevation="7">
+        <v-card v-for="movie in storeMovies" :key="movie.id" @click="router(movie.id)" width="93%" class="ma-10 px-13 pb-9 pt-5" elevation="7">
           <v-row>
             <v-col class="pa-1 d-flex justify-end">
               <span class="text-body-2">1時間前</span>
@@ -53,7 +53,7 @@
               </div>
                 <v-divider></v-divider>
               <div class="ma-3">
-                <p class="text-body-1">{{movie.comment}}</p>
+                <p>{{movie.comment}}</p>
               </div>
             </v-col>
 
@@ -61,7 +61,6 @@
         </v-card>
 
       </v-card>
-      <button @click="check"></button>
     </v-container>
   </v-app>
 </template>
@@ -82,11 +81,17 @@ export default {
     },
     storeMovies: function() {
       return this.$store.getters.storeMovies;
-    }
+    },
   },
   methods: {
     check: function() {
       console.log(this.storeMovies)
+    },
+    router: function(index) {
+       this.$router.push(`movies/${index}`)
+    },
+    routerNew: function() {
+       this.$router.push('movies/new')
     }
   }
   
