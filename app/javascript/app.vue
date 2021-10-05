@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <v-navigation-drawer permanent app color="green accent-3">
+    <v-navigation-drawer v-if="userState === 'ok'" permanent app color="green accent-3">
       <v-list>
 
         <v-list-item  class="white">
           {{user.name}}
         </v-list-item>
 
-        <v-list-item  v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
+        <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
           <v-list-item-action>
             <v-icon class="white--text">{{list.icon}}</v-icon>
           </v-list-item-action>
@@ -46,6 +46,11 @@ export default {
       ]
     }
   },
+  computed: {
+    userState: function() {
+      return this.$store.state.user 
+    }
+  },
   methods: {
     logout: function() { 
       if(confirm('ログアウトしますか')) {
@@ -54,6 +59,7 @@ export default {
           .then(response => {
             console.log(response)
             console.log('ログアウトしました')
+            this.$store.dispatch('lostUser')
             this.$router.push({name: 'LoginForm' })
           })
           .catch(error => {

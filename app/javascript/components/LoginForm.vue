@@ -4,6 +4,7 @@
       <v-form @submit.prevent="submitData" class="ma-5"> 
           <v-row>
             <v-col cols="12">
+              <p v-if="errors !== ''" class="d-flex justify-center red--text">{{errors}}</p>
               <v-text-field
                 v-model="loginInfo.email"
                 :rules="emailRules"
@@ -33,10 +34,6 @@
 
 <script>
 import axios from 'axios';
-// axios.defaults.headers.common = {
-//     'X-Requested-With': 'XMLHttpRequest',
-//     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-// };
 
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
@@ -83,7 +80,7 @@ export default {
         .catch(error => {
           console.error(error.response.data.errors);
           if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors;
+            this.errors = 'メールアドレスかパスワードに誤りがあります';
           }
           console.error('通信エラーです');
         })
