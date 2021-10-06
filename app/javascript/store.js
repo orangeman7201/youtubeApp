@@ -8,11 +8,18 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     movies: [],
-    user: ''
+    user: '',
+    today: null,
   },
   getters: {
     storeMovies: state => {
        return state.movies
+    },
+    storeToday: state => {
+       return state.today
+    },
+    num: state => {
+      return state.num
     }
   },
   mutations: {
@@ -22,6 +29,7 @@ export default new Vuex.Store({
       .then(response => {
         state.movies = response.data;
         state.user = 'ok'
+        state.today = new Date();
       })
       .catch(error => {
         router.push({name: 'LoginForm' })
@@ -30,7 +38,20 @@ export default new Vuex.Store({
     },
     lostUser(state) {
       state.user = ''
-    }
+    },
+    inputToday(state) {
+      state.today = new Date();
+    },
+    oneDayAgo(state) {
+      const newDay = new Date(state.today);
+      newDay.setDate(state.today.getDate() - 1);
+      state.today = newDay;
+    },
+    oneDayAfter(state) {
+      const newDay = new Date(state.today);
+      newDay.setDate(state.today.getDate() + 1);
+      state.today = newDay;
+    },
   },
   actions: {
     getData(context) {
@@ -38,6 +59,15 @@ export default new Vuex.Store({
     },
     lostUser(context) {
       context.commit('lostUser')
-    }
+    },
+    inputToday(context) {
+      context.commit('inputToday')
+    },
+    oneDayAgo(context) {
+      context.commit('oneDayAgo')
+    },
+    oneDayAfter(context) {
+      context.commit('oneDayAfter')
+    },
   }
 })

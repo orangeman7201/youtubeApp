@@ -3,12 +3,14 @@ import App from '../app.vue'
 import router from '../router.js';
 import Vuetify from "vuetify"; 
 import store from '../store';
+import moment from "moment"
 import "vuetify/dist/vuetify.min.css"; 
 import '@mdi/font/css/materialdesignicons.css'
 
 
 Vue.config.productionTip = true
 Vue.use(Vuetify);
+Vue.use(require('vue-moment'))
 const vuetify = new Vuetify({
   icons: {
     iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
@@ -28,6 +30,7 @@ window.addEventListener("unhandledrejection", event => {
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.body.appendChild(document.createElement('hello'))
   const app = new Vue({
+    moment,
     el,
     router,
     store,

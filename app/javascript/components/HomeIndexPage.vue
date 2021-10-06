@@ -78,7 +78,7 @@ export default {
         sum += this.storeMovies[id].duration
       }
       return sum;
-    },
+    },  
     storeMovies: function() {
       return this.$store.getters.storeMovies;
     },
