@@ -101,7 +101,7 @@ export default {
     },
     todayMovies: function() {
       const todayMovies = this.$store.getters.storeMovies.filter(element => {
-        const movieDate = String(new Date(element.created_at)).slice(0, 15)
+        const movieDate = String(new Date(element.date)).slice(0, 15)
         const today = String(this.$store.getters.storeToday).slice(0, 15)
         if(movieDate === today) {
           return element

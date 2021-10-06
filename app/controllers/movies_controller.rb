@@ -50,7 +50,7 @@ class MoviesController < ApiController
   private
 
   def movie_params
-    params.fetch(:movie, {}).permit(:url, :duration, :title, :comment, :thumbnail)
+    params.fetch(:movie, {}).permit(:url, :duration, :title, :comment, :thumbnail, :date)
   end
 
   def render_status_404(exception)
