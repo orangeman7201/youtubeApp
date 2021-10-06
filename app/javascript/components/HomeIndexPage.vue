@@ -4,9 +4,20 @@
 
       <v-row align="center" justify="center" class="my-5 pa-5">
         <v-card class="pa-5">
+
+          <div class="mb-5">
+            <v-btn @click="oneDayAgo" fab dark max-height="40px" max-width="40px" class="mr-5" color="green accent-3">
+              <v-icon class="text-h4">mdi-menu-left</v-icon>
+            </v-btn>
+            <span class="text-h5">{{ this.$store.getters.storeToday | moment("M月D日") }}</span>
+            <v-btn @click="oneDayAfter" fab dark max-height="40px" max-width="40px" class="ml-5" color="green accent-3">
+              <v-icon class="text-h4">mdi-menu-right</v-icon>
+            </v-btn>
+          </div>
+
           <p class="text-h5">合計視聴時間<v-divider></v-divider></p>
           
-          <div class="text-h3">
+          <div class="text-h3 d-flex justify-center">
             <span v-if="totalDuration >= 3600">
               {{Math.floor(totalDuration/3600)}}時間
             </span>
@@ -26,7 +37,13 @@
           </v-col>
         </v-row>
 
-        <v-card v-for="movie in storeMovies" :key="movie.id" @click="router(movie.id)" width="93%" class="ma-10 px-13 pb-9 pt-5" elevation="7">
+        <v-row v-if="this.todayMovies.length === 0">
+          <v-col class="pt-2 pb-1 d-flex justify-center">
+            <p class="text-h4 mb-10">動画を視聴していません</p>
+          </v-col>
+        </v-row>
+
+        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" width="93%" class="ma-10 px-13 pb-9 pt-5" elevation="7">
           <v-row>
             <v-col class="pt-2 pb-1 d-flex justify-end">
               <span class="text-body-2">1時間前</span>
@@ -74,25 +91,38 @@ export default {
   computed: {
     totalDuration: function() {
       let sum = 0;
-      for(let id = 0; id < this.storeMovies.length; id++) {
-        sum += this.storeMovies[id].duration
+      for(let id = 0; id < this.todayMovies.length; id++) {
+        sum += this.todayMovies[id].duration
       }
-      return sum;
+        return sum;
     },  
     storeMovies: function() {
       return this.$store.getters.storeMovies;
     },
+    todayMovies: function() {
+      const todayMovies = this.$store.getters.storeMovies.filter(element => {
+        const movieDate = String(new Date(element.created_at)).slice(0, 15)
+        const today = String(this.$store.getters.storeToday).slice(0, 15)
+        if(movieDate === today) {
+          return element
+        }
+      })
+      return todayMovies
+    }
   },
   methods: {
-    check: function() {
-      console.log(this.storeMovies)
-    },
     router: function(index) {
        this.$router.push(`movies/${index}`)
     },
     routerNew: function() {
        this.$router.push('movies/new')
-    }
+    },
+    oneDayAgo: function() {
+      this.$store.dispatch('oneDayAgo');
+    },
+    oneDayAfter: function() {
+      this.$store.dispatch('oneDayAfter');
+    },
   }
   
 }

@@ -22,16 +22,6 @@
           <v-btn @click="logout">ログアウト</v-btn>
         </v-list-item>
 
-        <v-list-item class="d-flex justify-center white black--text">
-          <v-btn @click="oneDayAgo" fab max-height="40px" max-width="40px" class="mr-5">
-            <v-icon class="text-h4">mdi-menu-left</v-icon>
-          </v-btn>
-          <span>{{ today | moment("M月D日") }}</span>
-          <v-btn @click="oneDayAfter" fab max-height="40px" max-width="40px" class="ml-5">
-            <v-icon class="text-h4">mdi-menu-right</v-icon>
-          </v-btn>
-        </v-list-item>
-
       </v-list>
     </v-navigation-drawer>
   <v-main>
