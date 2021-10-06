@@ -3,7 +3,7 @@
     <v-navigation-drawer permanent app color="green accent-3">
       <v-list>
 
-        <v-list-item  class="white">
+        <v-list-item  class="white d-flex justify-center">
           {{user.name}}
         </v-list-item>
 
@@ -36,7 +36,7 @@ import axios from 'axios';
 export default {
   data: function() {
     return {
-      user: {name: 'akita'},
+      user: {},
       lists: [
         {icon: 'mdi-home', title: 'ホーム', route: '/'},
         {icon: 'mdi-magnify', title: 'ユーザー検索', route: '/users/serch'},
@@ -47,6 +47,9 @@ export default {
     }
   },
   mounted() {
+    axios
+      .post('/users/self.json')
+      .then(response => (this.user = response.data))
     this.$store.dispatch('inputToday');
   },
   computed: {
