@@ -28,7 +28,7 @@
 
         <v-card v-for="movie in storeMovies" :key="movie.id" @click="router(movie.id)" width="93%" class="ma-10 px-13 pb-9 pt-5" elevation="7">
           <v-row>
-            <v-col class="pa-1 d-flex justify-end">
+            <v-col class="pt-2 pb-1 d-flex justify-end">
               <span class="text-body-2">1時間前</span>
             </v-col>
           </v-row>
@@ -78,7 +78,7 @@ export default {
         sum += this.storeMovies[id].duration
       }
       return sum;
-    },
+    },  
     storeMovies: function() {
       return this.$store.getters.storeMovies;
     },

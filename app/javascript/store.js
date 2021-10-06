@@ -7,27 +7,67 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    movies: []
+    movies: [],
+    user: '',
+    today: null,
   },
   getters: {
     storeMovies: state => {
        return state.movies
+    },
+    storeToday: state => {
+       return state.today
+    },
+    num: state => {
+      return state.num
     }
   },
   mutations: {
     getData(state) {
       axios
       .get('/movies.json')
-      .then(response => (state.movies = response.data))
+      .then(response => {
+        state.movies = response.data;
+        state.user = 'ok'
+        state.today = new Date();
+      })
       .catch(error => {
         router.push({name: 'LoginForm' })
         console.log(error)
       })
-    }
+    },
+    lostUser(state) {
+      state.user = ''
+    },
+    inputToday(state) {
+      state.today = new Date();
+    },
+    oneDayAgo(state) {
+      const newDay = new Date(state.today);
+      newDay.setDate(state.today.getDate() - 1);
+      state.today = newDay;
+    },
+    oneDayAfter(state) {
+      const newDay = new Date(state.today);
+      newDay.setDate(state.today.getDate() + 1);
+      state.today = newDay;
+    },
   },
   actions: {
     getData(context) {
       context.commit('getData')
-    }
+    },
+    lostUser(context) {
+      context.commit('lostUser')
+    },
+    inputToday(context) {
+      context.commit('inputToday')
+    },
+    oneDayAgo(context) {
+      context.commit('oneDayAgo')
+    },
+    oneDayAfter(context) {
+      context.commit('oneDayAfter')
+    },
   }
 })

@@ -7,7 +7,7 @@
           {{user.name}}
         </v-list-item>
 
-        <v-list-item  v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
+        <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
           <v-list-item-action>
             <v-icon class="white--text">{{list.icon}}</v-icon>
           </v-list-item-action>
@@ -18,8 +18,18 @@
           <v-btn router to="/movies/new">動画を追加</v-btn>
         </v-list-item>
 
-        <v-list-item class="mt-7">
+        <v-list-item class="my-7">
           <v-btn @click="logout">ログアウト</v-btn>
+        </v-list-item>
+
+        <v-list-item class="d-flex justify-center white black--text">
+          <v-btn @click="oneDayAgo" fab max-height="40px" max-width="40px" class="mr-5">
+            <v-icon class="text-h4">mdi-menu-left</v-icon>
+          </v-btn>
+          <span>{{ today | moment("M月D日") }}</span>
+          <v-btn @click="oneDayAfter" fab max-height="40px" max-width="40px" class="ml-5">
+            <v-icon class="text-h4">mdi-menu-right</v-icon>
+          </v-btn>
         </v-list-item>
 
       </v-list>
@@ -43,7 +53,18 @@ export default {
         {icon: 'mdi-account-multiple', title: '友達一覧', route: '/freinds/index'},
         {icon: 'mdi-clipboard-account', title: 'ユーザー新規登録', route: '/signup'},
         {icon: 'mdi-chart-line', title: 'グラフ', route: '/movies/chart'},
-      ]
+      ],
+    }
+  },
+  mounted() {
+    this.$store.dispatch('inputToday');
+  },
+  computed: {
+    userState: function() {
+      return this.$store.state.user 
+    },
+    today: function() {
+      return this.$store.state.today
     }
   },
   methods: {
@@ -54,6 +75,7 @@ export default {
           .then(response => {
             console.log(response)
             console.log('ログアウトしました')
+            this.$store.dispatch('lostUser')
             this.$router.push({name: 'LoginForm' })
           })
           .catch(error => {
@@ -64,6 +86,12 @@ export default {
             console.error('通信エラーです');
           })
       }
+    },
+    oneDayAgo: function() {
+      this.$store.dispatch('oneDayAgo');
+    },
+    oneDayAfter: function() {
+      this.$store.dispatch('oneDayAfter');
     },
   }
 }
