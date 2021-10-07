@@ -14,6 +14,7 @@ import FriendIndexPage from './components/FriendIndexPage.vue';
 Vue.use(Router);
 
 export default new Router ({
+  mode: 'history',
   routes: [
      {path: '/', name: 'HomeIndexPage', component: HomeIndexPage}, 
      {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 

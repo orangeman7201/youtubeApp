@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">
+  <v-app v-if="userState === 'ok'" id="app">
     <v-container id="typography-view" fluid tag="section" class="grey lighten-3">
 
       <v-row align="center" justify="center" class="my-5 pa-5">
@@ -89,6 +89,9 @@ export default {
     this.$store.dispatch('getData')
   },
   computed: {
+    userState: function() {
+      return this.$store.state.user 
+    },
     totalDuration: function() {
       let sum = 0;
       for(let id = 0; id < this.todayMovies.length; id++) {

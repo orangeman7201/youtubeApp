@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer permanent app color="green accent-3">
+    <v-navigation-drawer v-if="userState === 'ok'" permanent app color="green accent-3">
       <v-list>
 
         <v-list-item  class="white d-flex justify-center">
