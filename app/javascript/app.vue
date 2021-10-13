@@ -46,8 +46,8 @@ export default {
       ],
     }
   },
-  mounted() {
-    axios
+ async mounted() {
+   await axios
       .post('/users/self.json')
       .then(response => (this.user = response.data))
     this.$store.dispatch('inputToday');
