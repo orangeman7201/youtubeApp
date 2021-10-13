@@ -1,7 +1,12 @@
 <template>
   <v-container id="typography-view" fluid tag="section" class="grey lighten-3">
         <v-card class="ma-5 px-5 py-10">
-          <v-row>
+          <v-row v-if="durationCheck !== 'ok'">
+            <v-col>
+              <p class="text-h4">再生した動画はありません</p>
+            </v-col>
+          </v-row>
+          <v-row v-else>
             <v-col cols="10">
               <line-chart :chart-data="dataCollection" :height="height" :width="width"/>
             </v-col>
@@ -30,15 +35,17 @@ export default {
 
   async mounted () {
     await this.getData();
+    this.durationArrayCheck();
   },
 
   data: function () {
     return {
       loaded: false,
-      number: "6",
+      number: 6,
       movies: [],
       height: window.innerHeight *3 /4 ,
       width: window.innerWidth / 2,
+      durationCheck: '',
     }
   },
   computed: {
@@ -50,12 +57,12 @@ export default {
         let year = String(date.getFullYear());
         let month = String(date.getMonth() + 1);
         if(month.length == 1) {
-          month = 0 + month
-        };
+          month = 0 + month;
+        }
         let day = String(date.getDate());
         if(day.length == 1) {
-          day = 0 + day
-        };
+          day = 0 + day;
+        }
         const fitToday = year + '-' +  month + '-' + day
         dateArray.push(fitToday);
       }
@@ -70,7 +77,8 @@ export default {
       })
       stepArray.forEach(stepObj => {
         this.movies.forEach(movie => {
-          if(stepObj.x === movie.created_at.slice(0, 10)) {
+          if(stepObj.x === movie.date.slice(0, 10)) {
+            console.log(movie)
             stepObj.y += movie.duration
           }
         })
@@ -94,6 +102,14 @@ export default {
     },
   },
   methods: {
+    durationArrayCheck: function() {
+      this.durationArray.forEach(element => {
+        if(element.y !== 0 ) {
+          this.durationCheck = 'ok'
+          console.log('test')
+        }
+      })
+    },
     getData: async function() {
       await axios
         .get('/movies.json')

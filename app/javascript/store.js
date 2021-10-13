@@ -18,9 +18,6 @@ export default new Vuex.Store({
     storeToday: state => {
        return state.today
     },
-    num: state => {
-      return state.num
-    }
   },
   mutations: {
     getData(state) {

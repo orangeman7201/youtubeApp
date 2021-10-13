@@ -8,8 +8,8 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="inputUserName.userId"
-                label="ユーザーID"
+                v-model="inputUserName.userName"
+                label="ユーザー名"
                 required
               ></v-text-field>
             </v-col>
@@ -21,13 +21,6 @@
     </v-card>
   </v-container>
 </template>
-
-    <form @submit.prevent="submitData">
-      <label for="comment">ユーザー名を入力してください</label>
-      <input id="comment" type="text" v-model="inputUserName.userId">
-      <button type="submit">検索</button>
-    </form>
-  </div>
 
 <script>
 import axios from 'axios';
@@ -45,7 +38,7 @@ export default {
   data: function () {
     return {
       inputUserName: {
-        userId: ''
+        userName: ''
       },
       error: ''
     }  
@@ -62,11 +55,7 @@ export default {
             let e = response;
             this.$router.push({name: 'UserDetailPage', params: { id: e.data.id } })
           })
-          .catch(error => {
-            console.error(error);
-            console.error('Rubyの方の通信エラーです');
-            this.error = 'error';
-          })
+          .catch(this.error = 'error')
       }
     }
   }

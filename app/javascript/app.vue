@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <v-navigation-drawer permanent app color="green accent-3">
+    <v-navigation-drawer v-if="userState === 'ok'" permanent app color="green accent-3">
       <v-list>
 
-        <v-list-item  class="white">
+        <v-list-item  class="white d-flex justify-center">
           {{user.name}}
         </v-list-item>
 
@@ -22,16 +22,6 @@
           <v-btn @click="logout">ログアウト</v-btn>
         </v-list-item>
 
-        <v-list-item class="d-flex justify-center white black--text">
-          <v-btn @click="oneDayAgo" fab max-height="40px" max-width="40px" class="mr-5">
-            <v-icon class="text-h4">mdi-menu-left</v-icon>
-          </v-btn>
-          <span>{{ today | moment("M月D日") }}</span>
-          <v-btn @click="oneDayAfter" fab max-height="40px" max-width="40px" class="ml-5">
-            <v-icon class="text-h4">mdi-menu-right</v-icon>
-          </v-btn>
-        </v-list-item>
-
       </v-list>
     </v-navigation-drawer>
   <v-main>
@@ -46,7 +36,7 @@ import axios from 'axios';
 export default {
   data: function() {
     return {
-      user: {name: 'akita'},
+      user: {},
       lists: [
         {icon: 'mdi-home', title: 'ホーム', route: '/'},
         {icon: 'mdi-magnify', title: 'ユーザー検索', route: '/users/serch'},
@@ -56,7 +46,10 @@ export default {
       ],
     }
   },
-  mounted() {
+ async mounted() {
+   await axios
+      .post('/users/self.json')
+      .then(response => (this.user = response.data))
     this.$store.dispatch('inputToday');
   },
   computed: {

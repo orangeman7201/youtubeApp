@@ -50,6 +50,7 @@ export default {
         title: '',
         comment: '',
         thumbnail: '',
+        date: '',
       },
       error: '',
     }  
@@ -102,6 +103,7 @@ export default {
             this.movie.thumbnail = e.items[0].snippet.thumbnails.standard.url
             this.movie.title = e.items[0].snippet.title
             this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
+            this.movie.date = this.$store.getters.storeToday
             axios
               .post('/movies', this.movie)
               .then(response => {
