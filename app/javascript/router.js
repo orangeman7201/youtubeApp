@@ -10,6 +10,7 @@ import LoginForm from './components/LoginForm.vue';
 import UserDetailPage from './components/UserDetailPage.vue';
 import UserSerchForm from './components/UserSerchForm.vue';
 import FriendIndexPage from './components/FriendIndexPage.vue';
+import About from './components/About.vue';
 
 Vue.use(Router);
 
@@ -26,5 +27,6 @@ export default new Router ({
      {path: '/users/:id(\\d+)', name: 'UserDetailPage', component: UserDetailPage}, 
      {path: '/users/serch', name: 'UserSerchForm', component: UserSerchForm}, 
      {path: '/freinds/index', name: 'FriendIndexPage', component: FriendIndexPage}, 
+     {path: '/about', component: About}, 
   ]
 })
