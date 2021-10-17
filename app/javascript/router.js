@@ -15,9 +15,10 @@ import About from './components/About.vue';
 Vue.use(Router);
 
 export default new Router ({
-  mode: 'history',
+  // mode: 'history',
   routes: [
-     {path: '/', name: 'HomeIndexPage', component: HomeIndexPage}, 
+     {path: '/', component: About}, 
+     {path: '/home', name: 'HomeIndexPage', component: HomeIndexPage}, 
      {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 
      {path: '/movies/new', component: InputFormPage}, 
      {path: '/movies/chart', component: Chart}, 
@@ -27,6 +28,5 @@ export default new Router ({
      {path: '/users/:id(\\d+)', name: 'UserDetailPage', component: UserDetailPage}, 
      {path: '/users/serch', name: 'UserSerchForm', component: UserSerchForm}, 
      {path: '/freinds/index', name: 'FriendIndexPage', component: FriendIndexPage}, 
-     {path: '/about', component: About}, 
   ]
 })

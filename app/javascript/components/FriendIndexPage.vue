@@ -72,7 +72,8 @@ export default {
   data: function () {
     return {
       requests: {},
-      friends: []
+      friends: [],
+      rankingFriends: []
     }  
   },
   mounted () {
@@ -82,7 +83,7 @@ export default {
   },
   computed: {
     filteredFriends: function() {
-      const filteredFriends = this.friends.sort((a, b) => {
+      const filteredFriends = this.rankingFriends.sort((a, b) => {
         return b.total_duration - a.total_duration
       })
       return filteredFriends
@@ -100,14 +101,14 @@ export default {
         .then(response => {
           response.data.forEach(element => {
             this.friends.push(element)
+            this.rankingFriends.push(element)
           });
         })
     },
     getMyData: function() {
-      console.log(this.firends)
       axios
-        .post(`/users/self.json`)
-        .then(response => (this.friends.push(response.data)));
+        .post('/users/self.json')
+        .then(response => (this.rankingFriends.push(response.data)));
       },
     accept: function(request) {
       axios
