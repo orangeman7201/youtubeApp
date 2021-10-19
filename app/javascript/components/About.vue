@@ -85,6 +85,13 @@
                   <v-btn class="white--text green accent-2" router to="login">ログイン</v-btn>
                 </v-col>
               </v-row>
+              <v-divider class="mt-5"></v-divider>
+              <v-row justify="center" align="center">
+                <v-col align="center">
+                  <p class="grey--text d-flex justify-center my-7">ゲストログインはこちら</p>
+                  <v-btn class="white--text green accent-2" @click="gestlogin">ゲストログイン</v-btn>
+                </v-col>
+              </v-row>
             </v-card>
 
           </v-col>
@@ -144,6 +151,22 @@ export default {
       } else {
         console.log('失敗です')
       }
+    },
+    gestlogin: function() {
+      axios
+        .post('/gest/login', 'gest@example.com')
+        .then(response => {
+          console.log(response)
+          console.log('成功です')
+          this.$router.push({name: 'HomeIndexPage' })
+        })
+        .catch(error => {
+          console.error(error);
+          if (error.response.data && error.response.data.errors) {
+            this.errors = error.response.data.errors;
+          }
+          console.error('通信エラーです');
+        })
     }
   }
 }
