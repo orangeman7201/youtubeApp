@@ -36,7 +36,7 @@
     <v-card class="ma-5">
       <v-row>
         <v-col col="12" class="text-h4 d-flex justify-center">
-          <p>視聴時間ランキング</p>
+          <p>本日の視聴時間ランキング</p>
         </v-col>
       </v-row>
 
