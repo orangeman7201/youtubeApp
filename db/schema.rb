@@ -29,13 +29,6 @@ ActiveRecord::Schema.define(version: 2021_09_27_072351) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
   end
 
-  create_table "firends", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "firend_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "friends", force: :cascade do |t|
     t.integer "user_id"
     t.integer "friend_user_id"

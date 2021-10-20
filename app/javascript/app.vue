@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-if="userState === 'ok'" permanent app color="green accent-3">
+    <v-navigation-drawer v-if="userState === 'ok'" permanent app color="green accent-2">
       <v-list>
 
         <v-list-item  class="white d-flex justify-center">
@@ -38,16 +38,15 @@ export default {
     return {
       user: {},
       lists: [
-        {icon: 'mdi-home', title: 'ホーム', route: '/'},
+        {icon: 'mdi-home', title: 'ホーム', route: '/home'},
         {icon: 'mdi-magnify', title: 'ユーザー検索', route: '/users/serch'},
         {icon: 'mdi-account-multiple', title: '友達一覧', route: '/freinds/index'},
-        {icon: 'mdi-clipboard-account', title: 'ユーザー新規登録', route: '/signup'},
         {icon: 'mdi-chart-line', title: 'グラフ', route: '/movies/chart'},
       ],
     }
   },
- async mounted() {
-   await axios
+ mounted() {
+   axios
       .post('/users/self.json')
       .then(response => (this.user = response.data))
     this.$store.dispatch('inputToday');
@@ -86,6 +85,9 @@ export default {
     oneDayAfter: function() {
       this.$store.dispatch('oneDayAfter');
     },
+    about: function() {
+      this.$router.push('/about')
+    }
   }
 }
 </script>
