@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar></Navbar>
+    <Navbar v-if="userState === 'ok'"></Navbar>
   <v-main>
     <router-view></router-view>
   </v-main>
@@ -12,7 +12,16 @@ import Navbar from './components/Navbar';
 
 export default {
   components: {Navbar},
-  
+  data () {
+    return {
+      errors: '',
+    }
+  },
+  computed: {
+    userState: function() {
+      this.$store.state.user
+    }
+  }
 }
 </script>
 
