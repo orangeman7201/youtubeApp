@@ -10,10 +10,6 @@
       <v-app-bar-nav-icon @click="drawer = !drawer">
       </v-app-bar-nav-icon>
 
-      <v-app-bar-title class="font-weight-medium headline">
-        YSTOPPER
-      </v-app-bar-title>
-
     </v-app-bar>
 
     <v-navigation-drawer app temporary v-model="drawer" color="green accent-2">
