@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="grey lighten-3">
+  <v-container fill-height class="grey lighten-3">
     <v-card >
       <v-form @submit.prevent="submitData" class="ma-5"> 
           <v-row>
