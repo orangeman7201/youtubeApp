@@ -6,7 +6,7 @@
         <v-col v-if="this.requests.length === 0" col="12" class="text-h4 d-flex justify-center">友達申請はありません</v-col>
         <v-col v-else col="12" class="text-h4 d-flex justify-center">
           <p class="text-h4">友達申請
-            <table class="ma-5">
+            <table :class="[$vuetify.breakpoint.smAndDown ? 'ma-3' : 'ma-5']">
               <tr v-for="request in requests" :key="request.id">
                 <td class="text-h6">{{request.name}}</td>
                 <td><v-btn @click="accept(request)" class="ml-10 mr-5 white--text green accent-3">承認する</v-btn></td>
