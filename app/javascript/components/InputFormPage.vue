@@ -89,7 +89,7 @@ export default {
       } else {
         this.error = '';
         const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
-        let Id = this.movie.url.slice(32)
+        let Id = this.movie.url.slice(-13)
   
         let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
         apiUrl += '?id=' + Id;
