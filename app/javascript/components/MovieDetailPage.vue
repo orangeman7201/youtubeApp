@@ -1,11 +1,11 @@
 <template>
   <v-app>
-    <v-container>
-
+    <v-container fluid class="grey lighten-3">
+      <v-row align="center">
+      
         <v-card  width="93%" class="ma-10 px-10 pb-10 pt-7">
-
-          <v-row> 
-            <v-col cols="4" class="d-flex justify-center">
+          <v-row align="center"> 
+            <v-col cols="12" class="d-flex justify-center">
               <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
                 <div bottom class="mt-1 mr-2 black white--text text-right">
                   <span v-if="movie.duration >= 3600">
@@ -18,27 +18,26 @@
               </v-img>
             </v-col>
 
-            <v-col cols="8">
+            <v-col cols="12">
               <div class="ma-2">
                 <h4 class="text-h5">{{movie.title}}</h4>
               </div>
                 <v-divider></v-divider>
-              <v-textarea v-model="movie.comment" outlined>
-                {{movie.comment}}
-              </v-textarea>
+              <div class="ma-3">
+                <p>{{movie.comment}}</p>
+              </div>
             </v-col>
+
+            <v-col cols="6">
+              <v-btn type="submit" class="white--text green accent-3">保存</v-btn>
+            </v-col>
+            <v-col cols="6">
+              <v-btn router to="/users/serch" class="white--text green accent-3">戻る</v-btn>
+            </v-col> 
           </v-row>
 
-          <v-row align="center" justify="center" class="mt-5">
-            <v-btn type="submit" class="white--text green accent-3" @click="submitData">保存</v-btn>
-          <v-col cols="1">
-          </v-col>
-          <v-col cols="1">
-            <v-btn class="white--text green accent-3" @click="deleteData">削除</v-btn>
-          </v-col>
-        </v-row>
-
         </v-card>
+      </v-row>  
 
     </v-container>
   </v-app>

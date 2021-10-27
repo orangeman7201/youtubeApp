@@ -56,6 +56,7 @@ export default {
     }  
   },
   mounted () {
+    this.error = '';
     axios
       .get('/movies.json')
       .then(res => {
@@ -89,8 +90,13 @@ export default {
       } else {
         this.error = '';
         const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
-        let Id = this.movie.url.slice(-13)
-  
+        // let Id = ''
+        let Id = this.movie.url.split('=')[1]
+        // if(this.movie.url.slice(8,9) === 'w') {
+        //   Id = this.movie.url.slice(32)
+        // }else{
+        //   Id = this.movie.url.slice(30)
+        // }
         let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
         apiUrl += '?id=' + Id;
         apiUrl += '&key=' + Key;
@@ -118,7 +124,7 @@ export default {
           })
           .catch(error => {
             console.error(error);
-            console.error('youtubeAPIの方の通信エラーです');
+            this.error = error;
           });
       }
     },
