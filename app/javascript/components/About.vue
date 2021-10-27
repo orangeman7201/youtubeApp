@@ -138,13 +138,10 @@ export default {
       if(this.user.name !== '' && this.user.email !== '' && this.user.password !== '' && this.user.passwordConfirmation !== '' ) {
         axios
         .post('/users', this.user)
-        .then(response => {
-          console.log(response)
-          console.log('成功です')
+        .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {
-          console.error(error);
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors;
           }
@@ -157,14 +154,11 @@ export default {
     gestlogin: function() {
       axios
         .post('/gest/login', 'gest@example.com')
-        .then(response => {
-          console.log(response)
-          console.log('成功です')
+        .then(() => {
           this.$store.dispatch('getData')
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {
-          console.error(error);
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors;
           }

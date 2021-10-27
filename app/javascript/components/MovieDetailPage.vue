@@ -29,10 +29,10 @@
             </v-col>
 
             <v-col cols="6">
-              <v-btn type="submit" class="white--text green accent-3">保存</v-btn>
+              <v-btn  @click.prevent="submitData" class="white--text green accent-3">保存</v-btn>
             </v-col>
             <v-col cols="6">
-              <v-btn router to="/users/serch" class="white--text green accent-3">戻る</v-btn>
+              <v-btn @click.prevent="deleteData" class="white--text green accent-3">戻る</v-btn>
             </v-col> 
           </v-row>
 
@@ -62,12 +62,10 @@ export default {
     submitData: function() {
       axios
         .patch(`/movies/${this.$route.params.id}.json`, this.movie)
-        .then(response => {
-          console.log(response);
+        .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {
-          console.log(error)
           this.error = error
         })
     },
@@ -75,11 +73,10 @@ export default {
       if(confirm('削除しますか？')){
         axios
           .delete(`/movies/${this.$route.params.id}.json`, this.movie)
-          .then(response => {
+          .then(() => {
             this.$router.push({name: 'HomeIndexPage' })
           })
           .catch(error => {
-            console.log(error)
             this.error = error
           })
       }
