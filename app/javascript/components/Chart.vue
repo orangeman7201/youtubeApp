@@ -1,24 +1,24 @@
 <template>
   <v-container id="typography-view" fluid tag="section" class="grey lighten-3">
-        <v-card class="ma-5 px-5 py-10">
-          <v-row v-if="durationCheck !== 'ok'">
-            <v-col>
-              <p class="text-h4">再生した動画はありません</p>
-            </v-col>
-          </v-row>
-          <v-row v-else>
-            <v-col cols="10">
-              <line-chart :chart-data="dataCollection" :height="height" :width="width"/>
-            </v-col>
-            <v-col cols="2">
-              <v-radio-group v-model="number" column>
-                <v-radio value="6" label="1週間分を表示" class="mb-5"></v-radio>
-                <v-radio value="13" label="2週間分を表示" class="mb-5"></v-radio>
-                <v-radio value="29" label="4週間分を表示" class="mb-5"></v-radio>
-              </v-radio-group>
-            </v-col>
-          </v-row>
-        </v-card>
+      <v-card class="ma-5 px-5 py-10">
+        <v-row v-if="durationCheck !== 'ok'">
+          <v-col>
+            <p class="text-h4">再生した動画はありません</p>
+          </v-col>
+        </v-row>
+        <v-row v-else >
+          <v-col cols="12" md10>
+            <line-chart :chart-data="dataCollection" :height="height" :width="width"/>
+          </v-col>
+          <v-col cols="12" md2>
+            <v-radio-group v-model="number" column >
+              <v-radio value="6" label="1週間分を表示" class="mb-5"></v-radio>
+              <v-radio value="13" label="2週間分を表示" class="mb-5"></v-radio>
+              <v-radio value="29" label="4週間分を表示" class="mb-5"></v-radio>
+            </v-radio-group>
+          </v-col>
+        </v-row>
+      </v-card>
   </v-container>
 
 </template>
@@ -43,8 +43,8 @@ export default {
       loaded: false,
       number: 6,
       movies: [],
-      height: window.innerHeight *3 /4 ,
-      width: window.innerWidth / 2,
+      height: window.innerHeight *1 /4 ,
+      width: window.innerWidth *2 / 3,
       durationCheck: '',
     }
   },
