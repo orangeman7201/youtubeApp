@@ -33,19 +33,22 @@ export default {
     LineChart
   },
 
+  async mounted () {
+    await this.getData();
+    this.durationArrayCheck();
+  },
+
   data: function () {
     return {
       loaded: false,
       number: 6,
+      movies: [],
       height: window.innerHeight *1 /4 ,
       width: window.innerWidth *2 / 3,
       durationCheck: '',
     }
   },
   computed: {
-    movies: function() {
-      return this.$store.state.movies
-    },
     dateArray: function() {
       let dateArray = [];
       for(let num = this.number; num >= 0; num--) {
@@ -97,6 +100,20 @@ export default {
       return chartdata
     },
   },
+  methods: {
+    getData: async function() {
+      await axios
+        .get('/movies.json')
+        .then(response => {
+          response.data.forEach(element => {
+            this.movies.push(element)
+          })
+        })
+        .catch(() => {
+          router.push({name: 'LoginForm' })
+      })
+    },
+  }
 }
  
 </script>
