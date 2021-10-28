@@ -23,11 +23,11 @@
                 <h4 class="text-h5">{{movie.title}}</h4>
               </div>
                 <v-divider class="ma-2"></v-divider>
-              <v-text-field
+              <v-textarea
                 v-model="movie.comment"
                 label="コメントを編集"
                 class="mt-2"
-              ></v-text-field>
+              ></v-textarea>
             </v-col>
 
             <v-col cols="6">
