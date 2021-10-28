@@ -80,9 +80,9 @@
 <script>
 
 export default {
-  // mounted () {
-  //   this.$store.dispatch('getData')
-  // },
+  mounted () {
+    this.$store.dispatch('getData')
+  },
   computed: {
     userState: function() {
       return this.$store.state.user 

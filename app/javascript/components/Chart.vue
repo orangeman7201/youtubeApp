@@ -1,12 +1,12 @@
 <template>
   <v-container id="typography-view" fluid tag="section" class="grey lighten-3">
-      <v-card class="ma-5 px-5 py-10">
+      <v-card v-if="loaded === ture" class="ma-5 px-5 py-10">
         <v-row v-if="durationArray === []">
           <v-col>
             <p class="text-h4">再生した動画はありません</p>
           </v-col>
         </v-row>
-        <v-row v-else >
+        <v-row v-else>
           <v-col cols="12" md10>
             <line-chart :chart-data="dataCollection" :height="height" :width="width"/>
           </v-col>
@@ -35,7 +35,6 @@ export default {
 
   async mounted () {
     await this.getData();
-    this.durationArrayCheck();
   },
 
   data: function () {
@@ -107,6 +106,7 @@ export default {
         .then(response => {
           response.data.forEach(element => {
             this.movies.push(element)
+            this.loaded = true
           })
         })
         .catch(() => {
