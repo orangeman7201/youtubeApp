@@ -1,7 +1,7 @@
 <template>
   <v-container id="typography-view" fluid tag="section" class="grey lighten-3">
       <v-card class="ma-5 px-5 py-10">
-        <v-row v-if="durationCheck !== 'ok'">
+        <v-row v-if="durationArray === []">
           <v-col>
             <p class="text-h4">再生した動画はありません</p>
           </v-col>
@@ -33,22 +33,19 @@ export default {
     LineChart
   },
 
-  async mounted () {
-    await this.getData();
-    this.durationArrayCheck();
-  },
-
   data: function () {
     return {
       loaded: false,
       number: 6,
-      movies: [],
       height: window.innerHeight *1 /4 ,
       width: window.innerWidth *2 / 3,
       durationCheck: '',
     }
   },
   computed: {
+    movies: function() {
+      return this.$store.state.movies
+    },
     dateArray: function() {
       let dateArray = [];
       for(let num = this.number; num >= 0; num--) {
@@ -78,7 +75,6 @@ export default {
       stepArray.forEach(stepObj => {
         this.movies.forEach(movie => {
           if(stepObj.x === movie.date.slice(0, 10)) {
-            console.log(movie)
             stepObj.y += movie.duration
           }
         })
@@ -101,29 +97,6 @@ export default {
       return chartdata
     },
   },
-  methods: {
-    durationArrayCheck: function() {
-      this.durationArray.forEach(element => {
-        if(element.y !== 0 ) {
-          this.durationCheck = 'ok'
-          console.log('test')
-        }
-      })
-    },
-    getData: async function() {
-      await axios
-        .get('/movies.json')
-        .then(response => {
-          response.data.forEach(element => {
-            this.movies.push(element)
-          })
-        })
-        .catch(error => {
-          router.push({name: 'LoginForm' })
-          console.log(error)
-      })
-    },
-  }
 }
  
 </script>
