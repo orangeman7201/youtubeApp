@@ -22,17 +22,19 @@
               <div class="ma-2">
                 <h4 class="text-h5">{{movie.title}}</h4>
               </div>
-                <v-divider></v-divider>
-              <div class="ma-3">
-                <p>{{movie.comment}}</p>
-              </div>
+                <v-divider class="ma-2"></v-divider>
+              <v-text-field
+                v-model="movie.comment"
+                label="コメントを編集"
+                class="mt-2"
+              ></v-text-field>
             </v-col>
 
             <v-col cols="6">
               <v-btn  @click.prevent="submitData" class="white--text green accent-3">保存</v-btn>
             </v-col>
             <v-col cols="6">
-              <v-btn @click.prevent="deleteData" class="white--text green accent-3">戻る</v-btn>
+              <v-btn @click.prevent="deleteData" class="white--text green accent-3">削除</v-btn>
             </v-col> 
           </v-row>
 

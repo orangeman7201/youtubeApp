@@ -28,7 +28,7 @@
         </v-card>
       </v-row>
       
-      <v-card class="mx-10 pa-5">
+      <v-row>
         <v-row class="hidden-sm-and-down" align="center" justify="end">
           <v-col cols="1" >
             <v-btn fab class="green accent-3 white--text" >
@@ -43,7 +43,7 @@
           </v-col>
         </v-row>
 
-        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" width="93%" :class="[$vuetify.breakpoint.smAndDown ? 'ma-2 pa-3' : 'ma-10 px-15 pb-10 pt-7']" elevation="7">
+        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
 
           <v-row align="center" justify="center"> 
             <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
@@ -72,7 +72,7 @@
           </v-row>
         </v-card>
 
-      </v-card>
+      </v-row>
     </v-container>
   </v-app>
 </template>
