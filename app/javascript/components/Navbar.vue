@@ -10,6 +10,11 @@
       <v-app-bar-nav-icon @click="drawer = !drawer">
       </v-app-bar-nav-icon>
 
+      <v-spacer></v-spacer>
+      <v-btn icon to="/movies/new">
+        <v-icon>mdi-movie-open-plus-outline</v-icon>
+      </v-btn>
+
     </v-app-bar>
 
     <v-navigation-drawer app temporary v-model="drawer" color="green accent-2">

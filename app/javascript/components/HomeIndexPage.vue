@@ -1,6 +1,6 @@
 <template>
   <v-app v-if="userState === 'ok'" id="app">
-    <v-container id="typography-view" fluid tag="section" class="grey lighten-3">
+    <v-row class="grey lighten-3">
 
       <v-row align="center" justify="center" class="my-5 pa-5">
         <v-card class="pa-5">
@@ -73,7 +73,7 @@
         </v-card>
 
       </v-row>
-    </v-container>
+    </v-row>
   </v-app>
 </template>
 
