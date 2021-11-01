@@ -1,8 +1,4 @@
 <template>
-  <v-container fill-height class="grey lighten-3">
-    <v-row align="center" justify="center">
-
-      <v-card>
         <v-form @submit.prevent="submitData" class="ma-5"> 
             <v-row align="center" justify="center">
               <v-col cols="12" v-if="error !== ''">
@@ -20,9 +16,6 @@
               </v-col>
             </v-row>
         </v-form>
-      </v-card>
-    </v-row>
-  </v-container>
 </template>
 
 <script>

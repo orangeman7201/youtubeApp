@@ -1,6 +1,5 @@
 <template>
-  <v-container fluid class="grey lighten-3">
-    <v-card >
+
       <v-form @submit.prevent="submitData" class="ma-5"> 
           <v-row>
             <v-col cols="12" v-if="error !== ''">
@@ -21,12 +20,11 @@
               ></v-textarea>
             </v-col>
             <v-col cols="12" class="d-flex justify-center">
-              <v-btn type="submit" class="white--text green accent-3 mb-5">保存</v-btn>
+              <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
             </v-col>
           </v-row>
       </v-form>
-    </v-card>
-  </v-container>
+
 </template>
 
 <script>

@@ -1,11 +1,8 @@
 <template>
   <v-app>
-    <v-container fluid class="grey lighten-3">
-      <v-row align="center">
-      
-        <v-card  width="93%" class="ma-10 px-10 pb-10 pt-7">
-          <v-row align="center"> 
-            <v-col cols="12" class="d-flex justify-center">
+
+          <v-row no-gutters class="px-10 pt-6"> 
+            <v-col cols="12" class="mb-n15">
               <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
                 <div bottom class="mt-1 mr-2 black white--text text-right">
                   <span v-if="movie.duration >= 3600">
@@ -18,7 +15,7 @@
               </v-img>
             </v-col>
 
-            <v-col cols="12">
+            <v-col cols="12" class="my-n15">
               <div class="ma-2">
                 <h4 class="text-h5">{{movie.title}}</h4>
               </div>
@@ -30,18 +27,12 @@
               ></v-textarea>
             </v-col>
 
-            <v-col cols="6">
+            <v-col cols="12" class="mt-n10">
               <v-btn  @click.prevent="submitData" class="white--text green accent-3">保存</v-btn>
-            </v-col>
-            <v-col cols="6">
+              <span class="mx-4"></span> 
               <v-btn @click.prevent="deleteData" class="white--text green accent-3">削除</v-btn>
             </v-col> 
           </v-row>
-
-        </v-card>
-      </v-row>  
-
-    </v-container>
   </v-app>
 </template>
 
