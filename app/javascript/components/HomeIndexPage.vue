@@ -1,6 +1,6 @@
 <template>
   <v-app v-if="userState === 'ok'" id="app">
-    <v-row class="grey lighten-3">
+    <v-row class="pa-5 grey lighten-3">
 
       <v-row align="center" justify="center" class="my-5 pa-5">
         <v-card class="pa-5">
