@@ -1,6 +1,5 @@
 <template>
-  <v-container fluid class="grey lighten-3">
-    <v-card >
+
       <v-form @submit.prevent="submitData" class="ma-5"> 
           <v-row>
             <v-col cols="12" v-if="error !== ''">
@@ -21,12 +20,11 @@
               ></v-textarea>
             </v-col>
             <v-col cols="12" class="d-flex justify-center">
-              <v-btn type="submit" class="white--text green accent-3 mb-5">保存</v-btn>
+              <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
             </v-col>
           </v-row>
       </v-form>
-    </v-card>
-  </v-container>
+
 </template>
 
 <script>
@@ -56,6 +54,7 @@ export default {
     }  
   },
   mounted () {
+    this.error = '';
     axios
       .get('/movies.json')
       .then(res => {
@@ -89,8 +88,13 @@ export default {
       } else {
         this.error = '';
         const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
-        let Id = this.movie.url.slice(32)
-  
+        // let Id = ''
+        let Id = this.movie.url.split('=')[1]
+        // if(this.movie.url.slice(8,9) === 'w') {
+        //   Id = this.movie.url.slice(32)
+        // }else{
+        //   Id = this.movie.url.slice(30)
+        // }
         let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
         apiUrl += '?id=' + Id;
         apiUrl += '&key=' + Key;
@@ -118,7 +122,7 @@ export default {
           })
           .catch(error => {
             console.error(error);
-            console.error('youtubeAPIの方の通信エラーです');
+            this.error = error;
           });
       }
     },

@@ -19,9 +19,12 @@ export default {
   },
   computed: {
     userState: function() {
-      this.$store.state.user
-    }
-  }
+      return this.$store.state.user
+    },
+  },
+  mounted () {
+    this.$store.dispatch('getData')
+  },
 }
 </script>
 

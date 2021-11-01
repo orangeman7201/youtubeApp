@@ -1,38 +1,38 @@
 <template>
   <v-app v-if="userState === 'ok'" id="app">
-    <v-container id="typography-view" fluid tag="section" class="grey lighten-3">
+    <v-row class="grey lighten-3">
 
       <v-row align="center" justify="center" class="my-5 pa-5">
         <v-card class="pa-5">
 
-          <div class="mb-5">
-            <v-btn @click="oneDayAgo" fab dark max-height="40px" max-width="40px" class="mr-5" color="green accent-3">
+          <v-col cols="12" class="mb-5">
+            <v-btn @click="oneDayAgo" fab dark max-height="40px" max-width="40px" class="mr-5" color="green accent-2">
               <v-icon class="text-h4">mdi-menu-left</v-icon>
             </v-btn>
             <span class="text-h5">{{ this.$store.getters.storeToday | moment("M月D日") }}</span>
-            <v-btn @click="oneDayAfter" fab dark max-height="40px" max-width="40px" class="ml-5" color="green accent-3">
+            <v-btn @click="oneDayAfter" fab dark max-height="40px" max-width="40px" class="ml-5" color="green accent-2">
               <v-icon class="text-h4">mdi-menu-right</v-icon>
             </v-btn>
-          </div>
+          </v-col>
 
-          <p class="text-h5">合計視聴時間<v-divider></v-divider></p>
+          <p :class="[$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h5']">合計視聴時間<v-divider></v-divider></p>
           
-          <div class="text-h3 d-flex justify-center">
+          <v-col cols="12" :class="[$vuetify.breakpoint.smAndDown ? 'text-h4 d-flex justify-center' : 'text-h3']">
             <span v-if="totalDuration >= 3600">
               {{Math.floor(totalDuration/3600)}}時間
             </span>
             <span v-if="totalDuration >= 60">
               {{Math.floor(totalDuration/60%60)}}分
             </span>{{totalDuration%60}}秒
-          </div>
+          </v-col>
         </v-card>
       </v-row>
       
-      <v-card class="mx-10 pa-5">
-        <v-row align="center" justify="end">
+      <v-row>
+        <v-row class="hidden-sm-and-down" align="center" justify="end">
           <v-col cols="1" >
-            <v-btn fab class="green accent-3 white--text" @click="routerNew">
-              <v-icon class="text-h4">mdi-plus</v-icon>
+            <v-btn fab class="green accent-3 white--text" >
+              <v-icon :class="[$vuetify.breakpoint.smAndDown ? 'text-h5' : 'text-h4']">mdi-plus</v-icon>
             </v-btn>
           </v-col>
         </v-row>
@@ -43,12 +43,12 @@
           </v-col>
         </v-row>
 
-        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" width="93%" class="ma-10 px-13 pb-9 pt-9" elevation="7">
+        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
 
-          <v-row> 
-            <v-col cols="4" class="d-flex justify-center">
-              <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
-                <div bottom class="mt-1 mr-2 black white--text text-right">
+          <v-row align="center" justify="center"> 
+            <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
+              <v-img :src="movie.thumbnail" max-width="150px"  :class="[$vuetify.breakpoint.smAndDown ? 'ml-3 my-3' : '']">
+                <div bottom class="black white--text text-right hidden-sm-and-down" :class="[$vuetify.breakpoint.smAndDown ? 'text-caption' : 'mt-1 mr-2']">
                   <span v-if="movie.duration >= 3600">
                     {{Math.floor(movie.duration/3600)}}時間
                   </span>
@@ -59,12 +59,12 @@
               </v-img>
             </v-col>
 
-            <v-col cols="8">
+            <v-col cols="7" md="8" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
               <div class="ma-2">
-                <h4 class="text-h5">{{movie.title}}</h4>
+                <body :class="[$vuetify.breakpoint.smAndDown ? 'caption' : 'text-h5']">{{movie.title}}</body>
               </div>
                 <v-divider></v-divider>
-              <div class="ma-3">
+              <div class="ma-3" :class="[$vuetify.breakpoint.smAndDown ? 'body-2' : 'text-h5']">
                 <p>{{movie.comment}}</p>
               </div>
             </v-col>
@@ -72,17 +72,17 @@
           </v-row>
         </v-card>
 
-      </v-card>
-    </v-container>
+      </v-row>
+    </v-row>
   </v-app>
 </template>
 
 <script>
 
 export default {
-  mounted () {
-    this.$store.dispatch('getData')
-  },
+  // mounted () {
+  //   this.$store.dispatch('getData')
+  // },
   computed: {
     userState: function() {
       return this.$store.state.user 

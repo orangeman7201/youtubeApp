@@ -3,14 +3,21 @@
 
     <v-card class="ma-5">
       <v-row>
-        <v-col v-if="this.requests.length === 0" col="12" class="text-h4 d-flex justify-center">友達申請はありません</v-col>
-        <v-col v-else col="12" class="text-h4 d-flex justify-center">
-          <p class="text-h4">友達申請
-            <table class="ma-5">
+        <v-col v-if="this.requests.length === 0" col="12" :class="[$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h4 d-flex justify-center']">友達申請はありません</v-col>
+        <v-col v-else col="12">
+          <p :class="[$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h4 d-flex justify-center']">友達申請</p>
+          <p>
+            <v-responsive class="mx-auto mb-3" width="90">
+              <v-divider class="mb-1"></v-divider>
+              <v-divider></v-divider>
+            </v-responsive>
+          </p>
+          <p class="mx-auto">
+            <table :class="[$vuetify.breakpoint.smAndDown ? 'ma-3' : 'ma-5']">
               <tr v-for="request in requests" :key="request.id">
-                <td class="text-h6">{{request.name}}</td>
-                <td><v-btn @click="accept(request)" class="ml-10 mr-5 white--text green accent-3">承認する</v-btn></td>
-                <td><v-btn @click="accept(request)" class="mr-5 white--text green accent-3">承認しない</v-btn></td>
+                <td :class="[$vuetify.breakpoint.smAndDown ? 'text-caption': 'text-h6']">{{request.name}}</td>
+                <td><v-btn @click="accept(request)" class="white--text green accent-3" :class="[$vuetify.breakpoint.smAndDown ? 'text-caption ml-5 mr-5 mb-3' : 'ml-10 mr-5']">承認する</v-btn></td>
+                <td><v-btn @click="accept(request)" class="white--text green accent-3" :class="[$vuetify.breakpoint.smAndDown ? 'text-caption mb-3' : 'mr-5 ']">承認しない</v-btn></td>
               </tr>
             </table>
           </p>
@@ -20,12 +27,16 @@
 
     <v-card class="ma-5">
       <v-row>
-        <v-col v-if="this.friends.length === 0" col="12" class="text-h4 d-flex justify-center">まだ友達はいません</v-col>
-        <v-col v-else col="12" class="text-h4 d-flex justify-center">
+        <v-col v-if="this.friends.length === 0" col="12" :class="[$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h4 d-flex justify-center']">まだ友達はいません</v-col>
+        <v-col v-else col="12" :class="[$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h4 d-flex justify-center']">
           <p>友達一覧
-            <v-list>
-              <v-list-item v-for="friend in friends" :key="friend.id" class="text-h6 mt-5">
-                  {{friend.name}}
+            <v-responsive class="mx-auto mb-3" width="90">
+              <v-divider class="mb-1"></v-divider>
+              <v-divider></v-divider>
+            </v-responsive>
+            <v-list  :class="[$vuetify.breakpoint.smAndDown ? 'mt-5' : '']">
+              <v-list-item v-for="friend in friends" :key="friend.id" :class="[$vuetify.breakpoint.smAndDown ? 'text-body-2 d-flex justify-center ma-n5' : 'text-h6 mt-5']">
+                  {{friend.name}} 
               </v-list-item>
             </v-list>
           </p>
@@ -35,16 +46,21 @@
   
     <v-card class="ma-5">
       <v-row>
-        <v-col col="12" class="text-h4 d-flex justify-center">
-          <p>本日の視聴時間ランキング</p>
+        <v-col col="12" :class="[$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h4 d-flex justify-center']">
+          <p>視聴時間ランキング
+            <v-responsive class="mx-auto" width="200">
+              <v-divider class="mb-1"></v-divider>
+              <v-divider></v-divider>
+            </v-responsive>
+          </p>
         </v-col>
       </v-row>
 
       <v-row align="center" justify="center">
         <v-col class="d-flex justify-center">
-          <v-simple-table  class="text-h5">
+          <v-simple-table class="text-h5">
             <template>
-              <table>
+              <table :class="[$vuetify.breakpoint.smAndDown ? 'text-body-2' : 'text-h4 d-flex justify-center']">
                 <tr v-for="(friend, index) in filteredFriends" :key="friend.id">
                   <td class="pr-7">{{index + 1}}位</td>
                   <td class="pr-7">{{friend.name}}</td>

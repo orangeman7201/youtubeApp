@@ -75,6 +75,7 @@ export default {
           // let e = response.data
           console.log(response)
           console.log('成功です')
+          
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {

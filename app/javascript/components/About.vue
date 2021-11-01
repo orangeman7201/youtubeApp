@@ -8,7 +8,6 @@
         align="center"
         class="green accent-2 white--text mx-auto"
         justify="center"
-        wrap
       >
         <v-col
           :class="[$vuetify.breakpoint.smAndDown ? 'mt-10' : '']"
@@ -37,7 +36,7 @@
           md12
         >
           <v-card class="pa-5 ma-5">
-            <v-form @submit.prevent="submitData" class="ma-5"> 
+            <v-form class="ma-5"> 
               <v-row>
                 <v-col cols="12">
                   <v-text-field
@@ -77,7 +76,7 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" class="d-flex justify-center">
-                  <v-btn type="submit" class="white--text green accent-2">はじめる</v-btn>
+                  <v-btn @click.prevent="submitData" type="submit" class="white--text green accent-2">はじめる</v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -85,14 +84,14 @@
             <v-row justify="center" align="center">
               <v-col align="center">
                 <p class="grey--text d-flex justify-center my-7">すでにアカウントをお持ちの場合</p>
-                <v-btn type="submit" class="white--text green accent-2">ログイン</v-btn>
+                <v-btn router to="/login" class="white--text green accent-2">ログイン</v-btn>
               </v-col>
             </v-row>
             <v-divider class="mt-5"></v-divider>
             <v-row justify="center" align="center">
               <v-col align="center">
                 <p class="grey--text d-flex justify-center my-7">ゲストログインはこちら</p>
-                <v-btn type="submit" class="white--text green accent-2">ゲストログイン</v-btn>
+                <v-btn class="white--text green accent-2" @click.prevent="gestlogin">ゲストログイン</v-btn>
               </v-col>
             </v-row>
           </v-card>
@@ -139,13 +138,10 @@ export default {
       if(this.user.name !== '' && this.user.email !== '' && this.user.password !== '' && this.user.passwordConfirmation !== '' ) {
         axios
         .post('/users', this.user)
-        .then(response => {
-          console.log(response)
-          console.log('成功です')
+        .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {
-          console.error(error);
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors;
           }
@@ -158,13 +154,11 @@ export default {
     gestlogin: function() {
       axios
         .post('/gest/login', 'gest@example.com')
-        .then(response => {
-          console.log(response)
-          console.log('成功です')
+        .then(() => {
+          this.$store.dispatch('getData')
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {
-          console.error(error);
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors;
           }

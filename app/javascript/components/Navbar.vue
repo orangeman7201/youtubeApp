@@ -10,6 +10,11 @@
       <v-app-bar-nav-icon @click="drawer = !drawer">
       </v-app-bar-nav-icon>
 
+      <v-spacer></v-spacer>
+      <v-btn icon to="/movies/new">
+        <v-icon>mdi-movie-open-plus-outline</v-icon>
+      </v-btn>
+
     </v-app-bar>
 
     <v-navigation-drawer app temporary v-model="drawer" color="green accent-2">
@@ -30,15 +35,15 @@
         </v-list-item>
 
         <v-list-item class="my-7">
-          <v-btn @click="logout">ログアウト</v-btn>
+          <v-btn @click.prevent="logout">ログアウト</v-btn>
         </v-list-item>
 
         <v-list-item class="d-flex justify-center white black--text">
-          <v-btn @click="oneDayAgo" fab max-height="40px" max-width="40px" class="mr-5">
+          <v-btn @click.prevent="oneDayAgo" fab max-height="40px" max-width="40px" class="mr-5">
             <v-icon class="text-h4">mdi-menu-left</v-icon>
           </v-btn>
           <span>{{ today | moment("M月D日") }}</span>
-          <v-btn @click="oneDayAfter" fab max-height="40px" max-width="40px" class="ml-5">
+          <v-btn @click.prevent="oneDayAfter" fab max-height="40px" max-width="40px" class="ml-5">
             <v-icon class="text-h4">mdi-menu-right</v-icon>
           </v-btn>
         </v-list-item>
