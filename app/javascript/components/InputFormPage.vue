@@ -1,30 +1,44 @@
 <template>
-
-      <v-form @submit.prevent="submitData" class="ma-5"> 
-          <v-row>
-            <v-col cols="12" v-if="error !== ''">
-              <p class="red--text mt-5 text-h6">動画が見つかりません</p>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="movie.url"
-                label="url"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea
-                v-model="movie.comment"
-                label="コメント"
-                outlined
-              ></v-textarea>
-            </v-col>
-            <v-col cols="12" class="d-flex justify-center">
-              <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
-            </v-col>
-          </v-row>
-      </v-form>
-
+  <v-form @submit.prevent="submitData" class="ma-5"> 
+      <v-row>
+        <v-col cols="12">
+          <v-text-field
+            v-model="movie.url"
+            @change="serchMovie"
+            label="url"
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col v-if="movie.thumbnail && error === null">
+          <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
+            <div bottom class="mt-1 mr-2 black white--text text-right">
+              <span v-if="movie.duration >= 3600">
+                {{Math.floor(movie.duration/3600)}}時間
+              </span>
+              <span v-if="movie.duration >= 60">
+                {{Math.floor(movie.duration/60%60)}}分
+              </span>{{movie.duration%60}}秒
+            </div>
+          </v-img>
+        </v-col>
+        <v-col cols="12" v-if="error !== null">
+          <p class="red--text mt-5 text-h6">動画が見つかりません</p>
+        </v-col>
+        <v-col cols="12" v-if="unsavedError !== null">
+          <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを見直してください</p>
+        </v-col>
+        <v-col cols="12">
+          <v-textarea
+            v-model="movie.comment"
+            label="コメント"
+            outlined
+          ></v-textarea>
+        </v-col>
+        <v-col cols="12" class="d-flex justify-center">
+          <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
+        </v-col>
+      </v-row>
+  </v-form>
 </template>
 
 <script>
@@ -50,11 +64,11 @@ export default {
         thumbnail: '',
         date: '',
       },
-      error: '',
+      error: null,
+      unsavedError: null,
     }  
   },
   mounted () {
-    this.error = '';
     axios
       .get('/movies.json')
       .then(res => {
@@ -64,7 +78,7 @@ export default {
         this.$router.push({name: 'LoginForm' })
         console.log(error)
       })
-    },
+  },
   methods: {
     calculateDuration: function(duration) {
       // durationは'PT8H2M29S'のような形で送られてくる。なぜかSecondは＋１秒される。
@@ -83,48 +97,54 @@ export default {
       }
     },
     submitData: function() {
-      if( this.movie.url === '' ) {
-        this.error = 'error';
-      } else {
-        this.error = '';
-        const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
-        // let Id = ''
-        let Id = this.movie.url.split('=')[1]
-        // if(this.movie.url.slice(8,9) === 'w') {
-        //   Id = this.movie.url.slice(32)
-        // }else{
-        //   Id = this.movie.url.slice(30)
-        // }
-        let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
-        apiUrl += '?id=' + Id;
-        apiUrl += '&key=' + Key;
-        apiUrl += '&part=snippet,contentDetails'
-        
+      console.log('test')
+      if(this.error === null) {
         axios
-          .get(apiUrl)
+          .post('/movies', this.movie)
           .then(response => {
-            let e = response.data;
-            this.movie.thumbnail = e.items[0].snippet.thumbnails.standard.url
-            this.movie.title = e.items[0].snippet.title
-            this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
-            this.movie.date = this.$store.getters.storeToday
-            axios
-              .post('/movies', this.movie)
-              .then(response => {
-                let e = response.data
-                this.$router.push({name: 'MovieDetailPage', params: { id: e.id } })
-              })
-              .catch(error => {
-                console.error(error);
-                console.error('Rubyの方の通信エラーです');
-                console.error(this.movie);
-              })
+            let e = response.data
+            this.$router.push({name: 'HomeIndexPage'})
           })
           .catch(error => {
             console.error(error);
+            console.error('Rubyの方の通信エラーです');
+            console.error(this.movie);
             this.error = error;
-          });
+          })
+      } else {
+        this.error = null
+        this.unsavedError = '動画を保存できませんでした。URLを見直してください'
+        this.movie.thumbnail = '';
+        this.movie.title = '';
+        this.movie.duration = '';
+        this.movie.date = '';
+
       }
+    },
+    serchMovie: function() {
+      //↓computedとかにまとめる
+      const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
+      let Id = this.movie.url.split('=')[1]
+      let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
+      apiUrl += '?id=' + Id;
+      apiUrl += '&key=' + Key;
+      apiUrl += '&part=snippet,contentDetails'
+
+      axios
+        .get(apiUrl)
+        .then(response => {
+          this.error = null;
+          this.unsavedError = null;
+          let e = response.data;
+          this.movie.thumbnail = e.items[0].snippet.thumbnails.standard.url
+          this.movie.title = e.items[0].snippet.title
+          this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
+          this.movie.date = this.$store.getters.storeToday
+        })
+        .catch(error => {
+          console.error(error);
+          this.error = error;
+        });
     },
     check: function() {
       console.log(this.movie)
