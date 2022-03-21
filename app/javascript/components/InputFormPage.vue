@@ -35,6 +35,7 @@
           ></v-textarea>
         </v-col>
         <v-col cols="12" class="d-flex justify-center">
+          <v-btn @click="movieReset" class="white--text grey lighten-1 mb-5 mr-5">キャンセル</v-btn>
           <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
         </v-col>
       </v-row>
@@ -126,10 +127,14 @@ export default {
       }
     },
     movieReset: function() {
-      this.movie.thumbnail = '';
-      this.movie.title = '';
+      this.movie.url = '';
       this.movie.duration = '';
+      this.movie.title = '';
+      this.movie.comment = '';
+      this.movie.thumbnail = '';
       this.movie.date = '';
+      this.error = null;
+      this.unsavedError = null;
     },
     serchMovie: function() {
       axios
