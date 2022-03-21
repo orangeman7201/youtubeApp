@@ -79,6 +79,17 @@ export default {
         console.log(error)
       })
   },
+  computed: {
+    apiUrl: function() {
+      const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
+      let Id = this.movie.url.split('=')[1]
+      let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
+      apiUrl += '?id=' + Id;
+      apiUrl += '&key=' + Key;
+      apiUrl += '&part=snippet,contentDetails'
+      return apiUrl;
+    },  
+  },
   methods: {
     calculateDuration: function(duration) {
       // durationは'PT8H2M29S'のような形で送られてくる。なぜかSecondは＋１秒される。
@@ -97,7 +108,6 @@ export default {
       }
     },
     submitData: function() {
-      console.log('test')
       if(this.error === null) {
         axios
           .post('/movies', this.movie)
@@ -107,31 +117,23 @@ export default {
           })
           .catch(error => {
             console.error(error);
-            console.error('Rubyの方の通信エラーです');
-            console.error(this.movie);
             this.error = error;
           })
       } else {
         this.error = null
         this.unsavedError = '動画を保存できませんでした。URLを見直してください'
-        this.movie.thumbnail = '';
-        this.movie.title = '';
-        this.movie.duration = '';
-        this.movie.date = '';
-
+        this.movieReset();
       }
     },
+    movieReset: function() {
+      this.movie.thumbnail = '';
+      this.movie.title = '';
+      this.movie.duration = '';
+      this.movie.date = '';
+    },
     serchMovie: function() {
-      //↓computedとかにまとめる
-      const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
-      let Id = this.movie.url.split('=')[1]
-      let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
-      apiUrl += '?id=' + Id;
-      apiUrl += '&key=' + Key;
-      apiUrl += '&part=snippet,contentDetails'
-
       axios
-        .get(apiUrl)
+        .get(this.apiUrl)
         .then(response => {
           this.error = null;
           this.unsavedError = null;
@@ -145,9 +147,6 @@ export default {
           console.error(error);
           this.error = error;
         });
-    },
-    check: function() {
-      console.log(this.movie)
     },
   }
 }
