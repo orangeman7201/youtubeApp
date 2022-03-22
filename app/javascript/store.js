@@ -25,9 +25,9 @@ export default new Vuex.Store({
   mutations: {
     getData(state) {
       axios
-      .get('/movies.json')
+      .get('/session_check')
       .then(response => {
-        state.movies = response.data;
+        console.log(response)
         state.user = 'ok'
         state.today = new Date();
       })
