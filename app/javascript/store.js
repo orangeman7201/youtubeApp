@@ -23,11 +23,24 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    getData(state) {
+    requireLogin(state) {
       axios
       .get('/session_check')
       .then(response => {
         console.log(response)
+        state.user = 'ok'
+        state.today = new Date();
+      })
+      .catch(error => {
+        router.push({name: 'LoginForm' })
+        console.log(error)
+      })
+    },
+    getData(state) {
+      axios
+      .get('/movies.json')
+      .then(response => {
+        state.movies = response.data;
         state.user = 'ok'
         state.today = new Date();
       })
@@ -54,6 +67,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    requireLogin(context) {
+      context.commit('requireLogin')
+    },
     getData(context) {
       context.commit('getData')
     },
