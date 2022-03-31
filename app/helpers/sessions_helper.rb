@@ -28,12 +28,4 @@ module SessionsHelper
   def logged_in?
     !current_user.nil?
   end
-  
-  def reqire_login
-    if logged_in?
-      render json: current_user
-    else
-      render json:{ errors: "ログインしていません。" }, status: :unprocessable_entity 
-    end
-  end
 end

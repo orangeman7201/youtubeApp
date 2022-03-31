@@ -34,5 +34,6 @@ class SessionsController < ApplicationController
       render json:{ errors: "ログインしていません。" }, status: :unprocessable_entity 
     end
   end
+
 end
 
