@@ -1,26 +1,18 @@
-class MoviesController < ApiController
+class MoviesController < ApplicationController
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
+  before_action :set_movies, only: [:index]
 
   def index
-    if user_id = session[:user_id]
-      user = User.find_by(id: user_id)
-      movies = user.movies
-      render json: movies
-    elsif user_id = cookies.signed[:user_id]
-      user = User.find_by(id: user_id)
-      if user && user.authenticate(remember_digest: User.digest(cookies[:remember_token]))
-        log_in(user)
-        movies = user.movies
-        render json: movies
-      else
-        render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
-      end
+    if current_user
+      render json: @movies
+    else
+      render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def show
-    @movie = Movie.find(params[:id])
+    @movie ||= Movie.find(params[:id])
     render json: @movie
   end
 
@@ -59,5 +51,9 @@ class MoviesController < ApiController
 
   def render_status_500(exception)
     render json: { errors: [exception] }, status: 500
+  end
+
+  def set_movies
+    @movies ||= current_user.movies
   end
 end
