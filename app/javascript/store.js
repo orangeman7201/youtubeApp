@@ -38,7 +38,7 @@ export default new Vuex.Store({
     },
     getData(state) {
       axios
-      .get('/movies.json')
+      .get('/movies')
       .then(response => {
         state.movies = response.data;
         state.user = 'ok'
