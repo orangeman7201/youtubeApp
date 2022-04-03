@@ -22,9 +22,6 @@ export default {
       return this.$store.state.user
     },
   },
-  mounted () {
-    this.$store.dispatch('getData')
-  },
 }
 </script>
 
