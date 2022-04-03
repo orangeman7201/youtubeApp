@@ -23,12 +23,12 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    requireLogin(state) {
+     requireLogin(state) {
       axios
       .get('/session_check')
       .then(response => {
-        console.log(response)
-        state.user = 'ok'
+        console.log(response);
+        state.user = 'ok';
         state.today = new Date();
       })
       .catch(error => {

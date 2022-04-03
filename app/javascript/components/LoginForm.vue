@@ -60,6 +60,23 @@ export default {
       show: false,
     }  
   },
+
+  beforeMount() {
+    axios
+      .get('/session_check')
+      .then(response => {
+        console.log(response);
+        this.$store.state.user = 'ok';
+        this.$store.state.today = new Date();
+        this.$router.push({name: 'HomeIndexPage' });
+      })
+      .catch(error => {
+        console.log("teste")
+        router.push({name: 'LoginForm' })
+        console.log(error)
+      })
+  },
+
   computed: {
     toggle () {
       const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
