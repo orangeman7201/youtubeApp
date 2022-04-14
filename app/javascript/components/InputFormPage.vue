@@ -143,7 +143,7 @@ export default {
           this.error = null;
           this.unsavedError = null;
           let e = response.data;
-          this.movie.thumbnail = e.items[0].snippet.thumbnails.standard.url
+          this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
           this.movie.date = this.$store.getters.storeToday
