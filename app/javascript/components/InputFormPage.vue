@@ -80,11 +80,6 @@ export default {
         console.log(error)
       })
   },
-  watch: {
-    movie: function () {
-      window.scrollTo(0, window.innerHeight);
-    }
-  },
   computed: {
     apiUrl: function() {
       const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
@@ -142,14 +137,12 @@ export default {
       this.unsavedError = null;
     },
     serchMovie: function() {
-      console.log(this.apiUrl)
       axios
         .get(this.apiUrl)
         .then(response => {
           this.error = null;
           this.unsavedError = null;
           let e = response.data;
-          console.log(e)
           this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
@@ -159,7 +152,6 @@ export default {
           console.error(error);
           this.error = error;
         });
-      
     },
   }
 }
