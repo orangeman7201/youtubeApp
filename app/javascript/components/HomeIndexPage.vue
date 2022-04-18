@@ -43,7 +43,7 @@
           </v-col>
         </v-row>
 
-        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
+        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
 
           <v-row align="center" justify="center"> 
             <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
@@ -125,3 +125,9 @@ export default {
   
 }
 </script>
+
+<style scoped>
+  .flex-grow {
+    flex-grow: 1;
+  }
+</style>
