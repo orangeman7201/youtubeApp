@@ -101,8 +101,11 @@ export default {
         return hour*3600 + minute*60 + (second - 1);
       }else if(duration.includes('M')) {
         let minute = Number(duration.match(/T(.*)M/)[1]);
-        let second = Number(duration.match(/M(.*)S/)[1]);
-        return minute*60 + (second - 1);
+        if (duration.match(/M(.*)S/)) {
+          let second = Number(duration.match(/M(.*)S/)[1]);
+          return minute*60 + (second - 1);
+        }
+         return minute*60;
       }else{
         let second = Number(duration.match(/T(.*)S/)[1]);
         return second - 1;
@@ -143,6 +146,8 @@ export default {
           this.error = null;
           this.unsavedError = null;
           let e = response.data;
+          console.log(e)
+          console.log(e.items[0].snippet)
           this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
