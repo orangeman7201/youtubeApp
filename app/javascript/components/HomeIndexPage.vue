@@ -1,6 +1,6 @@
 <template>
   <v-app v-if="userState === 'ok'" id="app">
-    <v-row class="grey lighten-3">
+    <v-row class="pa-5 grey lighten-3">
 
       <v-row align="center" justify="center" class="my-5 pa-5">
         <v-card class="pa-5">
@@ -43,7 +43,7 @@
           </v-col>
         </v-row>
 
-        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
+        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
 
           <v-row align="center" justify="center"> 
             <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
@@ -80,9 +80,9 @@
 <script>
 
 export default {
-  // mounted () {
-  //   this.$store.dispatch('getData')
-  // },
+  mounted () {
+    this.$store.dispatch('getData')
+  },
   computed: {
     userState: function() {
       return this.$store.state.user 
@@ -125,3 +125,9 @@ export default {
   
 }
 </script>
+
+<style scoped>
+  .flex-grow {
+    flex-grow: 1;
+  }
+</style>

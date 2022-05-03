@@ -1,22 +1,16 @@
 <template>
-        <v-row v-if="durationCheck !== 'ok'" class="ma-5">
-            <v-col>
-              <p class="text-h4">再生した動画はありません</p>
-            </v-col>
-          </v-row>
-          <v-row v-else class="ma-5">
-            <v-col cols="12" md10>
-              <line-chart :chart-data="dataCollection" :height="height" :width="width"/>
-            </v-col>
-            <v-col cols="12" md2>
-              <v-radio-group v-model="number" column >
-                <v-radio value="6" label="1週間分を表示" class="mb-5"></v-radio>
-                <v-radio value="13" label="2週間分を表示" class="mb-5"></v-radio>
-                <v-radio value="29" label="4週間分を表示" class="mb-5"></v-radio>
-              </v-radio-group>
-            </v-col>
-        </v-row>
-
+  <v-row class="ma-5">
+    <v-col cols="12" md10>
+      <line-chart :chart-data="dataCollection" :height="height" :width="width"/>
+    </v-col>
+    <v-col cols="12" md2>
+      <v-radio-group v-model="number" column >
+        <v-radio value="6" label="1週間分を表示" class="mb-5"></v-radio>
+        <v-radio value="13" label="2週間分を表示" class="mb-5"></v-radio>
+        <v-radio value="29" label="4週間分を表示" class="mb-5"></v-radio>
+      </v-radio-group>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -29,9 +23,8 @@ export default {
     LineChart
   },
 
-  async mounted () {
-    await this.getData();
-    this.durationArrayCheck();
+  beforeMount () {
+    this.getData();
   },
 
   data: function () {
@@ -41,7 +34,6 @@ export default {
       movies: [],
       height: window.innerHeight *1 /4 ,
       width: window.innerWidth *2 / 3,
-      durationCheck: '',
     }
   },
   computed: {
@@ -74,7 +66,6 @@ export default {
       stepArray.forEach(stepObj => {
         this.movies.forEach(movie => {
           if(stepObj.x === movie.date.slice(0, 10)) {
-            console.log(movie)
             stepObj.y += movie.duration
           }
         })
@@ -98,25 +89,17 @@ export default {
     },
   },
   methods: {
-    durationArrayCheck: function() {
-      this.durationArray.forEach(element => {
-        if(element.y !== 0 ) {
-          this.durationCheck = 'ok'
-          console.log('test')
-        }
-      })
-    },
     getData: async function() {
       await axios
         .get('/movies.json')
         .then(response => {
           response.data.forEach(element => {
             this.movies.push(element)
+            this.loaded = true
           })
         })
-        .catch(error => {
+        .catch(() => {
           router.push({name: 'LoginForm' })
-          console.log(error)
       })
     },
   }

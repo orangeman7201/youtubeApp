@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :friends
 
   post "sessions/logout", to: "sessions#destroy"
+  get "session_check", to: "sessions#session_check"
   post "gest/login", to: "sessions#gest_login"
   post "requests", to: "requests#serch"
   get "requests", to: "requests#index"
