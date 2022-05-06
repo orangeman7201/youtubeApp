@@ -71,7 +71,6 @@ export default {
         this.$router.push({name: 'HomeIndexPage' });
       })
       .catch(error => {
-        console.log("teste")
         router.push({name: 'LoginForm' })
         console.log(error)
       })
