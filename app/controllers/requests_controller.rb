@@ -1,13 +1,12 @@
 class RequestsController < ApplicationController
 
   def index
-    user = User.find(session[:user_id])
-    requests = user.requested
+    requests = current_user.requested
     render json: requests
   end
 
   def create
-    request = Request.new(from_user_id: session[:user_id], to_user_id: params[:id])
+    request = Request.new(from_user_id: current_user.id, to_user_id: params[:id])
     request.save
   end
   
@@ -17,7 +16,7 @@ class RequestsController < ApplicationController
   end
 
   def destroy
-    request = Request.find_by(from_user: params[:id], to_user_id: session[:user_id])
+    request = Request.find_by(from_user: params[:id], to_user_id: current_user.id)
     request.destroy
   end
   
