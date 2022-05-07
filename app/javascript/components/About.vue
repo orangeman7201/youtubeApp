@@ -40,14 +40,14 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.name"
+                    v-model="users.name"
                     label="ユーザー名"
                     required
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.email"
+                    v-model="users.email"
                     :rules="emailRules"
                     label="e-mail"
                     required
@@ -55,7 +55,7 @@
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.password"
+                    v-model="users.password"
                     label="パスワード"
                     required
                     :append-icon="toggle.icon"
@@ -66,7 +66,7 @@
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="user.passwordConfirmation"
+                    v-model="users.passwordConfirmation"
                     label="パスワード確認"
                     required
                     :append-icon="toggle.icon"
@@ -109,7 +109,7 @@ export default {
   
   data () {
     return {
-      user: {
+      users: {
         name: '',
         email: '',
         password: '',
@@ -135,7 +135,7 @@ export default {
       this.$router.push('/signup')
     },
     submitData: function() {
-      if(this.user.name !== '' && this.user.email !== '' && this.user.password !== '' && this.user.passwordConfirmation !== '' ) {
+      if(this.users.name !== '' && this.users.email !== '' && this.users.password !== '' && this.users.passwordConfirmation !== '' ) {
         axios
         .post('/sign_up', this.users)
         .then(() => {

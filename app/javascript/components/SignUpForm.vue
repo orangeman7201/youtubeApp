@@ -5,14 +5,14 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="user.name"
+                v-model="users.name"
                 label="ユーザー名"
                 required
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="user.email"
+                v-model="users.email"
                 :rules="emailRules"
                 label="e-mail"
                 required
@@ -20,7 +20,7 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="user.password"
+                v-model="users.password"
                 label="パスワード"
                 required
                 :append-icon="toggle.icon"
@@ -31,7 +31,7 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="user.passwordConfirmation"
+                v-model="users.passwordConfirmation"
                 label="パスワード確認"
                 required
                 :append-icon="toggle.icon"
@@ -55,7 +55,7 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
-      user: {
+      users: {
         name: '',
         email: '',
         password: '',
@@ -79,7 +79,7 @@ export default {
   methods: {
     submitData: function() { 
       axios
-        .post('/users', this.user)
+        .post('/users', this.users)
         .then(response => {
           // let e = response.data
           console.log(response)
