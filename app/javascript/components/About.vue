@@ -137,7 +137,7 @@ export default {
     submitData: function() {
       if(this.user.name !== '' && this.user.email !== '' && this.user.password !== '' && this.user.passwordConfirmation !== '' ) {
         axios
-        .post('/users', this.user)
+        .post('/sign_up', this.users)
         .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
