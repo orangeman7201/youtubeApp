@@ -18,7 +18,6 @@ class UsersController < ApplicationController
   end
 
   def self
-    user = User.find(session[:user_id])
-    render json: user
+    render json: current_user
   end
 end
