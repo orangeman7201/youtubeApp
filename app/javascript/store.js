@@ -7,14 +7,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    movies: [],
     user: '',
     today: null,
   },
   getters: {
-    storeMovies: state => {
-       return state.movies
-    },
     storeToday: state => {
        return state.today
     },
@@ -36,18 +32,9 @@ export default new Vuex.Store({
         console.log(error)
       })
     },
-    getData(state) {
-      axios
-      .get('/movies')
-      .then(response => {
-        state.movies = response.data;
-        state.user = 'ok'
-        state.today = new Date();
-      })
-      .catch(error => {
-        router.push({name: 'LoginForm' })
-        console.log(error)
-      })
+    updateStatus(state) {
+      state.user = 'ok'
+      state.today = new Date();
     },
     lostUser(state) {
       state.user = ''
@@ -70,8 +57,8 @@ export default new Vuex.Store({
     requireLogin(context) {
       context.commit('requireLogin')
     },
-    getData(context) {
-      context.commit('getData')
+    updateStatus(context) {
+      context.commit('updateStatus')
     },
     lostUser(context) {
       context.commit('lostUser')
