@@ -71,24 +71,30 @@
 
           </v-row>
         </v-card>
-        <InfiniteLoading @infinite="infiniteHandler" />
-
+        <InfiniteLoading spinner="spiral" @infinite="infiniteHandler">
+          <span slot="no-more"></span>
+        </InfiniteLoading>
       </v-row>
     </v-row>
   </v-app>
 </template>
 
 <script>
+import axios from 'axios';
 import InfiniteLoading from 'vue-infinite-loading';
 export default {
   components: { InfiniteLoading },
   mounted () {
-    infiniteHandler();
+    this.infiniteHandler();
+    this.$nextTick(function () {
+      this.isLoading = false;
+    });
   },
   data: function () {
     return {
-      page: 0,
+      page: 1,
       movies: [],
+       isLoading: true,
     }  
   },
   computed: {
