@@ -71,41 +71,52 @@
 
           </v-row>
         </v-card>
-
+        <InfiniteLoading spinner="spiral" @infinite="infiniteHandler">
+          <span slot="no-more"></span>
+        </InfiniteLoading>
       </v-row>
     </v-row>
   </v-app>
 </template>
 
 <script>
-
+import axios from 'axios';
+import InfiniteLoading from 'vue-infinite-loading';
 export default {
+  components: { InfiniteLoading },
   mounted () {
-    this.$store.dispatch('getData')
+    this.infiniteHandler();
+    this.$nextTick(function () {
+      this.isLoading = false;
+    });
+  },
+  data: function () {
+    return {
+      page: 1,
+      movies: [],
+       isLoading: true,
+    }  
   },
   computed: {
     userState: function() {
-      return this.$store.state.user 
+      return this.$store.state.user;
     },
     totalDuration: function() {
       let sum = 0;
       for(let id = 0; id < this.todayMovies.length; id++) {
-        sum += this.todayMovies[id].duration
-      }
+        sum += this.todayMovies[id].duration;
+      };
         return sum;
     },  
-    storeMovies: function() {
-      return this.$store.getters.storeMovies;
-    },
     todayMovies: function() {
-      const todayMovies = this.$store.getters.storeMovies.filter(element => {
-        const movieDate = String(new Date(element.date)).slice(0, 15)
-        const today = String(this.$store.getters.storeToday).slice(0, 15)
+      const todayMovies = this.movies.filter(element => {
+        const movieDate = String(new Date(element.date)).slice(0, 15);
+        const today = String(this.$store.getters.storeToday).slice(0, 15);
         if(movieDate === today) {
-          return element
+          return element;
         }
       })
-      return todayMovies
+      return todayMovies;
     }
   },
   methods: {
@@ -120,6 +131,26 @@ export default {
     },
     oneDayAfter: function() {
       this.$store.dispatch('oneDayAfter');
+    },
+    infiniteHandler($state) {
+      axios
+      .get('/movies', {
+        params: { page: this.page },
+      })
+      .then(response => {
+        if (response.data.length) {
+          this.page += 1;
+          this.movies.push(...response.data);
+          this.$store.dispatch('updateStatus');
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      })
+      .catch(error => {
+        router.push({name: 'LoginForm' })
+        console.log(error)
+      })
     },
   }
   
