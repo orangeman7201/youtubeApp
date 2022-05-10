@@ -84,12 +84,13 @@ import axios from 'axios';
 import InfiniteLoading from 'vue-infinite-loading';
 export default {
   components: { InfiniteLoading },
-  mounted () {
-    this.infiniteHandler();
-    this.$nextTick(function () {
-      this.isLoading = false;
-    });
-  },
+  // スクロールしたらinfiniteHandlerをはっかするようにする
+  // mounted () {
+  //   this.infiniteHandler();
+  //   this.$nextTick(function () {
+  //     this.isLoading = false;
+  //   });
+  // },
   data: function () {
     return {
       page: 1,
