@@ -53,6 +53,6 @@ class MoviesController < ApplicationController
   end
 
   def set_movies
-    @movies ||= current_user.movies.order(created_at: :desc).page(params[:page])
+    @movies ||= current_user.movies.order(created_at: :desc)
   end
 end
