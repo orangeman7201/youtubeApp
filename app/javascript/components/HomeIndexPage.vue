@@ -71,9 +71,6 @@
 
           </v-row>
         </v-card>
-        <InfiniteLoading spinner="spiral" @infinite="infiniteHandler">
-          <span slot="no-more"></span>
-        </InfiniteLoading>
       </v-row>
     </v-row>
   </v-app>
@@ -81,21 +78,13 @@
 
 <script>
 import axios from 'axios';
-import InfiniteLoading from 'vue-infinite-loading';
 export default {
-  components: { InfiniteLoading },
-  // スクロールしたらinfiniteHandlerをはっかするようにする
-  // mounted () {
-  //   this.infiniteHandler();
-  //   this.$nextTick(function () {
-  //     this.isLoading = false;
-  //   });
-  // },
+  mounted () {
+    this.getMovie();
+  },
   data: function () {
     return {
-      page: 1,
       movies: [],
-       isLoading: true,
     }  
   },
   computed: {
@@ -133,23 +122,15 @@ export default {
     oneDayAfter: function() {
       this.$store.dispatch('oneDayAfter');
     },
-    infiniteHandler($state) {
+    getMovie() {
       axios
-      .get('/movies', {
-        params: { page: this.page },
-      })
+      .get('/movies')
       .then(response => {
-        if (response.data.length) {
-          this.page += 1;
-          this.movies.push(...response.data);
-          this.$store.dispatch('updateStatus');
-          $state.loaded();
-        } else {
-          $state.complete();
-        }
+        this.movies = response.data;
+        this.$store.dispatch('updateStatus');
       })
       .catch(error => {
-        router.push({name: 'LoginForm' })
+        this.$router.push({name: 'LoginForm' })
         console.log(error)
       })
     },
