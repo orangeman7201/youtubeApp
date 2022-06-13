@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="grey lighten-3">
+  <div class="login-background">
     <v-card>
       <v-form @submit.prevent="submitData" class="ma-5"> 
           <v-row>
@@ -29,7 +29,7 @@
           </v-row>
       </v-form>
     </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -105,3 +105,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.login-background {
+  background-color: #F1F1F2;
+  padding: 30px;
+  height: 100%;
+}
+</style>
