@@ -1,9 +1,9 @@
 <template>
-  <v-app>
+  <v-app class="main-font">
     <Navbar />
-  <v-main>
-    <router-view></router-view>
-  </v-main>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
   </v-app>  
 </template>
 
@@ -27,5 +27,11 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  .main-font {
+    font-family: 'Noto Sans';
+  } 
+</style>
 
 
