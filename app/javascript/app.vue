@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Navbar v-if="userState === 'ok'"></Navbar>
+    <Navbar />
   <v-main>
     <router-view></router-view>
   </v-main>
