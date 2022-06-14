@@ -1,39 +1,45 @@
 <template>
   <div class="login-background">
-    <v-card>
-      <v-form @submit.prevent="submitData" class="ma-5"> 
-          <v-row>
-            <v-col cols="12">
-              <p v-if="errors !== ''" class="d-flex justify-center red--text">{{errors}}</p>
-              <v-text-field
-                v-model="loginInfo.email"
-                :rules="emailRules"
-                label="e-mail"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="loginInfo.password"
-                label="パスワード"
-                required
-                :append-icon="toggle.icon"
-                :type="toggle.type"
-                autocomplete="on"
-                @click:append="show = !show"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="d-flex justify-center">
-              <v-btn type="submit" class="white--text green accent-3">ログイン</v-btn>
-            </v-col>
-          </v-row>
-      </v-form>
-    </v-card>
+    <v-row>
+      <v-col cols="12" class="d-flex justify-center pr-10">
+        <img src="~stopper.png" art="" width="200px" height="110px">
+      </v-col>
+      <v-col cols="12">
+        <v-card>
+          <v-form @submit.prevent="submitData" class="ma-5"> 
+            <v-row>
+              <v-col cols="12">
+                <p v-if="errors !== ''" class="d-flex justify-center red--text">{{errors}}</p>
+                <v-text-field
+                  v-model="loginInfo.email"
+                  :rules="emailRules"
+                  label="e-mail"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="loginInfo.password"
+                  label="パスワード"
+                  required
+                  autocomplete="on"
+                  type="password"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="d-flex justify-center">
+                <v-btn type="submit" class="white--text button-color">ログイン</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import 'stopper.png'
 
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
@@ -107,9 +113,15 @@ export default {
 </script>
 
 <style scoped>
+.stopper_icon {
+  width: 30px;
+}
 .login-background {
   background-color: #F1F1F2;
   padding: 30px;
   height: 100%;
+}
+.button-color {
+  background-color: #1995AD !important;
 }
 </style>
