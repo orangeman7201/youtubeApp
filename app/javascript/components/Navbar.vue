@@ -2,22 +2,21 @@
   <nav>
     <v-app-bar
       app
-      dark
       flat
-      color="green accent-2"
+      color="#1995AD"
       height="70"
+      width="100%"
+      class="d-flex justify-center"
     >
-      <v-app-bar-nav-icon @click="drawer = !drawer">
-      </v-app-bar-nav-icon>
-
-      <v-spacer></v-spacer>
-      <v-btn icon to="/movies/new">
-        <v-icon>mdi-movie-open-plus-outline</v-icon>
-      </v-btn>
-
+        <v-app-bar-nav-icon @click="drawer = !drawer"  v-if="userState === 'ok'">
+        </v-app-bar-nav-icon>
+        <h4 class="mx-auto header_title">Y stopper</h4>
+        <v-btn icon to="/movies/new" v-if="userState === 'ok'">
+          <v-icon>mdi-movie-open-plus-outline</v-icon>
+        </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app temporary v-model="drawer" color="green accent-2">
+    <v-navigation-drawer app temporary v-model="drawer" color="green accent-2" v-if="userState === 'ok'">
       <v-list>
         <v-list-item  class="white">
           {{user.name}}
@@ -112,3 +111,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.header_title {
+  color: white;
+  font-family: 'Noto Sans';
+}
+</style>
