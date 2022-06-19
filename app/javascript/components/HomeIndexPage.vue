@@ -1,30 +1,23 @@
 <template>
   <v-app v-if="userState === 'ok'" id="app">
     <v-row class="pa-5 grey lighten-3">
+      <v-row class="pa-5">
 
-      <v-row align="center" justify="center" class="my-5 pa-5">
-        <v-card class="pa-5">
-
-          <v-col cols="12" class="mb-5">
-            <v-btn @click="oneDayAgo" fab dark max-height="40px" max-width="40px" class="mr-5" color="green accent-2">
-              <v-icon class="text-h4">mdi-menu-left</v-icon>
-            </v-btn>
-            <span class="text-h5">{{ this.$store.getters.storeToday | moment("M月D日") }}</span>
-            <v-btn @click="oneDayAfter" fab dark max-height="40px" max-width="40px" class="ml-5" color="green accent-2">
-              <v-icon class="text-h4">mdi-menu-right</v-icon>
-            </v-btn>
-          </v-col>
-
-          <p :class="[$vuetify.breakpoint.smAndDown ? 'text-h6' : 'text-h5']">合計視聴時間<v-divider></v-divider></p>
-          
-          <v-col cols="12" :class="[$vuetify.breakpoint.smAndDown ? 'text-h4 d-flex justify-center' : 'text-h3']">
+        <v-card class="py-9 px-5" width="100%" height="274px">
+          <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
+          <v-card-text class='d-flex justify-center home-header-body'>
             <span v-if="totalDuration >= 3600">
               {{Math.floor(totalDuration/3600)}}時間
             </span>
             <span v-if="totalDuration >= 60">
               {{Math.floor(totalDuration/60%60)}}分
             </span>{{totalDuration%60}}秒
-          </v-col>
+          </v-card-text>
+          <div class='d-flex justify-center home-header-progress'>
+            <v-progress-linear></v-progress-linear>
+          </div>
+          <!-- 目標はuser.timeみたいな感じで取得する -->
+          <v-card-text class='d-flex justify-center home-header-target-time'>目標 60分/日</v-card-text>
         </v-card>
       </v-row>
       
@@ -142,5 +135,25 @@ export default {
 <style scoped>
   .flex-grow {
     flex-grow: 1;
+  }
+  .home-header-title {
+    font-size: 20px;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  .home-header-body {
+    font-size: 64px;
+    padding: 0;
+    margin-bottom: 32px;
+    height: 64px;
+    align-items: center;
+  }
+  .home-header-progress {
+    padding: 0;
+    margin-bottom: 12px;
+  }
+  .home-header-target-time {
+    font-size: 20px;
+    padding: 0;
   }
 </style>
