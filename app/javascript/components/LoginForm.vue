@@ -39,7 +39,7 @@
 
 <script>
 import axios from 'axios';
-import 'stopper.png'
+import 'stopper.svg'
 
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
