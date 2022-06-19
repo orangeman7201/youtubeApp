@@ -2,7 +2,7 @@
   <div class="login-background">
     <v-row>
       <v-col cols="12" class="d-flex justify-center pr-10">
-        <img src="~stopper.png" art="" width="200px" height="110px">
+        <img src="~stopper.svg" art="" width="200px" height="110px">
       </v-col>
       <v-col cols="12">
         <v-card>
