@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   post "requests/create", to: "requests#create"
   post "requests/destroy", to: "requests#destroy"
   post "users/self", to: "users#self"
+  get "total", to: "movies#total_duration"
 end

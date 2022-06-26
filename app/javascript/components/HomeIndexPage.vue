@@ -74,6 +74,7 @@ import axios from 'axios';
 export default {
   mounted () {
     this.getMovie();
+    this.$store.dispatch('getTotalDuration');
   },
   data: function () {
     return {
@@ -85,11 +86,7 @@ export default {
       return this.$store.state.user;
     },
     totalDuration: function() {
-      let sum = 0;
-      for(let id = 0; id < this.todayMovies.length; id++) {
-        sum += this.todayMovies[id].duration;
-      };
-        return sum;
+      return this.$store.getters.totalDuration
     },  
     todayMovies: function() {
       const todayMovies = this.movies.filter(element => {

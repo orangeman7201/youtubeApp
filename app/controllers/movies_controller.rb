@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
-  before_action :set_movies, only: [:index]
+  before_action :set_movies, only: [:index, :total_duration]
 
   def index
     if current_user
@@ -36,6 +36,10 @@ class MoviesController < ApplicationController
   def destroy
     movie = Movie.find(params[:id])
     movie.destroy
+  end
+
+  def total_duration
+    render json: { total_duration: @movies.today(params[:date].to_date).sum(:duration) }
   end
 
   private
