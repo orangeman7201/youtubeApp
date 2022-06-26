@@ -2,7 +2,6 @@
   <v-app v-if="userState === 'ok'" id="app">
     <v-row class="pa-5 grey lighten-3">
       <v-row class="pa-5">
-
         <v-card class="py-9 px-5" width="100%" height="274px">
           <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
           <v-card-text class='d-flex justify-center home-header-body'>
@@ -74,6 +73,7 @@ import axios from 'axios';
 export default {
   mounted () {
     this.getMovie();
+    this.$store.dispatch('getTotalDuration');
   },
   data: function () {
     return {
@@ -85,11 +85,7 @@ export default {
       return this.$store.state.user;
     },
     totalDuration: function() {
-      let sum = 0;
-      for(let id = 0; id < this.todayMovies.length; id++) {
-        sum += this.todayMovies[id].duration;
-      };
-        return sum;
+      return this.$store.getters.totalDuration
     },  
     todayMovies: function() {
       const todayMovies = this.movies.filter(element => {

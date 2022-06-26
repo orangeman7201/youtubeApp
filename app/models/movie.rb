@@ -6,4 +6,6 @@ class Movie < ApplicationRecord
   # validates :title, exclusion: { in: nil, message: "空欄です" }
   # # validates :comment, exclusion: { in: [nil] }入ってなくても保存できる
   # validates :date, exclusion: { in: nil, message: "空欄です" }
+
+  scope :today, -> (date) { where(date: date..(date + 1.day)) }
 end

@@ -9,13 +9,17 @@ export default new Vuex.Store({
   state: {
     user: '',
     today: null,
+    totalDuration: 0,
   },
   getters: {
     storeToday: state => {
-       return state.today
+      return state.today
     },
     storeUser: state => {
-       return state.user
+      return state.user
+    },
+    totalDuration: state => {
+      return state.totalDuration
     },
   },
   mutations: {
@@ -23,7 +27,6 @@ export default new Vuex.Store({
       axios
       .get('/session_check')
       .then(response => {
-        console.log(response);
         state.user = 'ok';
         state.today = new Date();
       })
@@ -52,6 +55,16 @@ export default new Vuex.Store({
       newDay.setDate(state.today.getDate() + 1);
       state.today = newDay;
     },
+    getTotalDuration(state) {
+      axios
+      .get('/total', { 
+        params: { date: state.today}
+      })
+      .then(response => {
+        state.totalDuration = response.data.total_duration;
+      })
+      .catch()
+    },
   },
   actions: {
     requireLogin(context) {
@@ -71,6 +84,9 @@ export default new Vuex.Store({
     },
     oneDayAfter(context) {
       context.commit('oneDayAfter')
+    },
+    getTotalDuration(context) {
+      context.commit('getTotalDuration')
     },
   }
 })
