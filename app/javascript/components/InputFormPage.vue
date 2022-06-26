@@ -11,7 +11,7 @@
         </span>{{totalDuration%60}}秒
       </div>
     </v-card>
-    <v-card class="p-5" width="100%">
+    <v-card class="p-5 mb-16" width="100%">
       <v-form @submit.prevent="submitData" class="ma-5"> 
         <v-row>
           <v-col cols="12">
@@ -45,6 +45,7 @@
               v-model="movie.comment"
               label="コメント"
               outlined
+              id="movie-input"
             ></v-textarea>
           </v-col>
           <v-col cols="12" class="d-flex justify-center">
@@ -156,12 +157,11 @@ export default {
           this.error = null;
           this.unsavedError = null;
           let e = response.data;
-          console.log(e)
-          console.log(e.items[0].snippet)
           this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
           this.movie.date = this.$store.getters.storeToday
+          this.$vuetify.goTo("#movie-input")
         })
         .catch(error => {
           console.error(error);
