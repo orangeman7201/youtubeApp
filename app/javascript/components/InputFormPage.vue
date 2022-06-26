@@ -38,7 +38,7 @@
             <p class="red--text mt-5 text-h6">動画が見つかりません</p>
           </v-col>
           <v-col cols="12" v-if="unsavedError !== null">
-            <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを見直してください</p>
+            <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを再度入力してください。</p>
           </v-col>
           <v-col cols="12">
             <v-textarea
