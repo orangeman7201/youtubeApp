@@ -1,15 +1,15 @@
 <template>
   <v-app class="pa-5 grey lighten-3">
     <v-card class="pa-4 mb-4" width="100%">
-      <v-card-title class="d-flex justify-center input-form-header-title pt-0">今日の総再生時間</v-card-title>
-      <v-card-text class='d-flex justify-center input-form-header-body'>
+      <div class="d-flex justify-center input-form-header-title pt-0">今日の総再生時間</div>
+      <div class='d-flex justify-center input-form-header-body'>
         <span v-if="totalDuration >= 3600">
           {{Math.floor(totalDuration/3600)}}時間
         </span>
         <span v-if="totalDuration >= 60">
           {{Math.floor(totalDuration/60%60)}}分
         </span>{{totalDuration%60}}秒
-      </v-card-text>
+      </div>
     </v-card>
     <v-card class="p-5" width="100%">
       <v-form @submit.prevent="submitData" class="ma-5"> 
@@ -178,8 +178,10 @@ div {
 }
 .input-form-header-title {
   font-size: 20px;
+  color: #333333;
 }
 .input-form-header-body {
   font-size: 40px;
+  color: #333333;
 }
 </style>
