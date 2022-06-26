@@ -1,45 +1,60 @@
 <template>
-  <v-form @submit.prevent="submitData" class="ma-5"> 
-      <v-row>
-        <v-col cols="12">
-          <v-text-field
-            v-model="movie.url"
-            @change="serchMovie"
-            label="url"
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col v-if="movie.thumbnail && error === null">
-          <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
-            <div bottom class="mt-1 mr-2 black white--text text-right">
-              <span v-if="movie.duration >= 3600">
-                {{Math.floor(movie.duration/3600)}}時間
-              </span>
-              <span v-if="movie.duration >= 60">
-                {{Math.floor(movie.duration/60%60)}}分
-              </span>{{movie.duration%60}}秒
-            </div>
-          </v-img>
-        </v-col>
-        <v-col cols="12" v-if="error !== null">
-          <p class="red--text mt-5 text-h6">動画が見つかりません</p>
-        </v-col>
-        <v-col cols="12" v-if="unsavedError !== null">
-          <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを見直してください</p>
-        </v-col>
-        <v-col cols="12">
-          <v-textarea
-            v-model="movie.comment"
-            label="コメント"
-            outlined
-          ></v-textarea>
-        </v-col>
-        <v-col cols="12" class="d-flex justify-center">
-          <v-btn @click="movieReset" class="white--text grey lighten-1 mb-5 mr-5">キャンセル</v-btn>
-          <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
-        </v-col>
-      </v-row>
-  </v-form>
+  <v-app class="pa-5 grey lighten-3">
+    <v-card class="pa-4 mb-4" width="100%">
+      <v-card-title class="d-flex justify-center input-form-header-title pt-0">今日の総再生時間</v-card-title>
+      <v-card-text class='d-flex justify-center input-form-header-body'>
+        <span v-if="totalDuration >= 3600">
+          {{Math.floor(totalDuration/3600)}}時間
+        </span>
+        <span v-if="totalDuration >= 60">
+          {{Math.floor(totalDuration/60%60)}}分
+        </span>{{totalDuration%60}}秒
+      </v-card-text>
+    </v-card>
+    <v-card class="p-5" width="100%">
+      <v-form @submit.prevent="submitData" class="ma-5"> 
+        <v-row>
+          <v-col cols="12">
+            <v-text-field
+              v-model="movie.url"
+              @change="serchMovie"
+              label="url"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col v-if="movie.thumbnail && error === null">
+            <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
+              <div bottom class="mt-1 mr-2 black white--text text-right">
+                <span v-if="movie.duration >= 3600">
+                  {{Math.floor(movie.duration/3600)}}時間
+                </span>
+                <span v-if="movie.duration >= 60">
+                  {{Math.floor(movie.duration/60%60)}}分
+                </span>{{movie.duration%60}}秒
+              </div>
+            </v-img>
+          </v-col>
+          <v-col cols="12" v-if="error !== null">
+            <p class="red--text mt-5 text-h6">動画が見つかりません</p>
+          </v-col>
+          <v-col cols="12" v-if="unsavedError !== null">
+            <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを見直してください</p>
+          </v-col>
+          <v-col cols="12">
+            <v-textarea
+              v-model="movie.comment"
+              label="コメント"
+              outlined
+            ></v-textarea>
+          </v-col>
+          <v-col cols="12" class="d-flex justify-center">
+            <v-btn @click="movieReset" class="white--text grey lighten-1 mb-5 mr-5">キャンセル</v-btn>
+            <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-card>
+  </v-app>
 </template>
 
 <script>
@@ -70,15 +85,7 @@ export default {
     }  
   },
   mounted () {
-    axios
-      .get('/movies.json')
-      .then(res => {
-        console.log(res)
-      })
-      .catch(error => {
-        this.$router.push({name: 'LoginForm' })
-        console.log(error)
-      })
+    this.$store.dispatch('getTotalDuration');
   },
   computed: {
     apiUrl: function() {
@@ -89,7 +96,10 @@ export default {
       apiUrl += '&key=' + Key;
       apiUrl += '&part=snippet,contentDetails'
       return apiUrl;
-    },  
+    },
+    totalDuration: function() {
+      return this.$store.getters.totalDuration
+    }, 
   },
   methods: {
     calculateDuration: function(duration) {
@@ -165,5 +175,11 @@ export default {
 <style scoped>
 div {
   text-align: center;
+}
+.input-form-header-title {
+  font-size: 20px;
+}
+.input-form-header-body {
+  font-size: 40px;
 }
 </style>

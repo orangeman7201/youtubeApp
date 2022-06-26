@@ -2,7 +2,6 @@
   <v-app v-if="userState === 'ok'" id="app">
     <v-row class="pa-5 grey lighten-3">
       <v-row class="pa-5">
-
         <v-card class="py-9 px-5" width="100%" height="274px">
           <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
           <v-card-text class='d-flex justify-center home-header-body'>
