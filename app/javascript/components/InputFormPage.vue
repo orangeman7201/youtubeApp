@@ -49,8 +49,8 @@
             ></v-textarea>
           </v-col>
           <v-col cols="12" class="d-flex justify-center">
-            <v-btn @click="movieReset" class="white--text grey lighten-1 mb-5 mr-5">キャンセル</v-btn>
-            <v-btn type="submit" class="white--text green accent-2 mb-5">保存</v-btn>
+            <v-btn @click="movieReset" class="white--text mb-5 mr-5" color="#A7DDEA">キャンセル</v-btn>
+            <v-btn type="submit" class="white--text mb-5" color="#18B1CE">保存</v-btn>
           </v-col>
         </v-row>
       </v-form>
