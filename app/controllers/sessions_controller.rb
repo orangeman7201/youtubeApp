@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
 
   def session_check
     if logged_in?
-      render json: current_user
+      render json: true
     else
       render json:{ errors: "ログインしていません。" }, status: :unprocessable_entity 
     end
