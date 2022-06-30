@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
 
   def session_check
     if current_user
-      render current_user
+      render json: true
     else
       if user_id = cookies.encrypted[:user_id]
       user = User.find_by(id: user_id)
