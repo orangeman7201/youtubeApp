@@ -7,12 +7,14 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.valid_password?(params[:session][:password])
       sign_in(user)
+      remember(user)
     else 
       render json:{ errors: user.errors.full_messages }, status: :unprocessable_entity 
     end
   end
 
   def destroy
+    forget(current_user)
     sign_out(current_user)
   end
 
@@ -26,10 +28,15 @@ class SessionsController < ApplicationController
   end
 
   def session_check
-    if logged_in?
-      render json: true
+    if current_user
+      render current_user
     else
-      render json:{ errors: "ログインしていません。" }, status: :unprocessable_entity 
+      if user_id = cookies.encrypted[:user_id]
+      user = User.find_by(id: user_id)
+        if user && user.authenticated?(cookies[:remember_token])
+          sign_in(user)
+        end
+      end
     end
   end
 end

@@ -1,6 +1,14 @@
 module SessionsHelper
-  def logged_in?
-    # // クッキーがDBに登録されているものと一致するか確認する
-    cookies[:remember_user_token]
+
+  def forget(user)
+    user.forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
+  end
+
+  def remember(user)
+    user.remember
+    cookies.permanent.encrypted[:user_id] = user.id
+    cookies.permanent[:remember_token] = user.remember_token
   end
 end
