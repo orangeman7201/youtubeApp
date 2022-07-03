@@ -24,13 +24,13 @@
           </v-col>
         </v-row>
 
-        <v-row v-if="this.todayMovies.length === 0">
+        <v-row v-if="movies.length === 0">
           <v-col class="pt-2 pb-1 d-flex justify-center">
             <p class="text-h4 mb-10">動画を視聴していません</p>
           </v-col>
         </v-row>
 
-        <v-card v-for="movie in todayMovies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
+        <v-card v-for="movie in movies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
 
           <v-row align="center" justify="center"> 
             <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
@@ -82,6 +82,9 @@ export default {
     totalDuration: function() {
       return this.$store.getters.totalDuration
     },
+    dateStatus: function() {
+      return this.$store.getters.dateStatus
+    },
     overHourClass: function() {
       const hour = Math.floor(this.totalDuration/3600)
       if (hour > 0) {
@@ -101,16 +104,18 @@ export default {
       }
       return `${second}秒`
     },
-    todayMovies: function() {
-      const todayMovies = this.movies.filter(element => {
-        const movieDate = String(new Date(element.date)).slice(0, 15);
-        const today = String(this.$store.getters.storeToday).slice(0, 15);
-        if(movieDate === today) {
-          return element;
-        }
-      })
-      return todayMovies;
-    }
+    // そもそもmoviesにはきょうの動画しか入らないはずなのでこれは必要ない。
+    // todayMovies: function() {
+    //   const todayMovies = this.movies.filter(element => {
+    //     const movieDate = String(new Date(element.date)).slice(0, 15);
+    //     const today = new Date();
+    //     const selectedDate = today.getDate() + this.$store.getters.dateStatus
+    //     if(movieDate === selectedDate) {
+    //       return element;
+    //     }
+    //   })
+    //   return todayMovies;
+    // }
   },
   methods: {
     router: function(index) {
@@ -127,13 +132,18 @@ export default {
     },
     getMovie() {
       axios
-      .get('/movies')
+      .get('/movies', {
+        params: {
+          dateStatus: this.dateStatus
+        }
+      })
       .then(response => {
+        console.log(response.data)
         this.movies = response.data;
         this.$store.dispatch('updateStatus');
       })
       .catch(error => {
-        this.$router.push({name: 'LoginForm' })
+        // this.$router.push({name: 'LoginForm' })
         console.log(error)
       })
     },

@@ -8,15 +8,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: '',
-    today: null,
+    dateStatus: 0,
     totalDuration: 0,
   },
   getters: {
-    storeToday: state => {
-      return state.today
-    },
     storeUser: state => {
       return state.user
+    },
+    dateStatus: state => {
+      return state.dateStatus
     },
     totalDuration: state => {
       return state.totalDuration
@@ -26,9 +26,8 @@ export default new Vuex.Store({
      requireLogin(state) {
       axios
       .get('/session_check')
-      .then(response => {
+      .then(() => {
         state.user = 'ok';
-        state.today = new Date();
       })
       .catch(error => {
         router.push({name: 'LoginForm' })
@@ -37,13 +36,9 @@ export default new Vuex.Store({
     },
     updateStatus(state) {
       state.user = 'ok'
-      state.today = new Date();
     },
     lostUser(state) {
       state.user = ''
-    },
-    inputToday(state) {
-      state.today = new Date();
     },
     oneDayAgo(state) {
       const newDay = new Date(state.today);
@@ -58,7 +53,7 @@ export default new Vuex.Store({
     getTotalDuration(state) {
       axios
       .get('/total', { 
-        params: { date: state.today}
+        params: { dateStatus: state.dateStatus}
       })
       .then(response => {
         state.totalDuration = response.data.total_duration;
