@@ -41,7 +41,7 @@
           <v-btn @click.prevent="oneDayAgo" fab max-height="40px" max-width="40px" class="mr-5">
             <v-icon class="text-h4">mdi-menu-left</v-icon>
           </v-btn>
-          <span>{{ formattedToday }}</span>
+          <span>{{ formattedDate }}</span>
           <v-btn @click.prevent="oneDayAfter" fab max-height="40px" max-width="40px" class="ml-5">
             <v-icon class="text-h4">mdi-menu-right</v-icon>
           </v-btn>
@@ -81,7 +81,7 @@ export default {
     dateStatus: function() {
       return this.$store.getters.dateStatus
     },
-    formattedToday: function() {
+    formattedDate: function() {
       return moment().add(this.dateStatus, 'd').format('MM月DD日')
     }
   },
