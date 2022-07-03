@@ -104,18 +104,6 @@ export default {
       }
       return `${second}秒`
     },
-    // そもそもmoviesにはきょうの動画しか入らないはずなのでこれは必要ない。
-    // todayMovies: function() {
-    //   const todayMovies = this.movies.filter(element => {
-    //     const movieDate = String(new Date(element.date)).slice(0, 15);
-    //     const today = new Date();
-    //     const selectedDate = today.getDate() + this.$store.getters.dateStatus
-    //     if(movieDate === selectedDate) {
-    //       return element;
-    //     }
-    //   })
-    //   return todayMovies;
-    // }
   },
   methods: {
     router: function(index) {
