@@ -14,58 +14,17 @@
           <v-card-text class='d-flex justify-center home-header-target-time'>目標 60分/日</v-card-text>
         </v-card>
       </v-row>
-      
-      <v-row>
-        <v-row class="hidden-sm-and-down" align="center" justify="end">
-          <v-col cols="1" >
-            <v-btn fab class="green accent-3 white--text" >
-              <v-icon :class="[$vuetify.breakpoint.smAndDown ? 'text-h5' : 'text-h4']">mdi-plus</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row v-if="movies.length === 0">
-          <v-col class="pt-2 pb-1 d-flex justify-center">
-            <p class="text-h4 mb-10">動画を視聴していません</p>
-          </v-col>
-        </v-row>
-
-        <v-card v-for="movie in movies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
-
-          <v-row align="center" justify="center"> 
-            <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
-              <v-img :src="movie.thumbnail" max-width="150px"  :class="[$vuetify.breakpoint.smAndDown ? 'ml-3 my-3' : '']">
-                <div bottom class="black white--text text-right hidden-sm-and-down" :class="[$vuetify.breakpoint.smAndDown ? 'text-caption' : 'mt-1 mr-2']">
-                  <span v-if="movie.duration >= 3600">
-                    {{Math.floor(movie.duration/3600)}}時間
-                  </span>
-                  <span v-if="movie.duration >= 60">
-                    {{Math.floor(movie.duration/60%60)}}分
-                  </span>{{movie.duration%60}}秒
-                </div>
-              </v-img>
-            </v-col>
-
-            <v-col cols="7" md="8" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
-              <div class="ma-2">
-                <body :class="[$vuetify.breakpoint.smAndDown ? 'caption' : 'text-h5']">{{movie.title}}</body>
-              </div>
-                <v-divider></v-divider>
-              <div class="ma-3" :class="[$vuetify.breakpoint.smAndDown ? 'body-2' : 'text-h5']">
-                <p>{{movie.comment}}</p>
-              </div>
-            </v-col>
-
-          </v-row>
-        </v-card>
-      </v-row>
     </v-row>
+    <ViewHistory :movies="todayMovies" />
   </v-app>
 </template>
 
 <script>
 import axios from 'axios';
+import ViewHistory from './ViewHistory';
+
 export default {
+  components: {ViewHistory},
   mounted () {
     this.getMovie();
     this.$store.dispatch('getTotalDuration');
