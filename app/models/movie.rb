@@ -7,5 +7,8 @@ class Movie < ApplicationRecord
   # # validates :comment, exclusion: { in: [nil] }入ってなくても保存できる
   # validates :date, exclusion: { in: nil, message: "空欄です" }
 
-  scope :today, -> (date) { where(date: date..(date + 1.day)) }
+  scope :target_date, -> (dateStatus) {
+    target_date = Date.today + dateStatus.to_i.day
+      where(date: target_date.beginning_of_day .. target_date.end_of_day)
+  }
 end

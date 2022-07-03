@@ -41,7 +41,7 @@
           <v-btn @click.prevent="oneDayAgo" fab max-height="40px" max-width="40px" class="mr-5">
             <v-icon class="text-h4">mdi-menu-left</v-icon>
           </v-btn>
-          <span>{{ today | moment("M月D日") }}</span>
+          <span>{{ formattedDate }}</span>
           <v-btn @click.prevent="oneDayAfter" fab max-height="40px" max-width="40px" class="ml-5">
             <v-icon class="text-h4">mdi-menu-right</v-icon>
           </v-btn>
@@ -54,6 +54,7 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment'
 
 export default {
   data: function() {
@@ -70,16 +71,18 @@ export default {
   },
   mounted() {
    axios
-      .post('/users/self.json')
-      .then(response => (this.user = response.data))
-    this.$store.dispatch('inputToday');
+    .post('/users/self.json')
+    .then(response => (this.user = response.data))
   },
   computed: {
     userState: function() {
-      return this.$store.state.user 
+      return this.$store.getters.storeUser 
     },
-    today: function() {
-      return this.$store.state.today
+    dateStatus: function() {
+      return this.$store.getters.dateStatus
+    },
+    formattedDate: function() {
+      return moment().add(this.dateStatus, 'd').format('MM月DD日')
     }
   },
   methods: {

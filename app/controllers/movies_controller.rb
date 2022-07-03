@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
   end
 
   def total_duration
-    render json: { total_duration: @movies.today(params[:date].to_date).sum(:duration) }
+    render json: { total_duration: @movies.sum(:duration) }
   end
 
   private
@@ -57,6 +57,8 @@ class MoviesController < ApplicationController
   end
 
   def set_movies
-    @movies ||= current_user.movies.order(created_at: :desc)
+    if !@movies || @movies&.first&.date&.beginning_of_day != (Date.today + params[:dateStatus].to_i.day).beginning_of_day
+      @movies = current_user.movies.target_date(params[:dateStatus]).order(created_at: :desc)
+    end
   end
 end

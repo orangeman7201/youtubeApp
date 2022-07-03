@@ -60,6 +60,8 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
+
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
     config.headers['X-Requested-With'] = 'XMLHttpReq'
@@ -100,7 +102,13 @@ export default {
     },
     totalDuration: function() {
       return this.$store.getters.totalDuration
-    }, 
+    },
+    dateStatus: function() {
+      return this.$store.getters.dateStatus
+    },
+    formattedDate: function() {
+      return moment().add(this.dateStatus, 'd').toDate()
+    },
   },
   methods: {
     calculateDuration: function(duration) {
@@ -160,7 +168,7 @@ export default {
           this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
-          this.movie.date = this.$store.getters.storeToday
+          this.movie.date = this.formattedDate
           this.$vuetify.goTo("#movie-input")
         })
         .catch(error => {
