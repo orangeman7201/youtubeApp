@@ -75,6 +75,12 @@ export default {
       movies: [],
     }  
   },
+  watch: {
+    dateStatus: function() {
+      this.getMovie();
+      this.$store.dispatch('getTotalDuration');
+    },
+  },
   computed: {
     userState: function() {
       return this.$store.state.user;

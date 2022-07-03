@@ -79,10 +79,10 @@ export default {
       return this.$store.getters.storeUser 
     },
     dateStatus: function() {
-      return this.$store.getter.dateStatus
+      return this.$store.getters.dateStatus
     },
     formattedToday: function() {
-      return moment().add(1, 'd').format('MM月DD日')
+      return moment().add(this.dateStatus, 'd').format('MM月DD日')
     }
   },
   methods: {

@@ -41,14 +41,10 @@ export default new Vuex.Store({
       state.user = ''
     },
     oneDayAgo(state) {
-      const newDay = new Date(state.today);
-      newDay.setDate(state.today.getDate() - 1);
-      state.today = newDay;
+      state.dateStatus--
     },
     oneDayAfter(state) {
-      const newDay = new Date(state.today);
-      newDay.setDate(state.today.getDate() + 1);
-      state.today = newDay;
+      state.dateStatus++
     },
     getTotalDuration(state) {
       axios
