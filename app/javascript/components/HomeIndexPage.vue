@@ -4,13 +4,8 @@
       <v-row class="pa-5">
         <v-card class="py-9 px-5" width="100%" height="274px">
           <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
-          <v-card-text class='d-flex justify-center home-header-body'>
-            <span v-if="totalDuration >= 3600">
-              {{Math.floor(totalDuration/3600)}}時間
-            </span>
-            <span v-if="totalDuration >= 60">
-              {{Math.floor(totalDuration/60%60)}}分
-            </span>{{totalDuration%60}}秒
+          <v-card-text class='d-flex justify-center home-header-body' :class="overHourClass">
+            {{ formattedTotalDuration}}
           </v-card-text>
           <div class='d-flex justify-center home-header-progress'>
             <v-progress-linear></v-progress-linear>
@@ -86,7 +81,26 @@ export default {
     },
     totalDuration: function() {
       return this.$store.getters.totalDuration
-    },  
+    },
+    overHourClass: function() {
+      const hour = Math.floor(this.totalDuration/3600)
+      if (hour > 0) {
+        return 'font-size-small'
+      }
+      return 'font-size-big'
+    },
+    formattedTotalDuration: function() {
+      const hour = Math.floor(this.totalDuration/3600)
+      const minute = Math.floor(this.totalDuration/60%60)
+      const second = this.totalDuration%60
+      if (hour > 0) {
+        return `${hour}時間${minute}分${second}秒`
+      }
+      if (minute > 0) {
+         return `${minute}分${second}秒`
+      }
+      return `${second}秒`
+    },
     todayMovies: function() {
       const todayMovies = this.movies.filter(element => {
         const movieDate = String(new Date(element.date)).slice(0, 15);
@@ -132,13 +146,18 @@ export default {
   .flex-grow {
     flex-grow: 1;
   }
+  .font-size-small {
+    font-size:min(9.5vw, 50px);
+  }
+  .font-size-big {
+    font-size:min(14vw, 50px);
+  }
   .home-header-title {
     font-size: 20px;
     padding: 0;
     margin-bottom: 20px;
   }
   .home-header-body {
-    font-size: 64px;
     padding: 0;
     margin-bottom: 32px;
     height: 64px;
