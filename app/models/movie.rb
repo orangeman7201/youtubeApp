@@ -8,7 +8,13 @@ class Movie < ApplicationRecord
   # validates :date, exclusion: { in: nil, message: "空欄です" }
 
   scope :target_date, -> (dateStatus) {
-    target_date = Date.today + dateStatus.to_i.day
+    target_date = Date.today + dateStatus.day
       where(date: target_date.beginning_of_day .. target_date.end_of_day)
+  }
+
+  scope :target_week, -> (dateStatus) {
+    to = Date.today + dateStatus.day
+    from = Date.today + ( dateStatus - 7 ).day ## 7: 一週間
+    where(date: from.beginning_of_day .. to.end_of_day)
   }
 end

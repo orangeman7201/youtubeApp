@@ -15,18 +15,16 @@
         </v-card>
       </v-row>
     </v-row>
-    <ViewHistory :movies="todayMovies" />
   </v-app>
 </template>
 
 <script>
 import axios from 'axios';
-import ViewHistory from './ViewHistory';
 
 export default {
-  components: {ViewHistory},
   mounted () {
     this.getMovie();
+    this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
   },
   data: function () {
@@ -97,6 +95,20 @@ export default {
       })
       .catch(error => {
         // this.$router.push({name: 'LoginForm' })
+        console.log(error)
+      })
+    },
+    getWeeklyDurationSum() {
+      axios
+      .get('/weekly_duration_sum', {
+        params: {
+          dateStatus: this.dateStatus
+        }
+      })
+      .then(response => {
+        console.log(111, response.data);
+      })
+      .catch(error => {
         console.log(error)
       })
     },
