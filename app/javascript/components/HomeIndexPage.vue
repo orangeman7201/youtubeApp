@@ -98,7 +98,6 @@ export default {
         }
       })
       .then(response => {
-        console.log(response.data)
         this.movies = response.data;
         this.$store.dispatch('updateStatus');
       })
