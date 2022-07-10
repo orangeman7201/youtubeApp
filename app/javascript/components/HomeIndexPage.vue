@@ -14,8 +14,12 @@
           <v-card-text class='d-flex justify-center home-header-target-time'>目標 60分/日</v-card-text>
         </v-card>
       </v-row>
+      <v-row class="pa-5">
+        <v-card class="py-9 px-5" width="100%" height="100%">
+          <DurationTable v-if="loaded" :items="weeklyDurationSum" />
+        </v-card>
+      </v-row>
     </v-row>
-    <DurationTable v-if="loaded" :items="weeklyDurationSum" />
   </v-app>
 </template>
 

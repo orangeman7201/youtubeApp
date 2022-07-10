@@ -55,7 +55,7 @@ class MoviesController < ApplicationController
       hash[:duration] = duration_sum
       array.push(hash)
     end
-    render json: array
+    render json: array.reverse
   end
 
   private

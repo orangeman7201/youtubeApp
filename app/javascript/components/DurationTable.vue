@@ -1,16 +1,13 @@
 <template>
   <v-app>
-    <table id="table" border="0">
-      <border />
-      <tr v-for="item in items" :key="item.date">
-        <td>
-          {{formatDate(item.date)}}
-        </td>
-        <td>
-          {{item.duration}}
-        </td>
-      </tr>
-    </table>
+    <div v-for="item in items" :key="item.date" class="duration-table">
+      <div class="item-date">
+        {{formatDate(item.date)}}
+      </div>
+      <div class="item-duration" :class="overTargetDuration(item.duration)">
+        {{formatDuration(item.duration)}}
+      </div>
+    </div>
   </v-app>
 </template>
 
@@ -32,18 +29,40 @@ export default {
     }
   },
   computed: {
-    aaa: function() {
-      return "aaa"
-    }
+
   },
   methods: {
     formatDate: function(date) {
-       moment.locale("ja");
+      moment.locale("ja");
       return moment(new Date(date)).format("MM月DD日(ddd)")
     },
-    formatate: function(date) {
-      return moment(new Date(date)).format("MM月DD日(ddd)")
+    formatDuration: function(duration) {
+      const minute = Math.floor(duration/60)
+      return `${minute}分`
     },
+    overTargetDuration: function(duration) {
+      // 60*60の部分は目標の再生時間が入る
+      return duration > 60*60 ? "over-duration" : ""
+    }
   }
 }
 </script>
+
+<style scoped>
+.duration-table {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 16px;
+  border-bottom: 1px solid #BCBABE;
+}
+.item-date {
+  color: #5E5E5E;
+}
+.item-duration {
+  font-size: 32px;
+  color: #333333;
+}
+.over-duration {
+  color: #FF5F5D;
+}
+</style>
