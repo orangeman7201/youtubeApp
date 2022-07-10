@@ -15,13 +15,16 @@
         </v-card>
       </v-row>
     </v-row>
+    <DurationTable v-if="loaded" :items="weeklyDurationSum" />
   </v-app>
 </template>
 
 <script>
 import axios from 'axios';
+import DurationTable from './DurationTable.vue';
 
 export default {
+  components: { DurationTable },
   mounted () {
     this.getMovie();
     this.getWeeklyDurationSum();
@@ -30,6 +33,8 @@ export default {
   data: function () {
     return {
       movies: [],
+      weeklyDurationSum: {},
+      loaded: false,
     }  
   },
   watch: {
@@ -106,7 +111,8 @@ export default {
         }
       })
       .then(response => {
-        console.log(111, response.data);
+        this.weeklyDurationSum = response.data
+        this.loaded = true
       })
       .catch(error => {
         console.log(error)

@@ -44,12 +44,18 @@ class MoviesController < ApplicationController
   end
 
   def weekly_duration_sum
-    hash = {}
+    array = []
     week_array.each do |date|
+      hash = {
+        date: nil,
+        duration: nil,
+      }
       duration_sum = @weekly_movies.where(date: date.beginning_of_day .. date.end_of_day).sum(:duration)
-      hash[date] = duration_sum
+      hash[:date] = date
+      hash[:duration] = duration_sum
+      array.push(hash)
     end
-    render json: hash
+    render json: array
   end
 
   private
