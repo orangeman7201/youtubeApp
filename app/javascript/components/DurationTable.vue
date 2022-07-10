@@ -28,9 +28,6 @@ export default {
       ]
     }
   },
-  computed: {
-
-  },
   methods: {
     formatDate: function(date) {
       moment.locale("ja");
