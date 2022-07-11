@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <div v-for="item in items" :key="item.date" class="duration-table">
       <div class="item-date">
         {{formatDate(item.date)}}
@@ -8,7 +8,7 @@
         {{formatDuration(item.duration)}}
       </div>
     </div>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -27,9 +27,6 @@ export default {
           { text: 'Calories', value: 'duration' }
       ]
     }
-  },
-  computed: {
-
   },
   methods: {
     formatDate: function(date) {

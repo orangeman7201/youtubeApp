@@ -15,8 +15,10 @@
         </v-card>
       </v-row>
       <v-row class="pa-5">
-        <v-card class="py-9 px-5" width="100%" height="100%">
-          <DurationTable v-if="loaded" :items="weeklyDurationSum" />
+        <v-card v-if="loaded" class="py-9 px-5" width="100%">
+          <h3 class="d-flex justify-center">週間サマリー</h3>
+          <Chart class="pt-5 pb-7" :chartData="chartItems" :options="chartOptions" :height="height" :width="width" />
+          <DurationTable :items="weeklyDurationSum" />
         </v-card>
       </v-row>
     </v-row>
@@ -25,10 +27,12 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 import DurationTable from './DurationTable.vue';
+import Chart from './Chart.js'
 
 export default {
-  components: { DurationTable },
+  components: { DurationTable, Chart },
   mounted () {
     this.getMovie();
     this.getWeeklyDurationSum();
@@ -39,6 +43,28 @@ export default {
       movies: [],
       weeklyDurationSum: {},
       loaded: false,
+      chartOptions: {
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        responsive: false,
+        scales: {
+          xAxes: [{
+            display: true,
+            gridLines: {
+              display:false
+            }
+          }],
+          yAxes: [{
+            display: true,
+            position: 'right',
+            ticks: {
+              maxTicksLimit: 3,
+            }
+          }]
+        },
+      },
     }  
   },
   watch: {
@@ -48,6 +74,12 @@ export default {
     },
   },
   computed: {
+    height: function() {
+      return window.innerHeight / 4
+    },
+    width: function() {
+      return window.innerWidth * 0.85
+    },
     userState: function() {
       return this.$store.state.user;
     },
@@ -76,6 +108,25 @@ export default {
       }
       return `${second}秒`
     },
+    dateArray: function() {
+      return this.weeklyDurationSum.map(item => {
+        return moment(new Date(item.date)).format("MM/DD")
+      }).reverse()
+    },
+    durationArray: function() {
+      return this.weeklyDurationSum.map(item => {
+        return item.duration / 60
+      })
+    },
+    chartItems: function() {
+      return {
+        labels: this.dateArray,
+        datasets: [{
+          data: this.durationArray,
+          backgroundColor: 'lightblue'
+        }]
+      }
+    },
   },
   methods: {
     router: function(index) {
@@ -98,12 +149,10 @@ export default {
         }
       })
       .then(response => {
-        console.log(response.data)
         this.movies = response.data;
         this.$store.dispatch('updateStatus');
       })
       .catch(error => {
-        // this.$router.push({name: 'LoginForm' })
         console.log(error)
       })
     },
