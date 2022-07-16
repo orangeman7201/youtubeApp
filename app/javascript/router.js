@@ -11,7 +11,7 @@ import UserDetailPage from './components/UserDetailPage.vue';
 import UserSerchForm from './components/UserSerchForm.vue';
 import FriendIndexPage from './components/FriendIndexPage.vue';
 import About from './components/About.vue';
-import Timeline from './components/Timeline/Page.vue';
+import Timeline from './components/Pages/Timeline.vue';
 
 Vue.use(Router);
 
@@ -29,6 +29,6 @@ export default new Router ({
      {path: '/users/:id(\\d+)', name: 'UserDetailPage', component: UserDetailPage}, 
      {path: '/users/serch', name: 'UserSerchForm', component: UserSerchForm}, 
      {path: '/freinds/index', name: 'FriendIndexPage', component: FriendIndexPage}, 
-     {path: '/timeline', name: 'TimelinePage', component: Timeline}, 
+     {path: '/timeline', name: 'Timeline', component: Timeline}, 
   ]
 })
