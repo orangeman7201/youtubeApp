@@ -1,5 +1,5 @@
 <template>
-  <v-card class="py-9 px-5" width="100%" flat>
+  <v-card class="px-5 py-5" width="100%" flat>
     <slot />
   </v-card>
 </template>

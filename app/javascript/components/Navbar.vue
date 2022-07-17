@@ -71,7 +71,7 @@ export default {
   },
   mounted() {
    axios
-    .post('/users/self.json')
+    .get('/self')
     .then(response => (this.user = response.data))
   },
   computed: {
