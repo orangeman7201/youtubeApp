@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :friends
   resources :durations, only: [:index]
   resources :posts, only: [:index, :create]
+  resources :replies, only: [:create]
 
   post "sessions/logout", to: "sessions#destroy"
   post "sign_up", to: "users#create"
