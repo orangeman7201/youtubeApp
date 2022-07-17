@@ -48,7 +48,7 @@ export default new Vuex.Store({
     },
     getTotalDuration(state) {
       axios
-      .get('/total', { 
+      .get('/durations', { 
         params: { dateStatus: state.dateStatus}
       })
       .then(response => {
