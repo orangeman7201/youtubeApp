@@ -20,6 +20,6 @@ Rails.application.routes.draw do
   get "requests", to: "requests#index"
   post "requests/create", to: "requests#create"
   post "requests/destroy", to: "requests#destroy"
-  post "users/self", to: "users#self"
+  get "self", to: "users#self"
   get "weekly_duration_sum", to: "durations#weekly_duration_sum"
 end

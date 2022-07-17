@@ -123,7 +123,7 @@ export default {
     },
     getMyData: function() {
       axios
-        .post('/users/self.json')
+        .get('self')
         .then(response => (this.rankingFriends.push(response.data)));
       },
     accept: function(request) {
