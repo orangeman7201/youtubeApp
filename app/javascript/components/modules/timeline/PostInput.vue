@@ -1,30 +1,44 @@
 <template>
-  <div class="timeline">
-    <TimelineHeader />
-    <div class="timeline_contents">
-    <TimelinePostInput  />
+  <Card>
+    <div class="card-header">
+      <img src="~user_default.svg" art="" class="mr-4" />
+      <div class="mr-8">
+        <div class="card-user-name">{{ user.name }}</div>
+        <div class="card-date">{{ today }}</div>
+      </div>
+      <div class="card-header-user-and-limit">
+        <div>ID: {{ user.id }}</div>
+        <div>目標: {{ user.limit / 60}}分/日 </div>
+      </div>
     </div>
-  </div>
+    <div class="card-limit">
+      <span class="card-limit-duration">{{ tortalduration / 60 }}分</span>
+      <span class="card-limit-limit">/{{ user.limit / 60 }}分 </span>
+    </div>
+    <v-textarea
+      v-model="post.comment"
+      label="コメント"
+      outlined
+      class="mb-4"
+    ></v-textarea>
+    <div class="card-buttons">
+      <v-btn color="#A7DDEA" width="120px" height="56px" class="card-button-cancel">キャンセル</v-btn>
+      <v-btn color="#18B1CE" width="120px" height="56px" class="card-button-post">投稿</v-btn>
+    </div>
+  </Card>
 </template>
 
 <script>
-import TimelineHeader from "../modules/timeline/Header.vue"
-import TimelinePostInput from "../modules/timeline/PostInput.vue"
+import Card from "../Card.vue"
 import 'user_default.svg'
 import moment from 'moment';
-import axios from 'axios';
 
 export default {
   components: {
-    TimelineHeader,
-    TimelinePostInput
-  },
-  mounted() {
-    this.getPosts()
+    Card
   },
   data () {
     return {
-      loaded: true,
       user:  {
         id: 11,
         name: "test1234",
@@ -42,19 +56,6 @@ export default {
       moment.locale("ja");
       return moment(new Date()).format('ll');
     }
-  },
-  methods: {
-    getPosts() {
-      axios
-      .get('/posts')
-      .then(response => {
-        console.log(response)
-        this.loaded = true
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
   }
 
 }
