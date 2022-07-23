@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TimelineFirstPost v-if="isNotTodaysPost"/>
     <TimelineFirstPost v-if="isTodaysPost" :post="post"/>
     <TimelinePost v-else :post="post"/>
   </div>
@@ -18,10 +19,10 @@ export default {
   },
   computed: {
     isTodaysPost: function() {
-      if (this.index === 0) {
-        return moment().isSame(this.post.created_at, 'day');
-      }
-      return false
+      return this.index === 0 && moment().isSame(this.post.created_at, 'day');
+    },
+    isNotTodaysPost: function() {
+      return this.index === 0 && !moment().isSame(this.post.created_at, 'day');
     }
   }
 }
