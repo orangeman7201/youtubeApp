@@ -1,53 +1,50 @@
 <template>
-  <div class="timeline">
-    <TimelineHeader />
-    <div class="timeline_contents" v-for="(post, index) in posts" :key="post.id">
-      <TimelinePosts v-if="loaded" :post="post" :index="index"/>
+  <Card>
+    <div class="card-header">
+      <img src="~user_default.svg" art="" class="mr-4" />
+      <div class="mr-8">
+        <div class="card-user-name">{{ post.user.name }}</div>
+        <div class="card-date">{{ today }}</div>
+      </div>
+      <div class="card-header-user-and-limit">
+        <div>ID: {{ post.user.id }}</div>
+        <div>目標: {{ post.user.limit / 60}}分/日 </div>
+      </div>
     </div>
-  </div>
+    <div class="card-limit">
+      <span class="card-limit-duration">{{ tortalduration / 60 }}分</span>
+      <span class="card-limit-limit">/{{ post.user.limit / 60 }}分 </span>
+    </div>
+    <v-textarea
+      v-model="post.comment"
+      label="コメント"
+      outlined
+      class="mb-4"
+      disabled
+    ></v-textarea>
+  </Card>
 </template>
 
 <script>
-import TimelineHeader from "../modules/timeline/Header.vue"
-import TimelinePosts from "../modules/timeline/Posts.vue"
+import Card from "../Card.vue"
 import 'user_default.svg'
 import moment from 'moment';
-import axios from 'axios';
 
 export default {
+  props: ["post", "index"],
   components: {
-    TimelineHeader,
-    TimelinePosts,
-  },
-  mounted() {
-    this.getPosts()
+    Card
   },
   data () {
     return {
-      loaded: true,
-      posts: [],
-      user: null,
       tortalduration: 90 * 60,
     }
   },
   computed: {
     today: function() {
       moment.locale("ja");
-      return moment(new Date()).format('ll');
+      return moment(this.post.created_at).format('ll');
     }
-  },
-  methods: {
-    getPosts() {
-      axios
-      .get('/posts')
-      .then(response => {
-        this.posts = response.data
-        this.loaded = true
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
   }
 
 }
@@ -75,7 +72,7 @@ export default {
 .card-header-user-and-limit {
   font-size: 14px;
   color: #BCBABE;
-  margin-right: auto;
+  margin-left: auto;
 }
 .card-limit {
   display: flex;

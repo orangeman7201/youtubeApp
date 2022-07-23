@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card v-if="loaded">
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4" />
       <div class="mr-8">
@@ -32,30 +32,41 @@
 import Card from "../Card.vue"
 import 'user_default.svg'
 import moment from 'moment';
+import axios from 'axios';
 
 export default {
+  props: ["post", "index"],
   components: {
     Card
   },
   data () {
     return {
-      user:  {
-        id: 11,
-        name: "test1234",
-        email: "test003@test.com",
-        limit: 60 * 60,
-      },
+      loaded: false,
       tortalduration: 90 * 60,
-      post: {
-        commnet: "",
-      },
+      user: null
     }
+  },
+  mounted() {
+    this.getSelf()
   },
   computed: {
     today: function() {
       moment.locale("ja");
       return moment(new Date()).format('ll');
     }
+  },
+  methods: {
+    getSelf() {
+      axios
+      .get('/self')
+      .then(response => {
+        this.user = response.data
+        this.loaded = true
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
   }
 
 }
@@ -83,7 +94,7 @@ export default {
 .card-header-user-and-limit {
   font-size: 14px;
   color: #BCBABE;
-  margin-right: auto;
+  margin-left: auto;
 }
 .card-limit {
   display: flex;
