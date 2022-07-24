@@ -1,21 +1,23 @@
 <template>
   <div>
-    <TimelineFirstPost v-if="isNotTodaysPost"/>
-    <TimelineFirstPost v-if="isTodaysPost" :post="post"/>
+    <TimelineCreatePost v-if="isNotTodaysPost" class="mb-10"/>
+    <TimelineEditPost v-if="isTodaysPost" :post="post"/>
     <TimelinePost v-else :post="post"/>
   </div>
 </template>
 
 <script>
 import TimelinePost from "./Post.vue"
-import TimelineFirstPost from "./FirstPost.vue"
+import TimelineCreatePost from "./CreatePost.vue"
+import TimelineEditPost from "./EditPost.vue"
 import moment from 'moment';
 
 export default {
   props: ["post", "index"],
   components: {
     TimelinePost,
-    TimelineFirstPost
+    TimelineCreatePost,
+    TimelineEditPost,
   },
   computed: {
     isTodaysPost: function() {

@@ -16,7 +16,7 @@
       <span class="card-limit-limit">/{{ user.limit / 60 }}分 </span>
     </div>
     <v-textarea
-      v-model="post.comment"
+      v-model="comment"
       label="コメント"
       outlined
       class="mb-4"
@@ -35,7 +35,6 @@ import moment from 'moment';
 import axios from 'axios';
 
 export default {
-  props: ["post", "index"],
   components: {
     Card
   },
@@ -43,7 +42,8 @@ export default {
     return {
       loaded: false,
       tortalduration: 90 * 60,
-      user: null
+      user: null,
+      comment: "",
     }
   },
   mounted() {
