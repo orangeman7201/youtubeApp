@@ -34,13 +34,11 @@ import Chart from './Chart.js'
 export default {
   components: { DurationTable, Chart },
   mounted () {
-    this.getMovie();
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
   },
   data: function () {
     return {
-      movies: [],
       weeklyDurationSum: {},
       loaded: false,
       chartOptions: {
@@ -129,32 +127,11 @@ export default {
     },
   },
   methods: {
-    router: function(index) {
-       this.$router.push(`movies/${index}`)
-    },
-    routerNew: function() {
-       this.$router.push('movies/new')
-    },
     oneDayAgo: function() {
       this.$store.dispatch('oneDayAgo');
     },
     oneDayAfter: function() {
       this.$store.dispatch('oneDayAfter');
-    },
-    getMovie() {
-      axios
-      .get('/movies', {
-        params: {
-          dateStatus: this.dateStatus
-        }
-      })
-      .then(response => {
-        this.movies = response.data;
-        this.$store.dispatch('updateStatus');
-      })
-      .catch(error => {
-        console.log(error)
-      })
     },
     getWeeklyDurationSum() {
       axios

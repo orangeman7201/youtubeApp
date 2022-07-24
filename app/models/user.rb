@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :active_friend, class_name: "Friend", foreign_key: "user_id", dependent: :destroy
   has_many :passive_friend, class_name: "Friend", foreign_key: "friend_user_id", dependent: :destroy
   has_many :friends, through: :active_friend, source: :friend_user
+  has_many :posts, dependent: :destroy
+  has_many :replies, dependent: :destroy
 
   attr_accessor :remember_token
   before_save { self.email = self.email.downcase }

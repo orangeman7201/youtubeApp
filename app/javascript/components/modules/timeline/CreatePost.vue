@@ -1,34 +1,53 @@
 <template>
-  <div class="timeline">
-    <TimelineHeader />
-    <div class="timeline_contents" v-for="(post, index) in posts" :key="post.id">
-      <TimelinePosts v-if="loaded" :post="post" :index="index"/>
+  <Card v-if="loaded">
+    <div class="card-header">
+      <img src="~user_default.svg" art="" class="mr-4" />
+      <div class="mr-8">
+        <div class="card-user-name">{{ user.name }}</div>
+        <div class="card-date">{{ today }}</div>
+      </div>
+      <div class="card-header-user-and-limit">
+        <div>ID: {{ user.id }}</div>
+        <div>目標: {{ user.limit / 60}}分/日 </div>
+      </div>
     </div>
-  </div>
+    <div class="card-limit">
+      <span class="card-limit-duration">{{ tortalduration / 60 }}分</span>
+      <span class="card-limit-limit">/{{ user.limit / 60 }}分 </span>
+    </div>
+    <v-textarea
+      v-model="comment"
+      label="コメント"
+      outlined
+      class="mb-4"
+    ></v-textarea>
+    <div class="card-buttons">
+      <v-btn color="#A7DDEA" width="120px" height="56px" class="card-button-cancel">キャンセル</v-btn>
+      <v-btn color="#18B1CE" width="120px" height="56px" class="card-button-post">投稿</v-btn>
+    </div>
+  </Card>
 </template>
 
 <script>
-import TimelineHeader from "../modules/timeline/Header.vue"
-import TimelinePosts from "../modules/timeline/Posts.vue"
+import Card from "../Card.vue"
 import 'user_default.svg'
 import moment from 'moment';
 import axios from 'axios';
 
 export default {
   components: {
-    TimelineHeader,
-    TimelinePosts,
-  },
-  mounted() {
-    this.getPosts()
+    Card
   },
   data () {
     return {
-      loaded: true,
-      posts: [],
-      user: null,
+      loaded: false,
       tortalduration: 90 * 60,
+      user: null,
+      comment: "",
     }
+  },
+  mounted() {
+    this.getSelf()
   },
   computed: {
     today: function() {
@@ -37,11 +56,11 @@ export default {
     }
   },
   methods: {
-    getPosts() {
+    getSelf() {
       axios
-      .get('/posts')
+      .get('/self')
       .then(response => {
-        this.posts = response.data
+        this.user = response.data
         this.loaded = true
       })
       .catch(error => {
@@ -75,7 +94,7 @@ export default {
 .card-header-user-and-limit {
   font-size: 14px;
   color: #BCBABE;
-  margin-right: auto;
+  margin-left: auto;
 }
 .card-limit {
   display: flex;

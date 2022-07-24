@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :users
   resources :sessions
   resources :friends
+  resources :durations, only: [:index]
+  resources :posts, only: [:index, :create, :update]
+  resources :replies, only: [:create]
 
   post "sessions/logout", to: "sessions#destroy"
   post "sign_up", to: "users#create"
@@ -17,7 +20,6 @@ Rails.application.routes.draw do
   get "requests", to: "requests#index"
   post "requests/create", to: "requests#create"
   post "requests/destroy", to: "requests#destroy"
-  post "users/self", to: "users#self"
-  get "total", to: "movies#total_duration"
-  get "weekly_duration_sum", to: "movies#weekly_duration_sum"
+  get "self", to: "users#self"
+  get "weekly_duration_sum", to: "durations#weekly_duration_sum"
 end
