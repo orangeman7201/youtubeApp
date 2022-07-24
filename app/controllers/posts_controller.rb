@@ -2,7 +2,7 @@ class PostsController < ApplicationController
 before_action :find_post, only: [:update]
 
   def index
-    render json: current_user.posts.limit(7).reverse, each_serializer: PostSerializer
+    render json: current_user.posts.last(7).reverse, each_serializer: PostSerializer
   end
 
   def create
