@@ -8,24 +8,20 @@ before_action :find_post, only: [:update]
   def create
     post = current_user.posts.build(post_params)
     if post.save
-      render status: 200
+      render json: post
     else
       render json:{ errors: post.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
-    @post.update_attributes(update_params)
+    @post.update(post_params)
   end
 
   private
 
   def post_params
     params.fetch(:post, {}).permit(:comment)
-  end
-
-  def update_params
-    params.fetch(:update, {}).permit(:comment)
   end
 
   def find_post
