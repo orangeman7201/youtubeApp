@@ -120,7 +120,7 @@ export default {
       return {
         labels: this.dateArray,
         datasets: [{
-          data: this.durationArray,
+          data: this.durationArray.reverse(),
           backgroundColor: 'lightblue'
         }]
       }
