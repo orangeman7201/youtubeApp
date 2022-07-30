@@ -1,5 +1,15 @@
 <template>
   <Card v-if="loaded">
+    <v-alert
+      v-model="isVisible"
+      close-text="Close Alert"
+      dismissible
+      dense
+      outlined
+      type="success"
+      text
+      transition="scale-transition"
+    >編集完了しました</v-alert>
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4" />
       <div class="mr-8">
@@ -23,7 +33,7 @@
     ></v-textarea>
     <div class="card-buttons">
       <v-btn color="#A7DDEA" width="120px" height="56px" class="card-button-cancel">キャンセル</v-btn>
-      <v-btn color="#18B1CE" width="120px" height="56px" class="card-button-post">投稿</v-btn>
+      <v-btn color="#18B1CE" width="120px" height="56px" class="card-button-post" @click.prevent="submit">投稿</v-btn>
     </div>
   </Card>
 </template>
@@ -44,6 +54,7 @@ export default {
       loaded: false,
       tortalduration: 90 * 60,
       user: null,
+      isVisible: false,
     }
   },
   mounted() {
@@ -62,6 +73,21 @@ export default {
       .then(response => {
         this.user = response.data
         this.loaded = true
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    submit() {
+      axios
+      .patch(`/posts/${this.post.id}`, {
+        comment: this.post.comment
+      })
+      .then(() => {
+        this.isVisible = true
+        setTimeout(() => {
+          this.isVisible = false
+        }, 4000)
       })
       .catch(error => {
         console.log(error)
