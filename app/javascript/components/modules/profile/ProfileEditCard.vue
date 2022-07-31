@@ -3,11 +3,18 @@
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4 card-image" />
       <div class="card-user-profile">
-        <div class="card-user-name-content">{{ storeUser.name }}</div>
-        <div class="card-header-user-and-limit">
-          <div>ID: {{ storeUser.id }}</div>
-          <div>目標: {{ storeUser.limit / 60}}分/日 </div>
-        </div>
+        <v-text-field
+          :value="storeUser.name"
+          label="ユーザー名"
+          required
+          counter ="20"
+        ></v-text-field>
+        <v-select
+          :value="storeUser.limit"
+          :items="limitArray"
+          label="一日の目標時間(分)"
+          required
+        ></v-select>
       </div>
     </div>
   </Card>
@@ -33,6 +40,9 @@ export default {
   computed: {
     storeUser: function() {
       return this.$store.getters.storeUser 
+    },
+    limitArray: function() {
+      return [...Array(20)].map((_, i) => i * 10)
     },
   },
   methods: {
