@@ -20,11 +20,6 @@ export default {
       errors: '',
     }
   },
-  computed: {
-    userState: function() {
-      return this.$store.state.user
-    },
-  },
 }
 </script>
 

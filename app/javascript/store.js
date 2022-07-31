@@ -1,33 +1,32 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import router from './router';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: '',
+    user: null,
     dateStatus: 0,
     totalDuration: 0,
   },
   getters: {
-    storeUser: state => {
-      return state.user
-    },
     dateStatus: state => {
       return state.dateStatus
     },
     totalDuration: state => {
       return state.totalDuration
     },
+    storeUser: state => {
+      return state.user
+    },
   },
   mutations: {
-     requireLogin(state) {
+    requireLogin(state) {
       axios
       .get('/session_check')
-      .then(() => {
-        state.user = 'ok';
+      .then((response) => {
+        state.user = response.data
       })
       .catch(error => {
         router.push({name: 'LoginForm' })
@@ -38,7 +37,7 @@ export default new Vuex.Store({
       state.user = 'ok'
     },
     lostUser(state) {
-      state.user = ''
+      state.user = null
     },
     oneDayAgo(state) {
       state.dateStatus--
@@ -56,6 +55,11 @@ export default new Vuex.Store({
       })
       .catch()
     },
+    getSelf(state) {
+      axios
+       .get('/self')
+       .then(response => (state.user = response.data))
+     },
   },
   actions: {
     requireLogin(context) {
@@ -78,6 +82,9 @@ export default new Vuex.Store({
     },
     getTotalDuration(context) {
       context.commit('getTotalDuration')
+    },
+    getSelf(context) {
+      context.commit('getSelf')
     },
   }
 })
