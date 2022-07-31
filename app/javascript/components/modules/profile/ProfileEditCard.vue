@@ -1,23 +1,27 @@
 <template>
-  <Card v-if="storeUser">
-    <div class="card-header">
-      <img src="~user_default.svg" art="" class="mr-4 card-image" />
-      <div class="card-user-profile">
-        <v-text-field
-          :value="storeUser.name"
-          label="ユーザー名"
-          required
-          counter ="20"
-        ></v-text-field>
-        <v-select
-          :value="storeUser.limit"
-          :items="limitArray"
-          label="一日の目標時間(分)"
-          required
-        ></v-select>
+  <div>
+    <Card v-if="storeUser">
+      <div class="card-header">
+        <img src="~user_default.svg" art="" class="mr-4 card-image" />
+        <div class="card-user-profile">
+          <v-text-field
+            :value="storeUser.name"
+            label="ユーザー名"
+            required
+            counter ="20"
+            @change="changeParamsName"
+          ></v-text-field>
+          <v-select
+            :value="storeUser.limit"
+            :items="limitArray"
+            label="一日の目標時間(分)"
+            required
+            @change="changeParamsLimit"
+          ></v-select>
+        </div>
       </div>
-    </div>
-  </Card>
+    </Card>
+  </div>
 </template>
 
 <script>
@@ -26,13 +30,11 @@ import 'user_default.svg'
 import axios from 'axios';
 
 export default {
-  props: ["post", "index"],
   components: {
     Card
   },
   data () {
     return {
-      tortalduration: 90 * 60,
       user: null,
       isVisible: false,
     }
@@ -60,6 +62,12 @@ export default {
       .catch(error => {
         console.log(error)
       })
+    },
+    changeParamsName(event) {
+      this.$emit('changeName', event);
+    },
+    changeParamsLimit(event) {
+      this.$emit('changeLimit', event);
     },
   }
 
