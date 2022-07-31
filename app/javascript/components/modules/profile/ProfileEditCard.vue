@@ -2,8 +2,8 @@
   <Card v-if="loaded">
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4 card-image" />
-      <div class="card-user-name">
-        <div class="card-user-name-content">{{ user.name }}</div>
+      <div class="card-user-profile">
+        <input class="card-user-name-content">{{ user.name }}</div>
         <div class="card-header-user-and-limit">
           <div>ID: {{ user.id }}</div>
           <div>目標: {{ user.limit / 60}}分/日 </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Card from "./Card.vue"
+import Card from "../Card.vue"
 import 'user_default.svg'
 import axios from 'axios';
 

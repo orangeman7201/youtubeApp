@@ -1,22 +1,19 @@
 <template>
   <div class="profile">
-    <ProfileCard class="mb-2"/>
-    <v-card class="px-5 py-4 profile-edit-button" width="100%" flat color="#A7DDEA" @click="moveEditPage">
-      プロフィールの編集
-    </v-card>
+    <ProfileEditCard />
   </div>
 </template>
 
 <script>
-import ProfileCard from "../modules/profile/ProfileCard.vue"
+import ProfileEditCard from "../modules/profile/ProfileEditCard.vue"
 
 export default {
   components: {
-    ProfileCard,
+    ProfileEditCard,
   },
   methods: {
     moveEditPage: function() {
-      this.$router.push('/profile/edit')
+      this.$router.push('/home')
     }
   }
 
