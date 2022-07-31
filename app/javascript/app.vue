@@ -1,6 +1,6 @@
 <template>
   <v-app class="main-font">
-    <Navbar />
+    <Navbar v-if="!isTopPage"/>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -20,6 +20,11 @@ export default {
       errors: '',
     }
   },
+  computed: {
+    isTopPage: function() {
+      return this.$route.path === '/'
+    },
+  }
 }
 </script>
 

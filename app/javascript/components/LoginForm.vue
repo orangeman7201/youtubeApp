@@ -92,11 +92,7 @@ export default {
     submitData: function() { 
       axios
         .post('/sessions', this.loginInfo)
-        .then(response => {
-          // let e = response.data
-          console.log(response)
-          console.log('成功です')
-          
+        .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {

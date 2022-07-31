@@ -23,15 +23,17 @@ export default new Vuex.Store({
   },
   mutations: {
     requireLogin(state) {
-      axios
-      .get('/session_check')
-      .then((response) => {
-        state.user = response.data
-      })
-      .catch(error => {
-        router.push({name: 'LoginForm' })
-        console.log(error)
-      })
+      if(state.user === null) {
+        axios
+        .get('/session_check')
+        .then((response) => {
+          state.user = response.data
+        })
+        .catch(error => {
+          router.push({name: 'LoginForm' })
+          console.log(error)
+        })
+      }
     },
     updateStatus(state) {
       state.user = 'ok'

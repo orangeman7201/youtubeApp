@@ -8,20 +8,16 @@
       width="100%"
       class="d-flex justify-center"
     >
-        <v-app-bar-nav-icon @click="drawer = !drawer" v-if="storeUser">
+        <v-app-bar-nav-icon @click="drawer =!drawer" v-if="!isLoginPage">
         </v-app-bar-nav-icon>
         <h4 class="mx-auto header_title">Y stopper</h4>
-        <v-btn icon to="/movies/new" v-if="storeUser">
+        <v-btn icon to="/movies/new" v-if="!isLoginPage">
           <v-icon>mdi-movie-open-plus-outline</v-icon>
         </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app temporary v-model="drawer" color="#1995AD" v-if="storeUser">
-      <v-list>
-        <v-list-item  class="white">
-          {{storeUser.name}}
-        </v-list-item>
-
+    <v-navigation-drawer app temporary v-model="drawer" color="#1995AD" v-if="!isLoginPage">
+      <v-list class="mt-4">
         <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
           <v-list-item-action>
             <v-icon class="white--text">{{list.icon}}</v-icon>
@@ -52,6 +48,11 @@ export default {
       ],
     }
   },
+  beforeMount() {
+    if(this.storeUser) {
+      this.$store.dispatch("getSelg")
+    }
+  },
   computed: {
     storeUser: function() {
       return this.$store.getters.storeUser 
@@ -61,7 +62,10 @@ export default {
     },
     formattedDate: function() {
       return moment().add(this.dateStatus, 'd').format('MM月DD日')
-    }
+    },
+    isLoginPage: function() {
+      return this.$route.path === '/login'
+    },
   },
   methods: {
     logout: function() { 
