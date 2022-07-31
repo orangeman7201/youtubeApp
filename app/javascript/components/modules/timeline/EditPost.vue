@@ -13,17 +13,17 @@
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4" />
       <div class="mr-8">
-        <div class="card-user-name">{{ user.name }}</div>
+        <div class="card-user-name">{{ storeUser.name }}</div>
         <div class="card-date">{{ today }}</div>
       </div>
       <div class="card-header-user-and-limit">
-        <div>ID: {{ user.id }}</div>
-        <div>目標: {{ user.limit / 60}}分/日 </div>
+        <div>ID: {{ storeUser.id }}</div>
+        <div>目標: {{ storeUser.limit / 60}}分/日 </div>
       </div>
     </div>
     <div class="card-limit">
       <span class="card-limit-duration">{{ tortalduration / 60 }}分</span>
-      <span class="card-limit-limit">/{{ user.limit / 60 }}分 </span>
+      <span class="card-limit-limit">/{{ storeUser.limit / 60 }}分 </span>
     </div>
     <v-textarea
       v-model="post.comment"
@@ -64,20 +64,12 @@ export default {
     today: function() {
       moment.locale("ja");
       return moment(new Date()).format('ll');
-    }
+    },
+    storeUser: function() {
+      return this.$store.getters.storeUser 
+    },
   },
   methods: {
-    getSelf() {
-      axios
-      .get('/self')
-      .then(response => {
-        this.user = response.data
-        this.loaded = true
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
     submit() {
       axios
       .patch(`/posts/${this.post.id}`, {

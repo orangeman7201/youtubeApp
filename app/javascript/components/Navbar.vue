@@ -8,18 +8,18 @@
       width="100%"
       class="d-flex justify-center"
     >
-        <v-app-bar-nav-icon @click="drawer = !drawer"  v-if="userState === 'ok'">
+        <v-app-bar-nav-icon @click="drawer = !drawer"  v-if="storeUser">
         </v-app-bar-nav-icon>
         <h4 class="mx-auto header_title">Y stopper</h4>
-        <v-btn icon to="/movies/new" v-if="userState === 'ok'">
+        <v-btn icon to="/movies/new" v-if="storeUser">
           <v-icon>mdi-movie-open-plus-outline</v-icon>
         </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app temporary v-model="drawer" color="green accent-2" v-if="userState === 'ok'">
+    <v-navigation-drawer app temporary v-model="drawer" color="green accent-2" v-if="storeUser">
       <v-list>
         <v-list-item  class="white">
-          {{user.name}}
+          {{storeUser.name}}
         </v-list-item>
 
         <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
@@ -59,7 +59,6 @@ import moment from 'moment'
 export default {
   data: function() {
     return {
-      user: {},
       drawer: false,
       lists: [
         {icon: 'mdi-home', title: 'ホーム', route: '/home'},
@@ -69,13 +68,8 @@ export default {
       ],
     }
   },
-  mounted() {
-   axios
-    .get('/self')
-    .then(response => (this.user = response.data))
-  },
   computed: {
-    userState: function() {
+    storeUser: function() {
       return this.$store.getters.storeUser 
     },
     dateStatus: function() {

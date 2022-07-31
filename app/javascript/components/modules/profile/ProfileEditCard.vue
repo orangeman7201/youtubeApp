@@ -3,10 +3,10 @@
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4 card-image" />
       <div class="card-user-profile">
-        <input class="card-user-name-content">{{ user.name }}</div>
+        <div class="card-user-name-content">{{ storeUser.name }}</div>
         <div class="card-header-user-and-limit">
-          <div>ID: {{ user.id }}</div>
-          <div>目標: {{ user.limit / 60}}分/日 </div>
+          <div>ID: {{ storeUser.id }}</div>
+          <div>目標: {{ storeUser.limit / 60}}分/日 </div>
         </div>
       </div>
     </div>
@@ -31,21 +31,12 @@ export default {
       isVisible: false,
     }
   },
-  mounted() {
-    this.getSelf()
+  computed: {
+    storeUser: function() {
+      return this.$store.getters.storeUser 
+    },
   },
   methods: {
-    getSelf() {
-      axios
-      .get('/self')
-      .then(response => {
-        this.user = response.data
-        this.loaded = true
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
     submit() {
       axios
       .patch(`/posts/${this.post.id}`, {
