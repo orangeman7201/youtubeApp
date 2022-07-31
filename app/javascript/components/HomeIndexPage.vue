@@ -1,5 +1,5 @@
 <template>
-  <v-app v-if="storeUser" id="app">
+  <v-app v-if="loaded" id="app">
     <v-row class="pa-5 grey lighten-3">
       <v-row class="pa-5">
         <v-card class="py-9 px-5" width="100%" height="274px">

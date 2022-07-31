@@ -8,7 +8,7 @@
       width="100%"
       class="d-flex justify-center"
     >
-        <v-app-bar-nav-icon @click="drawer = !drawer"  v-if="storeUser">
+        <v-app-bar-nav-icon @click="drawer = !drawer" v-if="storeUser">
         </v-app-bar-nav-icon>
         <h4 class="mx-auto header_title">Y stopper</h4>
         <v-btn icon to="/movies/new" v-if="storeUser">
@@ -27,6 +27,9 @@
             <v-icon class="white--text">{{list.icon}}</v-icon>
           </v-list-item-action>
           <v-list-item-content class="white--text">{{list.title}}</v-list-item-content>
+        </v-list-item>
+        <v-list-item class="my-7">
+          <v-btn @click.prevent="logout">ログアウト</v-btn>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

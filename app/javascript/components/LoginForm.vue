@@ -70,14 +70,13 @@ export default {
   beforeMount() {
     axios
       .get('/session_check')
-      .then(response => {
-        console.log(response);
-        this.$store.state.user = 'ok';
+      .then(() => {
+        this.$store.dispatch('getSelf')
         this.$store.state.today = new Date();
         this.$router.push({name: 'HomeIndexPage' });
       })
       .catch(error => {
-        router.push({name: 'LoginForm' })
+        this.$router.push({name: 'LoginForm' })
         console.log(error)
       })
   },
