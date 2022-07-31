@@ -16,7 +16,6 @@
 <script>
 import Card from "./Card.vue"
 import 'user_default.svg'
-import moment from 'moment';
 import axios from 'axios';
 
 export default {
@@ -81,7 +80,7 @@ export default {
 .card-header {
   display: flex;
   align-items: center;
-  margin: 12px 0 20px;
+  margin: 12px 0 12px;
 }
 .card-user-name {
   display: flex;
