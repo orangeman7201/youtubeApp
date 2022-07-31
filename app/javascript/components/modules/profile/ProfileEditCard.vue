@@ -1,5 +1,5 @@
 <template>
-  <Card v-if="loaded">
+  <Card v-if="storeUser">
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4 card-image" />
       <div class="card-user-profile">
@@ -25,7 +25,6 @@ export default {
   },
   data () {
     return {
-      loaded: false,
       tortalduration: 90 * 60,
       user: null,
       isVisible: false,

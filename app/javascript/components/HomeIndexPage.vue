@@ -1,5 +1,5 @@
 <template>
-  <v-app v-if="userState === 'ok'" id="app">
+  <v-app v-if="storeUser" id="app">
     <v-row class="pa-5 grey lighten-3">
       <v-row class="pa-5">
         <v-card class="py-9 px-5" width="100%" height="274px">
@@ -78,8 +78,8 @@ export default {
     width: function() {
       return window.innerWidth * 0.85
     },
-    userState: function() {
-      return this.$store.state.user;
+    storeUser: function() {
+      return this.$store.getters.storeUser 
     },
     totalDuration: function() {
       return this.$store.getters.totalDuration
