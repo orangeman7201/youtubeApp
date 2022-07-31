@@ -12,7 +12,7 @@
             @change="changeParamsName"
           ></v-text-field>
           <v-select
-            :value="storeUser.limit"
+            :value="storeUser.limit / 60"
             :items="limitArray"
             label="一日の目標時間(分)"
             required

@@ -1,5 +1,16 @@
 <template>
   <Card v-if="storeUser">
+    <v-alert
+      v-model="isVisible"
+      close-text="Close Alert"
+      dismissible
+      dense
+      outlined
+      type="success"
+      text
+      transition="scale-transition"
+      class="card-alert"
+    >保存しました</v-alert>
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4 card-image" />
       <div class="card-user-name">
@@ -19,7 +30,7 @@ import 'user_default.svg'
 import axios from 'axios';
 
 export default {
-  props: ["post", "index"],
+  props: ["post", "index", "isVisible"],
   components: {
     Card
   },
@@ -27,7 +38,6 @@ export default {
     return {
       tortalduration: 90 * 60,
       user: null,
-      isVisible: false,
     }
   },
   computed: {

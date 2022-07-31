@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <ProfileCard class="mb-2"/>
+    <ProfileCard class="mb-2" :isVisible="isVisible"/>
     <v-card class="px-5 py-4 profile-edit-button" width="100%" flat color="#A7DDEA" @click="moveEditPage">
       プロフィールの編集
     </v-card>
@@ -14,12 +14,27 @@ export default {
   components: {
     ProfileCard,
   },
+  data () {
+    return {
+      isVisible: false,
+    }
+  },
+  mounted() {
+    this.successState()
+  },
   methods: {
     moveEditPage: function() {
       this.$router.push('/profile/edit')
+    },
+    successState: function() {
+      if(this.$route.params.editStatus) {
+        this.isVisible = true
+        setTimeout(() => {
+          this.isVisible = false
+        }, 4000)
+      }
     }
   }
-
 }
 </script>
 

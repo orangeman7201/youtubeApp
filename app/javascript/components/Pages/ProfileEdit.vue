@@ -24,15 +24,17 @@ export default {
   components: {
     ProfileEditCard,
   },
-  methods: {
-    moveEditPage: function() {
-      this.$router.push('/home')
+  computed: {
+    storeUser: function() {
+      return this.$store.getters.storeUser 
     },
+  },
+  methods: {
     changeName: function(name) {
       this.params.name = name
     },
     changeLimit: function(limit) {
-      this.params.limit = limit
+      this.params.limit = limit * 60
     },
     cancel() {
       if(confirm('内容は保存されませんが、よろしいでしょうか？')){
@@ -40,18 +42,17 @@ export default {
       }
     },
     submit() {
+      if(this.params.name === "") {
+        this.params.name = this.storeUser.name
+      }
       axios
-      .patch(`/posts/${this.post.id}`, {
-        comment: this.post.comment
-      })
+      .patch(`/users/${this.storeUser.id}`, this.params)
       .then(() => {
-        this.isVisible = true
-        setTimeout(() => {
-          this.isVisible = false
-        }, 4000)
+        this.$store.dispatch('getSelf');
+        this.$router.push( { name: 'Profile', params: { editStatus: 'success' } })
       })
       .catch(error => {
-        console.log(error)
+        console.log(error.message)
       })
     }
   }
