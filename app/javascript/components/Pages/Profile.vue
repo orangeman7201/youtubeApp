@@ -1,16 +1,17 @@
 <template>
-  <div>
-    profile
+  <div class="profile">
+    <ProfileCard />
   </div>
 </template>
 
 <script>
-import 'user_default.svg'
+import ProfileCard from "../modules/ProfileCard.vue"
 // import moment from 'moment';
 // import axios from 'axios';
 
 export default {
   components: {
+    ProfileCard
   },
   data () {
     return {
@@ -25,4 +26,9 @@ export default {
 </script>
 
 <style scoped>
+.profile {
+  height: 100%;
+  padding: 20px; 
+  background-color: #F1F1F2;
+}
 </style>
