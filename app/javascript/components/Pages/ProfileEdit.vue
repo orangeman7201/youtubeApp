@@ -21,6 +21,9 @@ export default {
       }
     }
   },
+  beforeCreate() {
+    this.$store.dispatch('getSelf')
+  },
   components: {
     ProfileEditCard,
   },

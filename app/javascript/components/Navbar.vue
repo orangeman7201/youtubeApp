@@ -16,7 +16,7 @@
         </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer app temporary v-model="drawer" color="#1995AD" v-if="!isLoginPage">
+    <v-navigation-drawer app temporary v-model="drawer" color="#1995AD">
       <v-list class="mt-4">
         <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
           <v-list-item-action>

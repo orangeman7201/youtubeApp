@@ -34,6 +34,9 @@ export default {
   components: {
     Card
   },
+  beforeCreate() {
+    this.$store.dispatch('getSelf')
+  },
   data () {
     return {
       tortalduration: 90 * 60,
