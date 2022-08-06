@@ -10,8 +10,7 @@
           <div class='d-flex justify-center home-header-progress'>
             <v-progress-linear></v-progress-linear>
           </div>
-          <!-- 目標はuser.timeみたいな感じで取得する -->
-          <v-card-text class='d-flex justify-center home-header-target-time'>目標 60分/日</v-card-text>
+          <v-card-text class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
         </v-card>
       </v-row>
       <v-row class="pa-5">
