@@ -10,7 +10,7 @@
           <div class='d-flex justify-center home-header-progress'>
             <v-progress-linear></v-progress-linear>
           </div>
-          <v-card-text class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
+          <v-card-text v-if="storeUser" class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
         </v-card>
       </v-row>
       <v-row class="pa-5">
@@ -33,7 +33,7 @@ import Chart from './Chart.js'
 export default {
   components: { DurationTable, Chart },
   beforeCreate() {
-    this.$store.dispatch('getSelf')
+    this.$store.dispatch('requireLogin');
   },
   mounted () {
     this.getWeeklyDurationSum();
