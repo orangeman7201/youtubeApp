@@ -12,9 +12,6 @@ import Navbar from './components/Navbar';
 
 export default {
   components: {Navbar},
-  beforeCreate() {
-    this.$store.dispatch('requireLogin');
-  },
   data () {
     return {
       errors: '',

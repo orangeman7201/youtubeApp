@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import router from './router.js';
 
 Vue.use(Vuex);
 
@@ -26,12 +27,12 @@ export default new Vuex.Store({
       if(state.user === null) {
         axios
         .get('/session_check')
-        .then((response) => {
+        .then(response => {
           state.user = response.data
+          state.today = new Date();
         })
-        .catch(error => {
+        .catch(() => {
           router.push({name: 'LoginForm' })
-          console.log(error)
         })
       }
     },
