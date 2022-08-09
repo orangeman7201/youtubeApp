@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="card-limit">
-      <span class="card-limit-duration">{{ tortalduration / 60 }}分</span>
+      <span class="card-limit-duration">{{ post.duration / 60 }}分</span>
       <span class="card-limit-limit">/{{  post.user.limit / 60 }}分 </span>
     </div>
     <v-textarea
@@ -51,7 +51,6 @@ export default {
   },
   data () {
     return {
-      tortalduration: 90 * 60,
       user: null,
       isVisible: false,
     }

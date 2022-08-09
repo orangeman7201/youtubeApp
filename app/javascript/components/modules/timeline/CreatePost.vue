@@ -52,7 +52,6 @@ export default {
   data () {
     return {
       loaded: false,
-      tortalduration: 90 * 60,
       comment: "",
       isVisible: false,
     }
@@ -64,6 +63,9 @@ export default {
     },
     storeUser: function() {
       return this.$store.getters.storeUser 
+    },
+    totalDuration: function() {
+      return this.$store.getters.totalDuration
     },
   },
   methods: {
