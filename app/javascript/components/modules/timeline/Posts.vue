@@ -5,7 +5,7 @@
     </div>
     <div v-else v-for="(post, index) in posts" :key="post.id">
       <TimelineCreatePost v-if="isNotTodaysPost(post, index)" class="mb-10"/>
-      <TimelineEditPost v-if="isTodaysPost(post, index)" :post="post"/>
+      <TimelineEditPost v-if="isTodaysPost(post, index)" :post="post" class="mb-10"/>
       <TimelinePost v-else :post="post"/>
     </div>
   </div>
