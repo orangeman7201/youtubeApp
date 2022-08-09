@@ -1,8 +1,13 @@
 <template>
   <div>
-    <TimelineCreatePost v-if="isNotTodaysPost" class="mb-10"/>
-    <TimelineEditPost v-if="isTodaysPost" :post="post"/>
-    <TimelinePost v-else :post="post"/>
+    <div v-if="posts.length === 0">
+      <TimelineCreatePost class="mb-10"/>
+    </div>
+    <div v-else v-for="(post, index) in posts" :key="post.id">
+      <TimelineCreatePost v-if="isNotTodaysPost(post, index)" class="mb-10"/>
+      <TimelineEditPost v-if="isTodaysPost(post, index)" :post="post"/>
+      <TimelinePost v-else :post="post"/>
+    </div>
   </div>
 </template>
 
@@ -13,19 +18,19 @@ import TimelineEditPost from "./EditPost.vue"
 import moment from 'moment';
 
 export default {
-  props: ["post", "index"],
+  props: ["posts"],
   components: {
     TimelinePost,
     TimelineCreatePost,
     TimelineEditPost,
   },
-  computed: {
-    isTodaysPost: function() {
-      return this.index === 0 && moment().isSame(this.post.created_at, 'day');
+  methods: {
+    isTodaysPost: function(post, index) {
+      return index === 0 && moment().isSame(post.created_at, 'day');
     },
-    isNotTodaysPost: function() {
-      return this.index === 0 && !moment().isSame(this.post.created_at, 'day');
+    isNotTodaysPost: function(post, index) {
+      return index === 0 && !moment().isSame(post.created_at, 'day');
     }
-  }
+  },
 }
 </script>

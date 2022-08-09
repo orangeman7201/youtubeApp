@@ -1,5 +1,5 @@
 <template>
-  <Card v-if="loaded">
+  <Card>
     <v-alert
       v-model="isVisible"
       close-text="Close Alert"
@@ -13,17 +13,17 @@
     <div class="card-header">
       <img src="~user_default.svg" art="" class="mr-4" />
       <div class="mr-8">
-        <div class="card-user-name">{{ storeUser.name }}</div>
+        <div class="card-user-name">{{ post.user.name }}</div>
         <div class="card-date">{{ today }}</div>
       </div>
       <div class="card-header-user-and-limit">
-        <div>ID: {{ storeUser.id }}</div>
-        <div>目標: {{ storeUser.limit / 60}}分/日 </div>
+        <div>ID: {{  post.user.id }}</div>
+        <div>目標: {{  post.user.limit / 60}}分/日 </div>
       </div>
     </div>
     <div class="card-limit">
       <span class="card-limit-duration">{{ tortalduration / 60 }}分</span>
-      <span class="card-limit-limit">/{{ storeUser.limit / 60 }}分 </span>
+      <span class="card-limit-limit">/{{  post.user.limit / 60 }}分 </span>
     </div>
     <v-textarea
       v-model="post.comment"
@@ -45,20 +45,16 @@ import moment from 'moment';
 import axios from 'axios';
 
 export default {
-  props: ["post", "index"],
+  props: ["post"],
   components: {
     Card
   },
   data () {
     return {
-      loaded: false,
       tortalduration: 90 * 60,
       user: null,
       isVisible: false,
     }
-  },
-  mounted() {
-    this.getSelf()
   },
   computed: {
     today: function() {

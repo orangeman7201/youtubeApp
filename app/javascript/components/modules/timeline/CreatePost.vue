@@ -54,7 +54,7 @@ export default {
       loaded: false,
       tortalduration: 90 * 60,
       comment: "",
-       isVisible: false,
+      isVisible: false,
     }
   },
   computed: {
