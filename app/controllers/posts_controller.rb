@@ -7,7 +7,7 @@ before_action :find_post, only: [:update]
 
   def create
     post = current_user.posts.build(post_params)
-    if post.save
+    if post.save!
       render json: post
     else
       render json:{ errors: post.errors.full_messages }, status: :unprocessable_entity

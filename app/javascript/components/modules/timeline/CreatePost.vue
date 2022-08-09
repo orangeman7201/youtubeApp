@@ -69,7 +69,7 @@ export default {
   methods: {
     submit() {
       axios
-      .post('/posts', this.comment)
+      .post('/posts', { comment: this.comment})
       .then(() => {
         this.isVisible = true
         setTimeout(() => {
