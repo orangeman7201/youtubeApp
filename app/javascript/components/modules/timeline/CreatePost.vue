@@ -52,9 +52,8 @@ export default {
   data () {
     return {
       loaded: false,
-      tortalduration: 90 * 60,
       comment: "",
-       isVisible: false,
+      isVisible: false,
     }
   },
   computed: {
@@ -65,11 +64,14 @@ export default {
     storeUser: function() {
       return this.$store.getters.storeUser 
     },
+    totalDuration: function() {
+      return this.$store.getters.totalDuration
+    },
   },
   methods: {
     submit() {
       axios
-      .post('/posts', this.comment)
+      .post('/posts', { comment: this.comment})
       .then(() => {
         this.isVisible = true
         setTimeout(() => {

@@ -1,9 +1,7 @@
 <template>
   <div class="timeline">
     <TimelineHeader />
-    <div class="timeline_contents" v-for="(post, index) in posts" :key="post.id">
-      <TimelinePosts v-if="loaded" :post="post" :index="index"/>
-    </div>
+    <TimelinePosts class="timeline_contents" v-if="loaded" :posts="posts"/>
   </div>
 </template>
 
@@ -24,7 +22,7 @@ export default {
   },
   data () {
     return {
-      loaded: true,
+      loaded: false,
       posts: [],
       user: null,
       tortalduration: 90 * 60,
