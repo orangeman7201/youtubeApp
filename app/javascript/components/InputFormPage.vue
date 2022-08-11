@@ -131,17 +131,14 @@ export default {
       }
     },
     submitData: function() {
+      this.$store.dispatch('requireLogin');
       if(this.error === null) {
         axios
           .post('/movies', this.movie)
-          .then(response => {
-            let e = response.data
+          .then(() => {
             this.$router.push({name: 'HomeIndexPage'})
           })
-          .catch(error => {
-            console.error(error);
-            this.error = error;
-          })
+          .catch()
       } else {
         this.error = null
         this.unsavedError = '動画を保存できませんでした。URLを見直してください'
