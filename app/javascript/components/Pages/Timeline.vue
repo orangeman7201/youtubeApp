@@ -37,7 +37,7 @@ export default {
       axios
       .get('/posts', {
         params: {
-          firend: this.$route.query.friend
+          friend: this.$route.query.friend
         }
       })
       .then(response => {

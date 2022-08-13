@@ -2,7 +2,7 @@ class PostsController < ApplicationController
 before_action :find_post, only: [:update]
 
   def index
-    render json: current_user.posts.last(7).reverse, each_serializer: PostSerializer
+    render json: resource, each_serializer: PostSerializer
   end
 
   def create
@@ -19,6 +19,13 @@ before_action :find_post, only: [:update]
   end
 
   private
+  
+  def resource
+    resource = current_user.id
+    resource = current_user.friends.ids if params.include?("friend")
+    resource = Post.where(user_id: resource).order(created_at: :desc).limit(10)
+    resource
+  end
 
   def post_params
     params.fetch(:post, {}).permit(:comment)
