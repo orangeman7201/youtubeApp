@@ -44,10 +44,12 @@ export default {
     showFriendPosts: function() {
       this.selected = 'friend'
       this.$router.push({ name: "Timeline", query: { friend: true } }, () => {})
+      this.$emit('get-posts')
     },
     showMyPosts: function() {
       this.selected = 'me'
       this.$router.push({ name: "Timeline" }, () => {})
+      this.$emit('get-posts')
     },
   }
 }
