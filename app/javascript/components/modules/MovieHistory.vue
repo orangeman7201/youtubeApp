@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-row class="pa-5 grey lighten-3 max-height">
-      <v-card v-for="movie in movies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
+      <v-card v-for="movie in movies" :key="movie.id" @click="goMovieDetail(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
         <v-row align="center" justify="center"> 
           <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
             <v-img :src="movie.thumbnail" max-width="150px"  :class="[$vuetify.breakpoint.smAndDown ? 'ml-3 my-3' : '']" />
@@ -42,6 +42,11 @@ export default {
         this.isLoading = true;
         this.$emit('get-movies');
         this.isLoading = false;
+      }
+    },
+    goMovieDetail: function(movie_id) {
+      if(!(this.$route.query.friend === true)) {
+        this.$router.push(`/movies/${movie_id}`)
       }
     }
   }
