@@ -45,6 +45,7 @@ export default {
         {icon: 'mdi-magnify', title: 'ユーザー検索', route: '/users/serch'},
         {icon: 'mdi-account-multiple', title: '友達一覧', route: '/freinds/index'},
         {icon: 'mdi-presentation', title: 'タイムライン', route: '/timeline'},
+        {icon: 'mdi-book', title: '視聴履歴', route: '/movies'},
         {icon: 'mdi-cog', title: 'プロフィール', route: '/profile'},
       ],
     }
