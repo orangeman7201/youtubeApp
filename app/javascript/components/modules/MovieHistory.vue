@@ -1,11 +1,6 @@
 <template>
   <v-app>
-    <v-row class="pa-5 grey lighten-3">
-      <v-row v-if="movies.length === 0">
-        <v-col class="pt-2 pb-1 d-flex justify-center">
-          <p class="text-h4 mb-10">動画を視聴していません</p>
-        </v-col>
-      </v-row>
+    <v-row class="pa-5 grey lighten-3 max-height">
       <v-card v-for="movie in movies" :key="movie.id" @click="router(movie.id)" :class="[$vuetify.breakpoint.smAndDown ? 'pa-5 flex-grow' : 'ma-10 px-15 pb-10 pt-7']" outlined tile>
         <v-row align="center" justify="center"> 
           <v-col cols="5" md="4" :class="[$vuetify.breakpoint.smAndDown ? 'pa-0' : '']">
@@ -23,12 +18,41 @@
           </v-col>
         </v-row>
       </v-card>
+      <div v-if="isMounted">
+        <v-progress-circular v-if="isLoading" indeterminate />
+        <div v-else-if="!isMoreData" v-intersect="onIntersect"></div>
+      </div>
     </v-row>
   </v-app>
 </template>
 
 <script>
 export default {
-  props: ['movies'],
+  data () {
+    return {
+      isLoading: false,
+    }
+  },
+  props: ['movies', 'isMoreData', 'isMounted'],
+  methods: {
+    onIntersect: function(entries, observer, isIntersecting) {
+      if (!isIntersecting) {
+        return;
+      } else {
+        this.isLoading = true;
+        this.$emit('get-movie');
+        this.isLoading = false;
+      }
+    }
+  }
 }
 </script>
+
+<style scoped>
+.flex-grow {
+  flex-grow: 1;
+}
+.max-height {
+  height: 100%;
+}
+</style>
