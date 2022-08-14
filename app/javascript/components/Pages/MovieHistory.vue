@@ -1,15 +1,18 @@
 <template>
   <div>
-    <MovieHistory :movies="movies" :is-more-data="isMoreData" :is-mounted="isMounted" @get-movie="getMovie"/>
+    <MoviesHeader @get-movies="getMovies"/>
+    <MovieHistory :movies="movies" :is-more-data="isMoreData" :is-mounted="isMounted" @get-movies="getMovies"/>
   </div>
 </template>
 
 <script>
+import MoviesHeader from "../modules/movies/Header.vue"
 import MovieHistory from "../modules/MovieHistory.vue"
 import axios from 'axios';
 
 export default {
   components: {
+    MoviesHeader,
     MovieHistory,
   },
   data () {
@@ -27,10 +30,10 @@ export default {
     }
   },
   beforeMount() {
-    this.getMovie()
+    this.getMovies()
   },
   methods: {
-    getMovie() {
+    getMovies() {
       axios
       .get('/movies', {
         params: {

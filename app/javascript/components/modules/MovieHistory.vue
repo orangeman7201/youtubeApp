@@ -40,7 +40,7 @@ export default {
         return;
       } else {
         this.isLoading = true;
-        this.$emit('get-movie');
+        this.$emit('get-movies');
         this.isLoading = false;
       }
     }
