@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card v-if="isShowCreatedCard">
     <v-alert
       v-model="isVisible"
       close-text="Close Alert"
@@ -67,6 +67,9 @@ export default {
     totalDuration: function() {
       return this.$store.getters.totalDuration
     },
+    isShowCreatedCard: function() {
+      return !(this.$route.query.friend)
+    }
   },
   methods: {
     submit() {
