@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card v-if="isShowCreatedCard">
     <v-alert
       v-model="isVisible"
       close-text="Close Alert"
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="card-limit">
-      <span class="card-limit-duration">{{ tortalduration / 60 }}分</span>
+      <span class="card-limit-duration">{{ totalDuration / 60 }}分</span>
       <span class="card-limit-limit">/{{ storeUser.limit / 60 }}分 </span>
     </div>
     <v-textarea
@@ -67,6 +67,9 @@ export default {
     totalDuration: function() {
       return this.$store.getters.totalDuration
     },
+    isShowCreatedCard: function() {
+      return !(this.$route.query.friend)
+    }
   },
   methods: {
     submit() {

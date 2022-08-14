@@ -1,6 +1,6 @@
 <template>
   <div class="timeline">
-    <TimelineHeader />
+    <TimelineHeader @get-posts="getPosts"/>
     <TimelinePosts class="timeline_contents" v-if="loaded" :posts="posts"/>
   </div>
 </template>
@@ -24,8 +24,6 @@ export default {
     return {
       loaded: false,
       posts: [],
-      user: null,
-      tortalduration: 90 * 60,
     }
   },
   computed: {
@@ -37,7 +35,11 @@ export default {
   methods: {
     getPosts() {
       axios
-      .get('/posts')
+      .get('/posts', {
+        params: {
+          friend: this.$route.query.friend
+        }
+      })
       .then(response => {
         this.posts = response.data
         this.loaded = true

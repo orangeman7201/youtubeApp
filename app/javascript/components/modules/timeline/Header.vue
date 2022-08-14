@@ -20,6 +20,18 @@ export default {
       selected: 'me'
     }
   },
+  mounted() {
+    if (this.$route.query.friend) {
+      this.selected = 'friend'
+    }
+  },
+  watch: {
+    $route(to) {
+      if (to.query.friend) {
+        this.selected = 'friend'
+      }
+    }
+  },
   computed: {
     myPostsButtonClass: function() {
       return this.selected === 'me' ? 'showed-posts v-btn--outlined' : 'unshowed-posts'
@@ -31,9 +43,13 @@ export default {
   methods: {
     showFriendPosts: function() {
       this.selected = 'friend'
+      this.$router.push({ name: "Timeline", query: { friend: true } }, () => {})
+      this.$emit('get-posts')
     },
     showMyPosts: function() {
       this.selected = 'me'
+      this.$router.push({ name: "Timeline" }, () => {})
+      this.$emit('get-posts')
     },
   }
 }
