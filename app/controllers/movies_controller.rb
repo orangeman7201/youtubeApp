@@ -1,11 +1,11 @@
 class MoviesController < ApplicationController
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
-  before_action :set_movies, :movies_total, only: [:index, :total_duration]
+  before_action :set_movies, only: [:index, :total_duration]
   before_action :set_weekly_movies, only: [:weekly_duration_sum]
 
   def index
-    render json: {movies: @movies, total: @total}
+    render json: {movies: movies, total: movies_total}
   end
 
   def show
@@ -73,8 +73,19 @@ class MoviesController < ApplicationController
     @movies = current_user.movies.order(created_at: :desc).limit(10).offset(params[:page].to_i * 10)
   end
 
+  def movies
+    resource = current_user.id
+    resource = current_user.friends.ids if params[:friend] == "true"
+    resource = Movie.where(user_id: resource).order(created_at: :desc).limit(10).offset(params[:page].to_i * 10)
+    resource
+  end
+
   def movies_total
-    @total ||= current_user.movies.count
+    total = if params[:friend] == "false"
+              total ||= current_user.movies.count
+            else
+              total ||= Movie.where(user_id: current_user.friends.ids).count
+            end
   end
 
   def set_weekly_movies
