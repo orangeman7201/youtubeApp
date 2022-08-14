@@ -23,21 +23,11 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    requireLogin(state) {
-      if(state.user === null) {
-        axios
-        .get('/session_check')
-        .then(response => {
-          state.user = response.data
-          state.today = new Date();
-        })
-        .catch(() => {
-          router.push({name: 'LoginForm' })
-        })
-      }
+    updateUserStatus(state, user) {
+      state.user = user
     },
-    updateStatus(state) {
-      state.user = 'ok'
+    updateDateStatus(state) {
+      state.today = new Date();
     },
     lostUser(state) {
       state.user = null
@@ -65,11 +55,21 @@ export default new Vuex.Store({
      },
   },
   actions: {
-    requireLogin(context) {
-      context.commit('requireLogin')
-    },
-    updateStatus(context) {
-      context.commit('updateStatus')
+    requireLogin(context, to) {
+      if(context.state.user === null) {
+        axios
+        .get('/session_check')
+        .then(response => {
+          context.commit('updateUserStatus', response.data)
+          context.commit('updateDateStatus')
+          if (to) {
+            router.push({name: 'HomeIndexPage'}, () => {})
+          }
+        })
+        .catch(() => {
+          router.push({name: 'LoginForm'}, () => {})
+        })
+      }
     },
     lostUser(context) {
       context.commit('lostUser')
