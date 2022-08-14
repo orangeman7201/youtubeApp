@@ -66,26 +66,14 @@ export default {
       show: false,
     }  
   },
-
-  beforeMount() {
-    axios
-      .get('/session_check')
-      .then(() => {
-        this.$store.dispatch('getSelf')
-        this.$store.state.today = new Date();
-        this.$router.push({name: 'HomeIndexPage' });
-      })
-      .catch(error => {
-        this.$router.push({name: 'LoginForm' })
-        console.log(error)
-      })
-  },
-
   computed: {
     toggle () {
       const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
       const type = this.show ? 'text' : 'password'
       return { icon, type }
+    },
+    storeUser: function() {
+      return this.$store.getters.storeUser
     }
   },
   methods: {
@@ -93,6 +81,7 @@ export default {
       axios
         .post('/sessions', this.loginInfo)
         .then(() => {
+          this.$store.dispatch('getSelf');
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {

@@ -32,9 +32,6 @@ import Chart from './Chart.js'
 
 export default {
   components: { DurationTable, Chart },
-  beforeCreate() {
-    this.$store.dispatch('requireLogin');
-  },
   mounted () {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
