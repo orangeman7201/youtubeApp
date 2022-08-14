@@ -12,6 +12,7 @@ import About from './components/About.vue';
 import Timeline from './components/Pages/Timeline.vue';
 import Profile from './components/Pages/Profile.vue';
 import ProfileEdit from './components/Pages/ProfileEdit.vue';
+import MovieHistory from './components/Pages/MovieHistory';
 
 Vue.use(Router);
 
@@ -20,6 +21,7 @@ export default new Router ({
   routes: [
      {path: '/', component: About}, 
      {path: '/home', name: 'HomeIndexPage', component: HomeIndexPage}, 
+     {path: '/movies', name: 'MovieHistory', component: MovieHistory}, 
      {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 
      {path: '/movies/new', component: InputFormPage}, 
      {path: '/signup', component: SignUpForm}, 
