@@ -17,34 +17,49 @@ export default {
   },
   data () {
     return {
-      isVisible: false,
-      movies: [],
-      totalCount: 0,
+      myMovies: [],
+      myPage: 0,
+      myTotalCount: 0,
+      friendMovies: [],
+      friendPage: 0,
+      friendTotalCount: 0,
       isMounted: false,
-      page: 0,
-    }
-  },
-  computed: {
-    isMoreData() {
-      return this.totalCount <= this.movies.length
     }
   },
   beforeMount() {
     this.getMovies()
+  },
+  computed: {
+    isMoreData() {
+      return this.isFriend ?  this.friendTotalCount <= this.friendMovies.length : this.myTotalCount <= this.myMovies.length
+    },
+    isFriend() {
+      return this.$route.query.friend !== undefined
+    },
+    movies() {
+      return this.isFriend ? this.friendMovies : this.myMovies
+    },
   },
   methods: {
     getMovies() {
       axios
       .get('/movies', {
         params: {
-          page: this.page
+          page: this.isFriend ? this.friendPage : this.myPage,
+          friend: this.isFriend
         }
       })
       .then(response => {
-        this.movies.push(...response.data.movies);
-        this.totalCount = response.data.total
+        if (this.isFriend) {
+          this.friendMovies.push(...response.data.movies);
+          this.friendPage++
+          this.friendTotalCount = response.data.total
+        } else {
+          this.myMovies.push(...response.data.movies);
+          this.myPage++
+          this.myTotalCount = response.data.total
+        }
         this.isMounted = true
-        this.page++
       })
       .catch()
     },

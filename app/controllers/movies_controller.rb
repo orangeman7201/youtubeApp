@@ -75,13 +75,13 @@ class MoviesController < ApplicationController
 
   def movies
     resource = current_user.id
-    resource = current_user.friends.ids if params.include?("friend")
+    resource = current_user.friends.ids if params[:friend] == "true"
     resource = Movie.where(user_id: resource).order(created_at: :desc).limit(10).offset(params[:page].to_i * 10)
     resource
   end
 
   def movies_total
-    total = if !params[:friend]
+    total = if params[:friend] == "false"
               total ||= current_user.movies.count
             else
               total ||= Movie.where(user_id: current_user.friends.ids).count
