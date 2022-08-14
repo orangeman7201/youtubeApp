@@ -62,7 +62,9 @@ export default new Vuex.Store({
         .then(response => {
           context.commit('updateUserStatus', response.data)
           context.commit('updateDateStatus')
-          router.push({name: 'HomeIndexPage'}, () => {})
+          if (to) {
+            router.push({name: 'HomeIndexPage'}, () => {})
+          }
         })
         .catch(() => {
           router.push({name: 'LoginForm'}, () => {})
