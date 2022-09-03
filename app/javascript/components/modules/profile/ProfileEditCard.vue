@@ -4,6 +4,7 @@
       <div class="card-header">
         <img src="~user_default.svg" art="" class="mr-4 card-image" />
         <div class="card-user-profile">
+          <input type="file" id="image" name="image" accept="image/png,image/jpeg" @change="setImage" />
           <v-text-field
             :value="storeUser.name"
             label="ユーザー名"
@@ -27,7 +28,6 @@
 <script>
 import Card from "../Card.vue"
 import 'user_default.svg'
-import axios from 'axios';
 
 export default {
   components: {
@@ -37,6 +37,7 @@ export default {
     return {
       user: null,
       isVisible: false,
+      imageFile: null,
     }
   },
   computed: {
@@ -48,26 +49,14 @@ export default {
     },
   },
   methods: {
-    submit() {
-      axios
-      .patch(`/posts/${this.post.id}`, {
-        comment: this.post.comment
-      })
-      .then(() => {
-        this.isVisible = true
-        setTimeout(() => {
-          this.isVisible = false
-        }, 4000)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
     changeParamsName(event) {
       this.$emit('changeName', event);
     },
     changeParamsLimit(event) {
       this.$emit('changeLimit', event);
+    },
+    setImage(event) {
+      this.$emit('setImage', event);
     },
   }
 

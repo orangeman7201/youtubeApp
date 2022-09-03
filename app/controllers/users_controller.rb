@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
+    user.image.attach(params[:image])
     if user.update_columns(name: params[:name], limit: params[:limit])
       render json: user
     else
@@ -27,12 +28,12 @@ class UsersController < ApplicationController
   end
 
   def self
-    render json: current_user
+    render json: current_user, methods: [:image_url]
   end
 
   private
 
   def update_params
-    params.require(:user).permit(:name, :limit)
+    params.require(:user).permit(:name, :limit, :image)
   end
 end
