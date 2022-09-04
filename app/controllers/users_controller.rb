@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    render json: user
+    render json: user, methods: [:image_url] 
   end
 
   def create
@@ -18,8 +18,8 @@ class UsersController < ApplicationController
   end
 
   def update
+    debugger
     user = User.find(params[:id])
-    user.image.attach(params[:image])
     if user.update_columns(name: params[:name], limit: params[:limit])
       render json: user
     else
@@ -29,6 +29,12 @@ class UsersController < ApplicationController
 
   def self
     render json: current_user, methods: [:image_url]
+  end
+
+  def update_image
+    user = User.find(params[:id])
+    user.image.attach(params[:image])
+    user.save!
   end
 
   private

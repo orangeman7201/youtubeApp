@@ -52,8 +52,21 @@ export default {
       if(this.params.name === "") {
         this.params.name = this.storeUser.name
       }
+      if (this.params.image) {
+        const formData = new FormData();
+        formData.append("title", "title");
+        formData.append("image", this.params.image);
+        axios
+        .put(`/users/${this.storeUser.id}/update_image`,formData)
+        .catch(error => {
+          console.log(error.message)
+        })
+      }
       axios
-      .patch(`/users/${this.storeUser.id}`, this.params)
+      .patch(`/users/${this.storeUser.id}`, {
+        name: this.params.name,
+        limit: this.params.limit
+      })
       .then(() => {
         this.$store.dispatch('getSelf');
         this.$router.push( { name: 'Profile', params: { editStatus: 'success' } })
