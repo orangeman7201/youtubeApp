@@ -18,7 +18,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    debugger
     user = User.find(params[:id])
     if user.update_columns(name: params[:name], limit: params[:limit])
       render json: user
@@ -28,7 +27,7 @@ class UsersController < ApplicationController
   end
 
   def self
-    render json: current_user, methods: [:image_url]
+    render json: current_user, serializer: UserSerializer
   end
 
   def update_image

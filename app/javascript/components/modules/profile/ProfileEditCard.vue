@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Card v-if="storeUser">
+    <Card v-if="storeUserLoaded">
       <div class="card-header">
-        <img src="~user_default.svg" art="" class="mr-4 card-image" />
+        <img :src="imageUrl" art="" class="mr-4 card-image" />
         <div class="card-user-profile">
           <input type="file" id="image" name="image" accept="image/png,image/jpeg" @change="setImage" />
           <v-text-field
@@ -44,9 +44,15 @@ export default {
     storeUser: function() {
       return this.$store.getters.storeUser 
     },
+    storeUserLoaded: function() {
+      return this.$store.getters.storeUserLoaded 
+    },
     limitArray: function() {
       return [...Array(20)].map((_, i) => i * 10)
     },
+    imageUrl: function () {
+      return this.storeUser?.image_url ? this.storeUser.imageUrl : "/packs/media/images/user_default.svg"
+    }
   },
   methods: {
     changeParamsName(event) {

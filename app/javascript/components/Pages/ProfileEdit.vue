@@ -23,7 +23,9 @@ export default {
     }
   },
   beforeCreate() {
-    this.$store.dispatch('getSelf')
+    if(!this.storeUserLoaded) {
+      this.$store.dispatch('getSelf')
+    }
   },
   components: {
     ProfileEditCard,
@@ -31,6 +33,9 @@ export default {
   computed: {
     storeUser: function() {
       return this.$store.getters.storeUser 
+    },
+    storeUserLoaded: function() {
+      return this.$store.getters.storeUserLoaded 
     },
   },
   methods: {

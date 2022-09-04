@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    userLoaded: false,
     dateStatus: 0,
     totalDuration: 0,
   },
@@ -21,10 +22,16 @@ export default new Vuex.Store({
     storeUser: state => {
       return state.user
     },
+    storeUserLoaded: state => {
+      return state.userLoaded
+    },
   },
   mutations: {
     updateUserStatus(state, user) {
       state.user = user
+    },
+    updateUserLoadStatus(state, bool) {
+      state.userLoaded = bool
     },
     updateDateStatus(state) {
       state.today = new Date();
@@ -50,12 +57,14 @@ export default new Vuex.Store({
     },
     getSelf(state) {
       axios
-       .get('/self')
-       .then(response => (state.user = response.data))
-     },
+      .get('/self')
+      .then(response => {
+        state.user = response.date})
+    }
   },
   actions: {
     requireLogin(context, to) {
+      context.commit('updateUserLoadStatus', true)
       if(context.state.user === null) {
         axios
         .get('/session_check')
@@ -67,6 +76,7 @@ export default new Vuex.Store({
           }
         })
         .catch(() => {
+          context.commit('updateUserLoadStatus', false)
           router.push({name: 'LoginForm'}, () => {})
         })
       }
