@@ -12,7 +12,8 @@
       class="card-alert"
     >保存しました</v-alert>
     <div class="card-header">
-      <img src="~user_default.svg" art="" class="mr-4 card-image" />
+      <img v-if="storeUser.image_url" :src="storeUser.image_url" art="" class="mr-4 card-image" />
+      <img v-else src="~user_default.svg" art="" class="mr-4 card-image" />
       <div class="card-user-name">
         <div class="card-user-name-content">{{ storeUser.name }}</div>
         <div class="card-header-user-and-limit">
@@ -70,6 +71,7 @@ export default {
 .card-image {
   width: 80px;
   height: 80px;
+  border-radius: 50%;
 }
 .card-header {
   display: flex;
