@@ -1,7 +1,7 @@
 <template>
   <Card v-if="storeUser">
     <v-alert
-      v-model="isVisible"
+      v-model="isEditSuccessNoticeVisible"
       close-text="Close Alert"
       dismissible
       dense
@@ -30,7 +30,7 @@ import 'user_default.svg'
 import axios from 'axios';
 
 export default {
-  props: ["post", "index", "isVisible"],
+  props: ["post", "index", "isEditSuccessNoticeVisible"],
   components: {
     Card
   },
@@ -55,9 +55,9 @@ export default {
         comment: this.post.comment
       })
       .then(() => {
-        this.isVisible = true
+        this.isEditSuccessNoticeVisible = true
         setTimeout(() => {
-          this.isVisible = false
+          this.isEditSuccessNoticeVisible = false
         }, 4000)
       })
       .catch(error => {
