@@ -56,7 +56,7 @@ export default new Vuex.Store({
         await axios
         .get('/session_check')
         .then(response => {
-          context.commit('updateUserStatus', response.data)
+          context.dispatch('updateUserStatus', response.data)
           context.commit('updateDateStatus')
           if (to) {
             router.push({name: 'HomeIndexPage'}, () => {})
@@ -67,6 +67,9 @@ export default new Vuex.Store({
           router.push({name: 'LoginForm'}, () => {})
         })
       }
+    },
+    updateUserStatus(context, user) {
+      context.commit('updateUserStatus', user)
     },
     lostUser(context) {
       context.commit('lostUser')
