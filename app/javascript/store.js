@@ -55,12 +55,6 @@ export default new Vuex.Store({
       })
       .catch()
     },
-    getSelf(state) {
-      axios
-      .get('/self')
-      .then(response => {
-        state.user = response.date})
-    }
   },
   actions: {
     requireLogin(context, to) {
@@ -97,7 +91,16 @@ export default new Vuex.Store({
       context.commit('getTotalDuration')
     },
     getSelf(context) {
-      context.commit('getSelf')
+      context.commit('updateUserLoadStatus', true)
+      axios
+      .get('/self')
+      .then(response => {
+        context.commit('updateUserStatus', response.data)
+      })
+      .catch(() => {
+        context.commit('updateUserLoadStatus', false)
+        router.push({name: 'LoginForm'}, () => {})
+      })
     },
   }
 })

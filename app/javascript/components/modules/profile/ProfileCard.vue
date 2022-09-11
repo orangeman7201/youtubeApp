@@ -37,12 +37,6 @@ export default {
   beforeCreate() {
     this.$store.dispatch('getSelf')
   },
-  data () {
-    return {
-      tortalduration: 90 * 60,
-      user: null,
-    }
-  },
   computed: {
     storeUser: function() {
       return this.$store.getters.storeUser 

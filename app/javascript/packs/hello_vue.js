@@ -29,7 +29,7 @@ window.addEventListener("unhandledrejection", event => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.body.appendChild(document.createElement('hello'))
-  const app = new Vue({
+  new Vue({
     moment,
     el,
     router,
@@ -37,6 +37,4 @@ document.addEventListener('DOMContentLoaded', () => {
     vuetify,
     render: h => h(App)
   }).$mount()
-
-  console.log(app)
 })
