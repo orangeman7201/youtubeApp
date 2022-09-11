@@ -2,9 +2,13 @@
   <div>
     <Card v-if="storeUserLoaded">
       <div class="card-header">
-        <img :src="imageUrl" art="" class="mr-4 card-image" />
+        <label for="edit-profile-image" class="file-input-label">
+          <v-icon class="white--text profile-image-edit-icon">mdi-camera</v-icon>
+          <img v-if="storeUser.image_url" :src="storeUser.image_url" art="" class="mr-4 card-image" />
+          <div v-else class="mr-4 card-image grey lighten-3" />
+        </label>
+        <input type="file" id="edit-profile-image" accept="image/png,image/jpeg" @change="setImage" class="file-input"/>
         <div class="card-user-profile">
-          <input type="file" id="image" name="image" accept="image/png,image/jpeg" @change="setImage" />
           <v-text-field
             :value="storeUser.name"
             label="ユーザー名"
@@ -79,6 +83,7 @@ export default {
 .card-image {
   width: 80px;
   height: 80px;
+  border-radius: 50%;
 }
 .card-header {
   display: flex;
@@ -99,5 +104,18 @@ export default {
   flex-flow: column;
   font-size: 18px;
   margin-left: auto;
+}
+.file-input {
+  display: none;
+}
+.file-input-label {
+  cursor : pointer;
+  position: relative;
+}
+.profile-image-edit-icon {
+  position: absolute !important;
+  /* 29pxが画像の中心に来てていい感じでした */
+  top: 29px;
+  left: 29px;
 }
 </style>
