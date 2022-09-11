@@ -57,10 +57,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    requireLogin(context, to) {
+    async requireLogin(context, to) {
       context.commit('updateUserLoadStatus', true)
       if(context.state.user === null) {
-        axios
+        await axios
         .get('/session_check')
         .then(response => {
           context.commit('updateUserStatus', response.data)

@@ -76,11 +76,6 @@ export default {
       return this.$store.getters.storeUser
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$store.dispatch('requireLogin', to);
-    });
-  },
   methods: {
     submitData: function() { 
       axios
