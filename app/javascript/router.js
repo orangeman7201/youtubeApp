@@ -19,18 +19,83 @@ Vue.use(Router);
 export default new Router ({
   // mode: 'history',
   routes: [
-     {path: '/', component: About}, 
-     {path: '/home', name: 'HomeIndexPage', component: HomeIndexPage}, 
-     {path: '/movies', name: 'MovieHistory', component: MovieHistory}, 
-     {path: '/movies/:id(\\d+)', name: 'MovieDetailPage',component: MovieDetailPage}, 
-     {path: '/movies/new', component: InputFormPage}, 
-     {path: '/signup', component: SignUpForm}, 
-     {path: '/login', name: 'LoginForm', component: LoginForm}, 
-     {path: '/users/:id(\\d+)', name: 'UserDetailPage', component: UserDetailPage}, 
-     {path: '/users/serch', name: 'UserSerchForm', component: UserSerchForm}, 
-     {path: '/freinds/index', name: 'FriendIndexPage', component: FriendIndexPage}, 
-     {path: '/timeline', name: 'Timeline', component: Timeline}, 
-     {path: '/profile', name: 'Profile', component: Profile}, 
-     {path: '/profile/edit', name: 'ProfileEdit', component: ProfileEdit}, 
+    {path: '/', component: About}, 
+    { path: '/home',
+      name: 'HomeIndexPage',
+      component: HomeIndexPage,
+      meta: {
+      requireAuth: true
+      },
+    }, 
+    { path: '/movies',
+      name: 'MovieHistory',
+      component: MovieHistory,
+      meta: {
+      requireAuth: true
+      },
+    }, 
+    { path: '/movies/:id(\\d+)',
+      name: 'MovieDetailPage',
+      component: MovieDetailPage,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { path: '/movies/new',
+      component: InputFormPage,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { 
+      path: '/signup',
+      component: SignUpForm,
+    }, 
+    { path: '/login',
+      name: 'LoginForm',
+      component: LoginForm,
+    }, 
+    { path: '/users/:id(\\d+)',
+      name: 'UserDetailPage',
+      component: UserDetailPage,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { path: '/users/serch',
+      name: 'UserSerchForm',
+      component: UserSerchForm,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { path: '/freinds/index',
+      name: 'FriendIndexPage',
+      component: FriendIndexPage,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { path: '/timeline',
+      name: 'Timeline',
+      component: Timeline,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { path: '/profile',
+      name: 'Profile',
+      component: Profile,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { path: '/profile/edit',
+      name: 'ProfileEdit',
+      component: ProfileEdit,
+      meta: {
+        requireAuth: true
+      },
+    }, 
   ]
 })
