@@ -34,9 +34,6 @@ export default {
   components: {
     Card
   },
-  beforeCreate() {
-    this.$store.dispatch('getSelf')
-  },
   computed: {
     storeUser: function() {
       return this.$store.getters.storeUser 

@@ -93,17 +93,5 @@ export default new Vuex.Store({
       })
       .catch()
     },
-    getSelf(context) {
-      context.commit('updateUserLoadStatus', true)
-      axios
-      .get('/self')
-      .then(response => {
-        context.commit('updateUserStatus', response.data)
-      })
-      .catch(() => {
-        context.commit('updateUserLoadStatus', false)
-        router.push({name: 'LoginForm'}, () => {})
-      })
-    },
   }
 })

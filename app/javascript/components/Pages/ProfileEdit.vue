@@ -22,11 +22,6 @@ export default {
       }
     }
   },
-  beforeCreate() {
-    if(!this.storeUserLoaded) {
-      this.$store.dispatch('getSelf')
-    }
-  },
   components: {
     ProfileEditCard,
   },
@@ -62,7 +57,7 @@ export default {
         formData.append("title", "title");
         formData.append("image", this.params.image);
         axios
-        .put(`/users/${this.storeUser.id}/update_image`,formData)
+        .put(`/users/${this.storeUser.id}/update_image`, formData)
         .catch(error => {
           console.log(error.message)
         })
@@ -72,8 +67,8 @@ export default {
         name: this.params.name,
         limit: this.params.limit
       })
-      .then(() => {
-        this.$store.dispatch('getSelf');
+      .then(response => {
+        this.$store.dispatch('updateUserStatus', response.data)
         this.$router.push( { name: 'Profile', params: { editStatus: 'success' } })
       })
       .catch(error => {
