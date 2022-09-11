@@ -45,15 +45,8 @@ export default new Vuex.Store({
     oneDayAfter(state) {
       state.dateStatus++
     },
-    getTotalDuration(state) {
-      axios
-      .get('/durations', { 
-        params: { dateStatus: state.dateStatus}
-      })
-      .then(response => {
-        state.totalDuration = response.data.total_duration;
-      })
-      .catch()
+    setTotalDuration(state, totalDuration) {
+      state.totalDuration = totalDuration
     },
   },
   actions: {
@@ -88,7 +81,14 @@ export default new Vuex.Store({
       context.commit('oneDayAfter')
     },
     getTotalDuration(context) {
-      context.commit('getTotalDuration')
+      axios
+      .get('/durations', { 
+        params: { dateStatus: context.state.dateStatus}
+      })
+      .then(response => {
+        context.commit('setTotalDuration', response.data.total_duration)
+      })
+      .catch()
     },
     getSelf(context) {
       context.commit('updateUserLoadStatus', true)

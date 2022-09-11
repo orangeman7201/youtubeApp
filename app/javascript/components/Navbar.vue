@@ -50,11 +50,6 @@ export default {
       ],
     }
   },
-  beforeMount() {
-    if(this.storeUser) {
-      this.$store.dispatch("getSelg")
-    }
-  },
   computed: {
     storeUser: function() {
       return this.$store.getters.storeUser 
