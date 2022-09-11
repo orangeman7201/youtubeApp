@@ -17,7 +17,7 @@ export default {
     return {
       params: {
         name: "",
-        limit: 0,
+        limit: null,
         image: null,
       }
     }
@@ -51,6 +51,9 @@ export default {
     submit() {
       if(this.params.name === "") {
         this.params.name = this.storeUser.name
+      }
+      if(this.params.limit === null) {
+        this.params.limit = this.storeUser.limit
       }
       if (this.params.image) {
         const formData = new FormData();
