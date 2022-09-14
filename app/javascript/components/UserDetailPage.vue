@@ -37,7 +37,6 @@ export default {
   mounted () {
     axios
       .get(`/users/${this.$route.params.id}.json`)
-      // .then(response => console.log(response.dat)
       .then(response => (this.user = response.data))
     },
   methods: {

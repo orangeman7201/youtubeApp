@@ -1,7 +1,7 @@
 <template>
   <Card v-if="storeUser">
     <v-alert
-      v-model="isVisible"
+      v-model="isEditSuccessNoticeVisible"
       close-text="Close Alert"
       dismissible
       dense
@@ -12,7 +12,8 @@
       class="card-alert"
     >保存しました</v-alert>
     <div class="card-header">
-      <img src="~user_default.svg" art="" class="mr-4 card-image" />
+      <img v-if="storeUser.image_url" :src="storeUser.image_url" art="" class="mr-4 card-image" />
+      <img v-else src="~user_default.svg" art="" class="mr-4 card-image" />
       <div class="card-user-name">
         <div class="card-user-name-content">{{ storeUser.name }}</div>
         <div class="card-header-user-and-limit">
@@ -30,18 +31,9 @@ import 'user_default.svg'
 import axios from 'axios';
 
 export default {
-  props: ["post", "index", "isVisible"],
+  props: ["post", "index", "isEditSuccessNoticeVisible"],
   components: {
     Card
-  },
-  beforeCreate() {
-    this.$store.dispatch('getSelf')
-  },
-  data () {
-    return {
-      tortalduration: 90 * 60,
-      user: null,
-    }
   },
   computed: {
     storeUser: function() {
@@ -55,9 +47,9 @@ export default {
         comment: this.post.comment
       })
       .then(() => {
-        this.isVisible = true
+        this.isEditSuccessNoticeVisible = true
         setTimeout(() => {
-          this.isVisible = false
+          this.isEditSuccessNoticeVisible = false
         }, 4000)
       })
       .catch(error => {
@@ -79,6 +71,7 @@ export default {
 .card-image {
   width: 80px;
   height: 80px;
+  border-radius: 50%;
 }
 .card-header {
   display: flex;

@@ -17,9 +17,6 @@ export default {
       errors: '',
     }
   },
-  beforeCreate() {
-    this.$store.dispatch('requireLogin');
-  },
   computed: {
     isTopPage: function() {
       return this.$route.path === '/'

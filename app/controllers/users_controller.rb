@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    render json: user
+    render json: user, serializer: UserSerializer
   end
 
   def create
@@ -20,19 +20,27 @@ class UsersController < ApplicationController
   def update
     user = User.find(params[:id])
     if user.update_columns(name: params[:name], limit: params[:limit])
-      render json: user
+      render json: user, serializer: UserSerializer
     else
       render json:{ errors: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def self
-    render json: current_user
+    render json: current_user, serializer: UserSerializer
+  end
+
+  def update_image
+    user = User.find(params[:id])
+    user.image.attach(params[:image])
+    if user.save!
+      render json: user, serializer: UserSerializer
+    end
   end
 
   private
 
   def update_params
-    params.require(:user).permit(:name, :limit)
+    params.permit(:name, :limit, :image)
   end
 end

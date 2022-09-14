@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
       user = User.find_by(id: user_id)
         if user && user.authenticated?(cookies[:remember_token])
           sign_in(user)
-          render json: current_user
+          render json: current_user, serializer: UserSerializer
         end
       end
     end

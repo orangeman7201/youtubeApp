@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <ProfileEditCard @changeName="changeName" @changeLimit="changeLimit"/>
+    <ProfileEditCard @changeName="changeName" @changeLimit="changeLimit" @setImage="setImage"/>
     <div class="card-buttons">
       <v-btn color="#A7DDEA" width="120px" height="56px" class="card-button-cancel" @click="cancel">キャンセル</v-btn>
       <v-btn color="#18B1CE" width="120px" height="56px" class="card-button-post" @click.prevent="submit">保存</v-btn>
@@ -17,12 +17,10 @@ export default {
     return {
       params: {
         name: "",
-        limit: 0,
+        limit: null,
+        image: null,
       }
     }
-  },
-  beforeCreate() {
-    this.$store.dispatch('getSelf')
   },
   components: {
     ProfileEditCard,
@@ -31,6 +29,9 @@ export default {
     storeUser: function() {
       return this.$store.getters.storeUser 
     },
+    storeUserLoaded: function() {
+      return this.$store.getters.storeUserLoaded 
+    },
   },
   methods: {
     changeName: function(name) {
@@ -38,6 +39,9 @@ export default {
     },
     changeLimit: function(limit) {
       this.params.limit = limit * 60
+    },
+    setImage: function(image) {
+      this.params.image = image.target.files[0]
     },
     cancel() {
       if(confirm('内容は保存されませんが、よろしいでしょうか？')){
@@ -48,10 +52,26 @@ export default {
       if(this.params.name === "") {
         this.params.name = this.storeUser.name
       }
+      if(this.params.limit === null) {
+        this.params.limit = this.storeUser.limit
+      }
+      if (this.params.image) {
+        const formData = new FormData();
+        formData.append("title", "title");
+        formData.append("image", this.params.image);
+        axios
+        .put(`/users/${this.storeUser.id}/update_image`, formData)
+        .catch(error => {
+          console.log(error.message)
+        })
+      }
       axios
-      .patch(`/users/${this.storeUser.id}`, this.params)
-      .then(() => {
-        this.$store.dispatch('getSelf');
+      .patch(`/users/${this.storeUser.id}`, {
+        name: this.params.name,
+        limit: this.params.limit
+      })
+      .then(response => {
+        this.$store.dispatch('updateUserStatus', response.data)
         this.$router.push( { name: 'Profile', params: { editStatus: 'success' } })
       })
       .catch(error => {

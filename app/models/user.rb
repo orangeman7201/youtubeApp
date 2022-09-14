@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include Rails.application.routes.url_helpers
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -13,6 +14,7 @@ class User < ApplicationRecord
   has_many :friends, through: :active_friend, source: :friend_user
   has_many :posts, dependent: :destroy
   has_many :replies, dependent: :destroy
+  has_one_attached :image
 
   attr_accessor :remember_token
   before_save { self.email = self.email.downcase }
@@ -24,7 +26,7 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
 
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
 
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -51,5 +53,9 @@ class User < ApplicationRecord
 
   def remember_me
     true
+  end
+
+  def image_url
+    image.attached? ? url_for(image) : nil
   end
 end

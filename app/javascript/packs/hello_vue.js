@@ -27,9 +27,16 @@ window.addEventListener("unhandledrejection", event => {
   console.log("Captured in unhandledrejection EventListener", event.reason);
 });
 
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requireAuth) {
+    await store.dispatch('requireLogin');
+  }
+  next()
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const el = document.body.appendChild(document.createElement('hello'))
-  const app = new Vue({
+  new Vue({
     moment,
     el,
     router,
@@ -37,6 +44,4 @@ document.addEventListener('DOMContentLoaded', () => {
     vuetify,
     render: h => h(App)
   }).$mount()
-
-  console.log(app)
 })

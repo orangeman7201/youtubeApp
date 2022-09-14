@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    userLoaded: false,
     dateStatus: 0,
     totalDuration: 0,
   },
@@ -21,10 +22,16 @@ export default new Vuex.Store({
     storeUser: state => {
       return state.user
     },
+    storeUserLoaded: state => {
+      return state.userLoaded
+    },
   },
   mutations: {
     updateUserStatus(state, user) {
       state.user = user
+    },
+    updateUserLoadStatus(state, bool) {
+      state.userLoaded = bool
     },
     updateDateStatus(state) {
       state.today = new Date();
@@ -38,38 +45,31 @@ export default new Vuex.Store({
     oneDayAfter(state) {
       state.dateStatus++
     },
-    getTotalDuration(state) {
-      axios
-      .get('/durations', { 
-        params: { dateStatus: state.dateStatus}
-      })
-      .then(response => {
-        state.totalDuration = response.data.total_duration;
-      })
-      .catch()
+    setTotalDuration(state, totalDuration) {
+      state.totalDuration = totalDuration
     },
-    getSelf(state) {
-      axios
-       .get('/self')
-       .then(response => (state.user = response.data))
-     },
   },
   actions: {
-    requireLogin(context, to) {
+    async requireLogin(context, to) {
+      context.commit('updateUserLoadStatus', true)
       if(context.state.user === null) {
-        axios
+        await axios
         .get('/session_check')
         .then(response => {
-          context.commit('updateUserStatus', response.data)
+          context.dispatch('updateUserStatus', response.data)
           context.commit('updateDateStatus')
           if (to) {
             router.push({name: 'HomeIndexPage'}, () => {})
           }
         })
         .catch(() => {
+          context.commit('updateUserLoadStatus', false)
           router.push({name: 'LoginForm'}, () => {})
         })
       }
+    },
+    updateUserStatus(context, user) {
+      context.commit('updateUserStatus', user)
     },
     lostUser(context) {
       context.commit('lostUser')
@@ -84,10 +84,14 @@ export default new Vuex.Store({
       context.commit('oneDayAfter')
     },
     getTotalDuration(context) {
-      context.commit('getTotalDuration')
-    },
-    getSelf(context) {
-      context.commit('getSelf')
+      axios
+      .get('/durations', { 
+        params: { dateStatus: context.state.dateStatus}
+      })
+      .then(response => {
+        context.commit('setTotalDuration', response.data.total_duration)
+      })
+      .catch()
     },
   }
 })

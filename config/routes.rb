@@ -5,12 +5,16 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   resources :movies
-  resources :users
+  resources :users do
+    member do
+      put 'update_image'
+    end
+  end
   resources :sessions
   resources :friends
   resources :durations, only: [:index]
   resources :posts, only: [:index, :create, :update]
-  resources :replies, only: [:create]
+  resources :replies, only: [:create] 
 
   post "sessions/logout", to: "sessions#destroy"
   post "sign_up", to: "users#create"

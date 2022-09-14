@@ -1,8 +1,13 @@
 <template>
   <div>
-    <Card v-if="storeUser">
+    <Card v-if="storeUserLoaded">
       <div class="card-header">
-        <img src="~user_default.svg" art="" class="mr-4 card-image" />
+        <label for="edit-profile-image" class="file-input-label">
+          <v-icon class="white--text profile-image-edit-icon">mdi-camera</v-icon>
+          <img v-if="storeUser.image_url" :src="storeUser.image_url" art="" class="mr-4 card-image" />
+          <div v-else class="mr-4 card-image grey lighten-3" />
+        </label>
+        <input type="file" id="edit-profile-image" accept="image/png,image/jpeg" @change="setImage" class="file-input"/>
         <div class="card-user-profile">
           <v-text-field
             :value="storeUser.name"
@@ -27,7 +32,6 @@
 <script>
 import Card from "../Card.vue"
 import 'user_default.svg'
-import axios from 'axios';
 
 export default {
   components: {
@@ -37,37 +41,32 @@ export default {
     return {
       user: null,
       isVisible: false,
+      imageFile: null,
     }
   },
   computed: {
     storeUser: function() {
       return this.$store.getters.storeUser 
     },
+    storeUserLoaded: function() {
+      return this.$store.getters.storeUserLoaded 
+    },
     limitArray: function() {
       return [...Array(20)].map((_, i) => i * 10)
     },
+    imageUrl: function () {
+      return this.storeUser?.image_url ? this.storeUser.imageUrl : "/packs/media/images/user_default.svg"
+    }
   },
   methods: {
-    submit() {
-      axios
-      .patch(`/posts/${this.post.id}`, {
-        comment: this.post.comment
-      })
-      .then(() => {
-        this.isVisible = true
-        setTimeout(() => {
-          this.isVisible = false
-        }, 4000)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    },
     changeParamsName(event) {
       this.$emit('changeName', event);
     },
     changeParamsLimit(event) {
       this.$emit('changeLimit', event);
+    },
+    setImage(event) {
+      this.$emit('setImage', event);
     },
   }
 
@@ -84,6 +83,7 @@ export default {
 .card-image {
   width: 80px;
   height: 80px;
+  border-radius: 50%;
 }
 .card-header {
   display: flex;
@@ -104,5 +104,18 @@ export default {
   flex-flow: column;
   font-size: 18px;
   margin-left: auto;
+}
+.file-input {
+  display: none;
+}
+.file-input-label {
+  cursor : pointer;
+  position: relative;
+}
+.profile-image-edit-icon {
+  position: absolute !important;
+  /* 29pxが画像の中心に来てていい感じでした */
+  top: 29px;
+  left: 29px;
 }
 </style>
