@@ -4,7 +4,7 @@
       <div class="card-header">
         <label for="edit-profile-image" class="file-input-label">
           <v-icon class="white--text profile-image-edit-icon">mdi-camera</v-icon>
-          <img v-if="storeUser.image_url" :src="storeUser.image_url" art="" class="mr-4 card-image" />
+          <img v-if="storeUser.image_url" :src="imageUrl" art="" class="mr-4 card-image" />
           <div v-else class="mr-4 card-image grey lighten-3" />
         </label>
         <input type="file" id="edit-profile-image" accept="image/png,image/jpeg" @change="setImage" class="file-input"/>
@@ -37,11 +37,9 @@ export default {
   components: {
     Card
   },
-  data () {
+  data() {
     return {
-      user: null,
-      isVisible: false,
-      imageFile: null,
+      previewImageUrl: null,
     }
   },
   computed: {
@@ -54,9 +52,9 @@ export default {
     limitArray: function() {
       return [...Array(20)].map((_, i) => i * 10)
     },
-    imageUrl: function () {
-      return this.storeUser?.image_url ? this.storeUser.imageUrl : "/packs/media/images/user_default.svg"
-    }
+    imageUrl: function() {
+      return this.previewImageUrl ? this.previewImageUrl : this.storeUser.image_url
+    },
   },
   methods: {
     changeParamsName(event) {
@@ -67,6 +65,8 @@ export default {
     },
     setImage(event) {
       this.$emit('setImage', event);
+      const file = event.target.files[0];
+      this.previewImageUrl = URL.createObjectURL(file)
     },
   }
 
