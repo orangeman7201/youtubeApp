@@ -48,7 +48,7 @@ export default {
         this.$router.push('/profile')
       }
     },
-    submit() {
+    async submit() {
       if(this.params.name === "") {
         this.params.name = this.storeUser.name
       }
@@ -59,7 +59,7 @@ export default {
         const formData = new FormData();
         formData.append("title", "title");
         formData.append("image", this.params.image);
-        axios
+        await axios
         .put(`/users/${this.storeUser.id}/update_image`, formData)
         .catch(error => {
           console.log(error.message)
@@ -72,7 +72,7 @@ export default {
       })
       .then(response => {
         this.$store.dispatch('updateUserStatus', response.data)
-        this.$router.push( { name: 'Profile', params: { editStatus: 'success' } })
+        this.$router.push({ name: 'Profile', params: { editStatus: 'success' } })
       })
       .catch(error => {
         console.log(error.message)
