@@ -4,16 +4,12 @@
       app
       flat
       color="#1995AD"
-      height="70"
+      height="86px"
       width="100%"
       class="d-flex justify-center"
     >
-        <v-app-bar-nav-icon @click="drawer =!drawer" v-if="!isLoginPage">
-        </v-app-bar-nav-icon>
-        <h4 class="mx-auto header_title">Y stopper</h4>
-        <v-btn icon to="/movies/new" v-if="!isLoginPage">
-          <v-icon>mdi-movie-open-plus-outline</v-icon>
-        </v-btn>
+      
+      <h4 class="mx-auto header_title">{{$route.meta.title}}</h4>
     </v-app-bar>
 
     <v-navigation-drawer app temporary v-model="drawer" color="#1995AD">
@@ -97,6 +93,16 @@ export default {
 <style scoped>
 .header_title {
   color: white;
-  font-family: 'Noto Sans';
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  line-height: 16px;
+}
+.humbarger-menue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #FFFFFF;
 }
 </style>
