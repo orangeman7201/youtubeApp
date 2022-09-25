@@ -1,6 +1,6 @@
 <template>
   <v-app class="main-font">
-    <Navbar v-if="!isTopPage"/>
+    <GlobalHeader v-if="!isTopPage"/>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar';
+import GlobalHeader from './components/GlobalHeader.vue';
 
 export default {
-  components: {Navbar},
+  components: { GlobalHeader },
   data () {
     return {
       errors: '',

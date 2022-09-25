@@ -1,31 +1,12 @@
 <template>
-  <nav>
-    <v-app-bar
-      app
-      flat
-      color="#1995AD"
-      height="86px"
-      width="100%"
-      class="d-flex justify-center"
-    >
-      
-      <h4 class="mx-auto header_title">{{$route.meta.title}}</h4>
-    </v-app-bar>
-
-    <v-navigation-drawer app temporary v-model="drawer" color="#1995AD">
-      <v-list class="mt-4">
-        <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="white--text">
-          <v-list-item-action>
-            <v-icon class="white--text">{{list.icon}}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content class="white--text">{{list.title}}</v-list-item-content>
-        </v-list-item>
-        <v-list-item class="my-7">
-          <v-btn @click.prevent="logout">ログアウト</v-btn>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-  </nav>
+  <header class="header">
+    <div>
+      <button @click="drawer =!drawer" v-if="!isLoginPage" class="humbarger-button">
+        <img src="~menu.svg" art="" width="24px" height="24px">
+      </button>
+      <h4 class="d-flex justify-center header-title">{{$route.meta.title}}</h4>
+    </div>
+  </header>
 </template>
 
 <script>
@@ -91,18 +72,21 @@ export default {
 </script>
 
 <style scoped>
-.header_title {
+.header {
+  background-color: #1995AD;
+  height: 86px;
+  width: 100%;
+  padding: 40px 0 10px ;
+}
+.humbarger-button {
+  position: absolute;
+  top: 34px;
+  left: 26px;
+}
+.header-title {
   color: white;
   font-size: 16px;
   font-weight: 400;
-  margin-top: 40px;
-  margin-bottom: 10px;
   line-height: 16px;
-}
-.humbarger-menue {
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: #FFFFFF;
 }
 </style>
