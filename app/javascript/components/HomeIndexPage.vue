@@ -1,18 +1,16 @@
 <template>
   <v-app v-if="loaded" id="app">
-    <v-row class="pa-5 grey lighten-3">
-      <v-row class="pa-5">
-        <v-card class="py-9 px-5" width="100%" height="274px">
-          <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
-          <v-card-text class='d-flex justify-center home-header-body' :class="overHourClass">
-            {{ formattedTotalDuration}}
-          </v-card-text>
-          <div class='d-flex justify-center home-header-progress'>
-            <v-progress-linear></v-progress-linear>
-          </div>
-          <v-card-text v-if="storeUser" class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
-        </v-card>
-      </v-row>
+    <div class="pa-5 home-backgound">
+      <v-card class="mt-6 mx-7 mb-8 pt-6 px-8 pb-3" flat>
+        <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
+        <v-card-text class='d-flex justify-center home-header-body'>
+          {{ formattedTotalDuration}}<span class="text-minute">分</span>
+        </v-card-text>
+        <div class='d-flex justify-center home-header-progress'>
+          <v-progress-linear></v-progress-linear>
+        </div>
+        <v-card-text v-if="storeUser" class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
+      </v-card>
       <v-row class="pa-5">
         <v-card v-if="loaded" class="py-9 px-5" width="100%">
           <h3 class="d-flex justify-center">週間サマリー</h3>
@@ -20,7 +18,7 @@
           <DurationTable :items="weeklyDurationSum" />
         </v-card>
       </v-row>
-    </v-row>
+    </div>
   </v-app>
 </template>
 
@@ -86,24 +84,8 @@ export default {
     dateStatus: function() {
       return this.$store.getters.dateStatus
     },
-    overHourClass: function() {
-      const hour = Math.floor(this.totalDuration/3600)
-      if (hour > 0) {
-        return 'font-size-small'
-      }
-      return 'font-size-big'
-    },
     formattedTotalDuration: function() {
-      const hour = Math.floor(this.totalDuration/3600)
-      const minute = Math.floor(this.totalDuration/60%60)
-      const second = this.totalDuration%60
-      if (hour > 0) {
-        return `${hour}時間${minute}分${second}秒`
-      }
-      if (minute > 0) {
-         return `${minute}分${second}秒`
-      }
-      return `${second}秒`
+      return Math.floor(this.totalDuration/60%60)
     },
     dateArray: function() {
       return this.weeklyDurationSum.map(item => {
@@ -156,22 +138,22 @@ export default {
   .flex-grow {
     flex-grow: 1;
   }
-  .font-size-small {
-    font-size:min(9.5vw, 50px);
-  }
-  .font-size-big {
-    font-size:min(14vw, 50px);
-  }
   .home-header-title {
-    font-size: 20px;
+    font-size: 15px;
+    line-height: 18px;
+    color: #333333;
     padding: 0;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
   }
   .home-header-body {
-    padding: 0;
+    padding: 0 0 0 20px;
+    font-size: 45px;
+    line-height: 54px;
+    color: #333333;
     margin-bottom: 32px;
     height: 64px;
     align-items: center;
+    vertical-align: middle;
   }
   .home-header-progress {
     padding: 0;
@@ -180,5 +162,14 @@ export default {
   .home-header-target-time {
     font-size: 20px;
     padding: 0;
+  }
+  .home-backgound {
+    display: block;
+    background-color: #F1F1F1;
+  } 
+  .text-minute {
+    font-size: 15px;
+    margin-left: 4px;
+    padding-top: 14px;
   }
 </style>
