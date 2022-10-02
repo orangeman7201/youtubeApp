@@ -1,7 +1,7 @@
 <template>
   <v-app class="main-font">
-    <AddMovieButton />
-    <GlobalHeader v-if="!isTopPage"/>
+    <AddMovieButton v-if="isHeaderShow"/>
+    <GlobalHeader v-if="isHeaderShow"/>
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -20,8 +20,8 @@ export default {
     }
   },
   computed: {
-    isTopPage: function() {
-      return this.$route.path === '/'
+    isHeaderShow: function() {
+      return !(this.$route.path === '/login' || this.$route.path === '/')
     },
   }
 }
