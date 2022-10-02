@@ -1,7 +1,7 @@
 <template>
-  <button class="add-movie-button">
+  <router-link class="add-movie-button" to="/movies/new">
     <span class="dli-plus"></span>
-  </button>
+  </router-link>
 </template>
 
 <script>
@@ -35,6 +35,8 @@ export default {
   height: 3px;
   background: currentColor;
   position: relative;
+  top: 22px;
+  left: 20px
 }
 .dli-plus::before {
   content: '';
