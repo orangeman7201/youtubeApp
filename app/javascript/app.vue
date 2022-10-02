@@ -1,5 +1,6 @@
 <template>
   <v-app class="main-font">
+    <AddMovieButton />
     <GlobalHeader v-if="!isTopPage"/>
     <v-main>
       <router-view></router-view>
@@ -8,10 +9,11 @@
 </template>
 
 <script>
+import AddMovieButton from './components/modules/AddMovieButton.vue';
 import GlobalHeader from './components/GlobalHeader.vue';
 
 export default {
-  components: { GlobalHeader },
+  components: { AddMovieButton, GlobalHeader },
   data () {
     return {
       errors: '',
