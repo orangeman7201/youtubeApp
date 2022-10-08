@@ -15,7 +15,7 @@
             達成中
           </div>
           <div v-else class="overLimit">
-            <span class="excessText">過剰</span>{{ overLimitTime }}分
+            <ExcessText />{{ overLimitTime }}分
           </div>
         </div>
       </v-card>
@@ -34,11 +34,12 @@
 import axios from 'axios';
 import moment from 'moment';
 import DurationTable from './DurationTable.vue';
-import Chart from './Chart.js'
-import ProgressBar from './modules/ProgressBar.vue'
+import Chart from './Chart.js';
+import ProgressBar from './modules/ProgressBar.vue';
+import ExcessText from './modules/ExcessText.vue';
 
 export default {
-  components: { DurationTable, Chart, ProgressBar },
+  components: { DurationTable, Chart, ProgressBar, ExcessText },
   mounted () {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
