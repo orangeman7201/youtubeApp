@@ -6,10 +6,10 @@
         <v-card-text class='d-flex justify-center home-header-body'>
           {{ formattedTotalDuration}}<span class="text-minute">分</span>
         </v-card-text>
+        <v-card-text v-if="storeUser" class='d-flex justify-end home-header-target-time'>目標 <span class="home-header-target-time-text">{{ storeUser.limit / 60 }}</span>分</v-card-text>
         <div class='home-header-progress'>
           <ProgressBar :total-duration="totalDuration" :limit="storeUser.limit"/>
         </div>
-        <v-card-text v-if="storeUser" class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
       </v-card>
       <v-row class="pa-5">
         <v-card v-if="loaded" class="py-9 px-5" width="100%">
@@ -150,9 +150,8 @@ export default {
     padding: 0 0 0 20px;
     font-size: 45px;
     line-height: 54px;
+    max-height: 54px;
     color: #333333;
-    margin-bottom: 32px;
-    height: 64px;
     align-items: center;
     vertical-align: middle;
   }
@@ -161,8 +160,15 @@ export default {
     margin-bottom: 12px;
   }
   .home-header-target-time {
-    font-size: 20px;
+    font-size: 9px;
     padding: 0;
+    color: #1995AD !important;
+    align-items: flex-end;
+  }
+  .home-header-target-time-text {
+    font-size: 15px;
+    margin: 0 3px;
+    padding-bottom: 1px;
   }
   .home-backgound {
     display: block;
