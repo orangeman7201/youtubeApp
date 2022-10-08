@@ -6,8 +6,8 @@
         <v-card-text class='d-flex justify-center home-header-body'>
           {{ formattedTotalDuration}}<span class="text-minute">分</span>
         </v-card-text>
-        <div class='d-flex justify-center home-header-progress'>
-          <v-progress-linear></v-progress-linear>
+        <div class='home-header-progress'>
+          <ProgressBar :total-duration="totalDuration" :limit="storeUser.limit"/>
         </div>
         <v-card-text v-if="storeUser" class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
       </v-card>
@@ -27,9 +27,10 @@ import axios from 'axios';
 import moment from 'moment';
 import DurationTable from './DurationTable.vue';
 import Chart from './Chart.js'
+import ProgressBar from './modules/ProgressBar.vue'
 
 export default {
-  components: { DurationTable, Chart },
+  components: { DurationTable, Chart, ProgressBar },
   mounted () {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
@@ -85,7 +86,7 @@ export default {
       return this.$store.getters.dateStatus
     },
     formattedTotalDuration: function() {
-      return Math.floor(this.totalDuration/60%60)
+      return Math.floor(this.totalDuration/60)
     },
     dateArray: function() {
       return this.weeklyDurationSum.map(item => {
