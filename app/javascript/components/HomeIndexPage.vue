@@ -10,6 +10,14 @@
         <div class='home-header-progress'>
           <ProgressBar :total-duration="totalDuration" :limit="storeUser.limit"/>
         </div>
+        <div class="d-flex justify-center">
+          <div v-if="storeUser.limit > totalDuration" class="lessThanLimit">
+            達成中
+          </div>
+          <div v-else class="overLimit">
+            <span class="excessText">過剰</span>{{ overLimitTime }}分
+          </div>
+        </div>
       </v-card>
       <v-row class="pa-5">
         <v-card v-if="loaded" class="py-9 px-5" width="100%">
@@ -107,6 +115,9 @@ export default {
         }]
       }
     },
+    overLimitTime: function() {
+      return  Math.floor(( this.totalDuration - this.storeUser.limit ) / 60)
+    }
   },
   methods: {
     oneDayAgo: function() {
@@ -178,5 +189,19 @@ export default {
     font-size: 15px;
     margin-left: 4px;
     padding-top: 14px;
+  }
+  .lessThanLimit {
+    font-size: 15px;
+    color: #1995AD;
+    text-align: center;
+  }
+  .overLimit {
+    color: #EB440C;
+    font-size: 9px;
+  }
+  .excessText {
+    border: 0.8px solid #EB440C;
+    margin-right: 4px;
+    padding: 0 7px;
   }
 </style>

@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
 .border {
-  border: 1px solid #1995AD;
+  border: 0.5px solid #1995AD;
   background-color: #1995AD;
 }
 .liner1 {
