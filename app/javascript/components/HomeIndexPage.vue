@@ -20,7 +20,7 @@
         </div>
       </v-card>
       <CardWithHeader headerText="週間サマリー">
-        <Chart class="pt-5 pb-7" :chartData="chartItems" :options="chartOptions" :height="height" :width="width" />
+        <Chart class="pt-5 pb-7 chart" :chartData="chartItems" :options="chartOptions" :height="chartheight" :width="chartWidth" />
         <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
       </CardWithHeader>
     </div>
@@ -57,6 +57,9 @@ export default {
             display: true,
             gridLines: {
               display:false
+            },
+            ticks: {
+              fontSize: 9,
             }
           }],
           yAxes: [{
@@ -64,6 +67,7 @@ export default {
             position: 'right',
             ticks: {
               maxTicksLimit: 3,
+              fontSize: 9,
             }
           }]
         },
@@ -77,11 +81,11 @@ export default {
     },
   },
   computed: {
-    height: function() {
+    chartheight: function() {
       return window.innerHeight / 4
     },
-    width: function() {
-      return window.innerWidth * 0.85
+    chartWidth: function() {
+      return window.innerWidth * 0.8
     },
     storeUser: function() {
       return this.$store.getters.storeUser 
@@ -202,5 +206,8 @@ export default {
     border: 0.8px solid #EB440C;
     margin-right: 4px;
     padding: 0 7px;
+  }
+  .chart {
+    padding: 0 6px;
   }
 </style>

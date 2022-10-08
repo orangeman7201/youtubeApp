@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" flat :color="color">
+  <v-card width="100%" flat>
     <div class="header">{{ headerText }}</div>
     <div class="">
       <slot /> 
