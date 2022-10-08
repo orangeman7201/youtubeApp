@@ -19,13 +19,10 @@
           </div>
         </div>
       </v-card>
-      <v-row class="pa-5">
-        <v-card v-if="loaded" class="py-9 px-5" width="100%">
-          <h3 class="d-flex justify-center">週間サマリー</h3>
-          <Chart class="pt-5 pb-7" :chartData="chartItems" :options="chartOptions" :height="height" :width="width" />
-          <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
-        </v-card>
-      </v-row>
+      <CardWithHeader headerText="週間サマリー">
+        <Chart class="pt-5 pb-7" :chartData="chartItems" :options="chartOptions" :height="height" :width="width" />
+        <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
+      </CardWithHeader>
     </div>
   </v-app>
 </template>
@@ -37,9 +34,10 @@ import DurationTable from './DurationTable.vue';
 import Chart from './Chart.js';
 import ProgressBar from './modules/ProgressBar.vue';
 import ExcessText from './modules/ExcessText.vue';
+import CardWithHeader from './modules/CardWithHeader.vue';
 
 export default {
-  components: { DurationTable, Chart, ProgressBar, ExcessText },
+  components: { DurationTable, Chart, ProgressBar, ExcessText, CardWithHeader },
   mounted () {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
