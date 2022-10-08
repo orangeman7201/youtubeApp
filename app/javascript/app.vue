@@ -1,25 +1,29 @@
 <template>
   <v-app class="main-font">
-    <Navbar v-if="!isTopPage"/>
+    <AddMovieButton v-if="isHeaderShow"/>
+    <GlobalHeader v-if="isHeaderShow"/>
     <v-main>
       <router-view></router-view>
     </v-main>
+    <GlobalFoooter v-if="isHeaderShow"/>
   </v-app>  
 </template>
 
 <script>
-import Navbar from './components/Navbar';
+import AddMovieButton from './components/modules/AddMovieButton.vue';
+import GlobalHeader from './components/GlobalHeader.vue';
+import GlobalFoooter from './components/GlobalFooter.vue';
 
 export default {
-  components: {Navbar},
+  components: { AddMovieButton, GlobalHeader, GlobalFoooter },
   data () {
     return {
       errors: '',
     }
   },
   computed: {
-    isTopPage: function() {
-      return this.$route.path === '/'
+    isHeaderShow: function() {
+      return !(this.$route.path === '/login' || this.$route.path === '/')
     },
   }
 }

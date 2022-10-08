@@ -1,26 +1,29 @@
 <template>
   <v-app v-if="loaded" id="app">
-    <v-row class="pa-5 grey lighten-3">
-      <v-row class="pa-5">
-        <v-card class="py-9 px-5" width="100%" height="274px">
-          <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
-          <v-card-text class='d-flex justify-center home-header-body' :class="overHourClass">
-            {{ formattedTotalDuration}}
-          </v-card-text>
-          <div class='d-flex justify-center home-header-progress'>
-            <v-progress-linear></v-progress-linear>
+    <div class="pa-5 home-backgound">
+      <v-card class="mt-6 mx-7 mb-8 pt-6 px-8 pb-3" flat>
+        <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
+        <v-card-text class='d-flex justify-center home-header-body'>
+          {{ formattedTotalDuration}}<span class="text-minute">分</span>
+        </v-card-text>
+        <v-card-text v-if="storeUser" class='d-flex justify-end home-header-target-time'>目標 <span class="home-header-target-time-text">{{ storeUser.limit / 60 }}</span>分</v-card-text>
+        <div class='home-header-progress'>
+          <ProgressBar :total-duration="totalDuration" :limit="storeUser.limit"/>
+        </div>
+        <div class="d-flex justify-center">
+          <div v-if="storeUser.limit > totalDuration" class="lessThanLimit">
+            達成中
           </div>
-          <v-card-text v-if="storeUser" class='d-flex justify-center home-header-target-time'>目標 {{ storeUser.limit / 60 }}分/日</v-card-text>
-        </v-card>
-      </v-row>
-      <v-row class="pa-5">
-        <v-card v-if="loaded" class="py-9 px-5" width="100%">
-          <h3 class="d-flex justify-center">週間サマリー</h3>
-          <Chart class="pt-5 pb-7" :chartData="chartItems" :options="chartOptions" :height="height" :width="width" />
-          <DurationTable :items="weeklyDurationSum" />
-        </v-card>
-      </v-row>
-    </v-row>
+          <div v-else class="overLimit">
+            <ExcessText />{{ overLimitTime }}分
+          </div>
+        </div>
+      </v-card>
+      <CardWithHeader headerText="週間サマリー">
+        <Chart class="pt-5 pb-14 chart" :chartData="chartItems" :options="chartOptions" :height="chartheight" :width="chartWidth" />
+        <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
+      </CardWithHeader>
+    </div>
   </v-app>
 </template>
 
@@ -28,10 +31,13 @@
 import axios from 'axios';
 import moment from 'moment';
 import DurationTable from './DurationTable.vue';
-import Chart from './Chart.js'
+import Chart from './Chart.js';
+import ProgressBar from './modules/ProgressBar.vue';
+import ExcessText from './modules/ExcessText.vue';
+import CardWithHeader from './modules/CardWithHeader.vue';
 
 export default {
-  components: { DurationTable, Chart },
+  components: { DurationTable, Chart, ProgressBar, ExcessText, CardWithHeader },
   mounted () {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
@@ -51,6 +57,9 @@ export default {
             display: true,
             gridLines: {
               display:false
+            },
+            ticks: {
+              fontSize: 9,
             }
           }],
           yAxes: [{
@@ -58,6 +67,7 @@ export default {
             position: 'right',
             ticks: {
               maxTicksLimit: 3,
+              fontSize: 9,
             }
           }]
         },
@@ -71,11 +81,11 @@ export default {
     },
   },
   computed: {
-    height: function() {
+    chartheight: function() {
       return window.innerHeight / 4
     },
-    width: function() {
-      return window.innerWidth * 0.85
+    chartWidth: function() {
+      return window.innerWidth * 0.8
     },
     storeUser: function() {
       return this.$store.getters.storeUser 
@@ -86,24 +96,8 @@ export default {
     dateStatus: function() {
       return this.$store.getters.dateStatus
     },
-    overHourClass: function() {
-      const hour = Math.floor(this.totalDuration/3600)
-      if (hour > 0) {
-        return 'font-size-small'
-      }
-      return 'font-size-big'
-    },
     formattedTotalDuration: function() {
-      const hour = Math.floor(this.totalDuration/3600)
-      const minute = Math.floor(this.totalDuration/60%60)
-      const second = this.totalDuration%60
-      if (hour > 0) {
-        return `${hour}時間${minute}分${second}秒`
-      }
-      if (minute > 0) {
-         return `${minute}分${second}秒`
-      }
-      return `${second}秒`
+      return Math.floor(this.totalDuration/60)
     },
     dateArray: function() {
       return this.weeklyDurationSum.map(item => {
@@ -124,6 +118,9 @@ export default {
         }]
       }
     },
+    overLimitTime: function() {
+      return  Math.floor(( this.totalDuration - this.storeUser.limit ) / 60)
+    }
   },
   methods: {
     oneDayAgo: function() {
@@ -156,29 +153,61 @@ export default {
   .flex-grow {
     flex-grow: 1;
   }
-  .font-size-small {
-    font-size:min(9.5vw, 50px);
-  }
-  .font-size-big {
-    font-size:min(14vw, 50px);
-  }
   .home-header-title {
-    font-size: 20px;
+    font-size: 15px;
+    line-height: 18px;
+    color: #333333;
     padding: 0;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
   }
   .home-header-body {
-    padding: 0;
-    margin-bottom: 32px;
-    height: 64px;
+    padding: 0 0 0 20px;
+    font-size: 45px;
+    line-height: 54px;
+    max-height: 54px;
+    color: #333333;
     align-items: center;
+    vertical-align: middle;
   }
   .home-header-progress {
     padding: 0;
     margin-bottom: 12px;
   }
   .home-header-target-time {
-    font-size: 20px;
+    font-size: 9px;
     padding: 0;
+    color: #1995AD !important;
+    align-items: flex-end;
+  }
+  .home-header-target-time-text {
+    font-size: 15px;
+    margin: 0 3px;
+    padding-bottom: 1px;
+  }
+  .home-backgound {
+    display: block;
+    background-color: #F1F1F1;
+  } 
+  .text-minute {
+    font-size: 15px;
+    margin-left: 4px;
+    padding-top: 14px;
+  }
+  .lessThanLimit {
+    font-size: 15px;
+    color: #1995AD;
+    text-align: center;
+  }
+  .overLimit {
+    color: #EB440C;
+    font-size: 9px;
+  }
+  .excessText {
+    border: 0.8px solid #EB440C;
+    margin-right: 4px;
+    padding: 0 7px;
+  }
+  .chart {
+    padding: 0 6px;
   }
 </style>

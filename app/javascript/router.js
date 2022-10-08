@@ -24,7 +24,8 @@ export default new Router ({
       name: 'HomeIndexPage',
       component: HomeIndexPage,
       meta: {
-      requireAuth: true
+        requireAuth: true,
+        title: "ホーム",
       },
     }, 
     { path: '/movies',
