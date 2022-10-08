@@ -20,7 +20,7 @@
         </div>
       </v-card>
       <CardWithHeader headerText="週間サマリー">
-        <Chart class="pt-5 pb-7 chart" :chartData="chartItems" :options="chartOptions" :height="chartheight" :width="chartWidth" />
+        <Chart class="pt-5 pb-14 chart" :chartData="chartItems" :options="chartOptions" :height="chartheight" :width="chartWidth" />
         <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
       </CardWithHeader>
     </div>

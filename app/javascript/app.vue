@@ -5,15 +5,17 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+    <GlobalFoooter v-if="isHeaderShow"/>
   </v-app>  
 </template>
 
 <script>
 import AddMovieButton from './components/modules/AddMovieButton.vue';
 import GlobalHeader from './components/GlobalHeader.vue';
+import GlobalFoooter from './components/GlobalFooter.vue';
 
 export default {
-  components: { AddMovieButton, GlobalHeader },
+  components: { AddMovieButton, GlobalHeader, GlobalFoooter },
   data () {
     return {
       errors: '',

@@ -1,6 +1,18 @@
 <template>
-  <span class="excessText">過剰</span>
+  <span class="excessText" :style="{ fontSize: excessTextFontSize }">過剰</span>
 </template>
+
+<script>
+export default {
+  fontSize: { type:[Number], default: 15 },
+  computed: {
+    excessTextFontSize() {
+      return `${this.fontSize}px`
+    }
+  }
+}
+</script>
+
 
 <style scoped>
   .excessText {
