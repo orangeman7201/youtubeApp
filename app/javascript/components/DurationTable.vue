@@ -5,7 +5,7 @@
         {{formatDate(item.date)}}
       </div>
       <div class="item-duration" :class="overTargetDuration(item.duration)">
-        {{formatDuration(item.duration)}}
+        <ExcessText v-if="item.duration > limit" />{{formatDuration(item.duration)}}
       </div>
     </div>
   </div>
@@ -13,9 +13,11 @@
 
 <script>
 import moment from 'moment';
+import ExcessText from './modules/ExcessText.vue';
 
 export default {
-  props: ['items'],
+  components: { ExcessText },
+  props: ['items', 'limit'],
   data: function () {
     return {
       headers: [
@@ -38,8 +40,7 @@ export default {
       return `${minute}分`
     },
     overTargetDuration: function(duration) {
-      // 60*60の部分は目標の再生時間が入る
-      return duration > 60*60 ? "over-duration" : ""
+      return duration > this.limit ? "over-duration" : ""
     }
   }
 }

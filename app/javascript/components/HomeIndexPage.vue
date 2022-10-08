@@ -23,7 +23,7 @@
         <v-card v-if="loaded" class="py-9 px-5" width="100%">
           <h3 class="d-flex justify-center">週間サマリー</h3>
           <Chart class="pt-5 pb-7" :chartData="chartItems" :options="chartOptions" :height="height" :width="width" />
-          <DurationTable :items="weeklyDurationSum" />
+          <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
         </v-card>
       </v-row>
     </div>
