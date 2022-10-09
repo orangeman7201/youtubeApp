@@ -1,5 +1,5 @@
 <template>
-  <v-app class="main-font">
+  <v-app>
     <AddMovieButton v-if="isHeaderShow"/>
     <GlobalHeader v-if="isHeaderShow"/>
     <v-main>
@@ -30,9 +30,9 @@ export default {
 </script>
 
 <style scoped>
-  .main-font {
-    font-family: 'Noto Sans';
-  } 
+  #app {
+    font-family: Inter, 'Noto Sans JP';
+  }
 </style>
 
 
