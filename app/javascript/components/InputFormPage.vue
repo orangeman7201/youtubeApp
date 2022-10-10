@@ -7,7 +7,7 @@
       </div>
     </v-card>
     <CardWithHeader headerText="動画を記録する" class="p-5 mb-7">
-      <v-form @submit.prevent="submitData" class="mx-11 mt-13"> 
+      <v-form class="mx-11 mt-13"> 
         <div class="d-flex justify-center flex-column">
           <v-text-field
             v-model="movie.url"
@@ -16,26 +16,29 @@
             required
             class="mb-2"
           ></v-text-field>
-          <div v-if="movie.thumbnail && error === null">
+          <div v-if="movie.thumbnail && error === null" class="mb-7 movie-thumbnail-area">
             <img :src="movie.thumbnail" alt="" class="movie-thumbnail">
-                            <!-- <div bottom class="mt-1 mr-2 black white--text text-right">
-                <span v-if="movie.duration >= 3600">
-                  {{Math.floor(movie.duration/3600)}}時間
-                </span>
-                <span v-if="movie.duration >= 60">
-                  {{Math.floor(movie.duration/60%60)}}分
-                </span>{{movie.duration%60}}秒
-              </div> -->
+            <div class="px-2 white--text movie-duration">
+              <span v-if="movie.duration >= 3600">
+                {{Math.floor(movie.duration/3600)}}:
+              </span>
+              <span v-if="movie.duration >= 60">
+                {{Math.floor(movie.duration/60%60)}}:
+              </span>{{movie.duration%60}}
+            </div>
+            <div class="movie-title">
+              {{ movie.title }}
+            </div>
           </div>
-          <div v-if="error !== null">
+          <div class="mb-7" v-if="error !== null">
             <p class="red--text mt-5 text-h6">動画が見つかりません</p>
           </div>
-          <div v-if="unsavedError !== null">
+          <div class="mb-7" v-if="unsavedError !== null">
             <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを再度入力してください。</p>
           </div>
           <div class="mb-7 d-flex justify-center">
-            <ButtonBase color="#949494">キャンセル</ButtonBase>
-            <ButtonBase color="#E8730E">保存</ButtonBase>
+            <ButtonBase color="#949494" @click.native="movieReset">キャンセル</ButtonBase>
+            <ButtonBase color="#E8730E" @click.native="submitData">保存</ButtonBase>
           </div>
         </div>
       </v-form>
@@ -194,7 +197,27 @@ export default {
 .how-to-use {
   font-size: 15px;
 }
+.movie-thumbnail-area {
+  position: relative;
+}
 .movie-thumbnail {
   width: 100%;
+}
+.movie-duration {
+  position: absolute;
+  top: 120px;
+  right: 6px;
+  font-size: 13px;
+  background-color: #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.movie-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 13px;
 }
 </style>
