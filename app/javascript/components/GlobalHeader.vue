@@ -1,11 +1,27 @@
 <template>
   <header class="header">
     <div>
-      <button @click="drawer =!drawer" v-if="!isLoginPage" class="humbarger-button">
+      <button @click.prevent="drawer =!drawer" v-if="!isLoginPage" class="humbarger-button">
         <img src="~menu.svg" art="" width="24px" height="24px">
       </button>
       <h4 class="d-flex justify-center header-title">{{$route.meta.title}}</h4>
     </div>
+    <v-navigation-drawer app temporary v-model="drawer" color="#858585">
+      <v-list class="mt-15">
+        <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="list-item">
+          <v-list-item-action>
+            <v-icon class="white--text">{{list.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content class="white--text">{{list.title}}</v-list-item-content>
+        </v-list-item>
+        <v-list-item class="list-item" @click.prevent="logout">
+          <v-list-item-action>
+            <v-icon class="white--text">mdi-logout</v-icon>
+          </v-list-item-action>
+          <v-list-item-content class="white--text">ログアウト</v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </header>
 </template>
 
@@ -18,12 +34,14 @@ export default {
     return {
       drawer: false,
       lists: [
+        {icon: 'mdi-account', title: 'マイページ', route: '/profile'},
         {icon: 'mdi-home', title: 'ホーム', route: '/home'},
-        {icon: 'mdi-magnify', title: 'ユーザー検索', route: '/users/serch'},
-        {icon: 'mdi-account-multiple', title: '友達一覧', route: '/freinds/index'},
-        {icon: 'mdi-presentation', title: 'タイムライン', route: '/timeline'},
-        {icon: 'mdi-book', title: '視聴履歴', route: '/movies'},
-        {icon: 'mdi-cog', title: 'プロフィール', route: '/profile'},
+        // ↓path編集必要？？
+        {icon: 'mdi-pencil', title: '記録', route: '/timeline'},
+        // ↓path編集必要??
+        {icon: 'mdi-account-group ', title: 'フレンド', route: '/users/serch'},
+        // ↓path編集必要
+        {icon: 'mdi-bell', title: 'お知らせ', route: '/freinds/index'},
       ],
     }
   },
