@@ -1,59 +1,54 @@
 <template>
   <v-app class="pa-5 grey lighten-3">
-    <v-card class="pa-4 mb-4" width="100%">
+    <v-card class="pa-4 mt-6 mb-11 mx-12 input-form-card" flat>
       <div class="d-flex justify-center input-form-header-title pt-0">今日の総再生時間</div>
-      <div class='d-flex justify-center input-form-header-body'>
-        <span v-if="totalDuration >= 3600">
-          {{Math.floor(totalDuration/3600)}}時間
-        </span>
-        <span v-if="totalDuration >= 60">
-          {{Math.floor(totalDuration/60%60)}}分
-        </span>{{totalDuration%60}}秒
+      <div class='d-flex justify-center input-form-header-body ml-1'>
+        {{Math.floor(totalDuration/60%60)}}<span class="minute-text ml-1 mt-4">分</span>
       </div>
     </v-card>
-    <v-card class="p-5 mb-16" width="100%">
-      <v-form @submit.prevent="submitData" class="ma-5"> 
-        <v-row>
-          <v-col cols="12">
-            <v-text-field
-              v-model="movie.url"
-              @change="serchMovie"
-              label="url"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col v-if="movie.thumbnail && error === null">
-            <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
-              <div bottom class="mt-1 mr-2 black white--text text-right">
-                <span v-if="movie.duration >= 3600">
-                  {{Math.floor(movie.duration/3600)}}時間
-                </span>
-                <span v-if="movie.duration >= 60">
-                  {{Math.floor(movie.duration/60%60)}}分
-                </span>{{movie.duration%60}}秒
-              </div>
-            </v-img>
-          </v-col>
-          <v-col cols="12" v-if="error !== null">
+    <CardWithHeader headerText="動画を記録する" class="p-5 mb-7">
+      <v-form class="mx-11 mt-13"> 
+        <div class="d-flex justify-center flex-column">
+          <v-text-field
+            v-model="movie.url"
+            @input="serchMovie"
+            label="URL"
+            required
+            class="mb-2"
+          ></v-text-field>
+          <div v-if="movie.thumbnail && error === null" class="mb-7 movie-thumbnail-area">
+            <img :src="movie.thumbnail" alt="" class="movie-thumbnail">
+            <div class="px-2 white--text movie-duration">
+              <span v-if="movie.duration >= 3600">
+                {{Math.floor(movie.duration/3600)}}:
+              </span>
+              <span v-if="movie.duration >= 60">
+                {{Math.floor(movie.duration/60%60)}}:
+              </span>{{movie.duration%60}}
+            </div>
+            <div class="movie-title">
+              {{ movie.title }}
+            </div>
+          </div>
+          <div class="mb-7" v-if="error !== null">
             <p class="red--text mt-5 text-h6">動画が見つかりません</p>
-          </v-col>
-          <v-col cols="12" v-if="unsavedError !== null">
+          </div>
+          <div class="mb-7" v-if="unsavedError !== null">
             <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを再度入力してください。</p>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea
-              v-model="movie.comment"
-              label="コメント"
-              outlined
-              id="movie-input"
-            ></v-textarea>
-          </v-col>
-          <v-col cols="12" class="d-flex justify-center">
-            <v-btn @click="movieReset" class="white--text mb-5 mr-5" color="#A7DDEA" width="100px">キャンセル</v-btn>
-            <v-btn type="submit" class="white--text mb-5" width="100px" color="#18B1CE">保存</v-btn>
-          </v-col>
-        </v-row>
+          </div>
+          <div class="mb-7 d-flex justify-center">
+            <ButtonBase color="#949494" @click.native="movieReset">キャンセル</ButtonBase>
+            <ButtonBase color="#E8730E" @click.native="submitData">保存</ButtonBase>
+          </div>
+        </div>
       </v-form>
+    </CardWithHeader>
+    <v-card class="pa-6 input-form-card" flat>
+      <ol class="how-to-use">
+        <li class="mb-2">Youtube動画詳細欄の「共有」を選択</li>
+        <li class="mb-2">URLをコピーする</li>
+        <li class="mb-2">上ボックスに貼り付ける</li>
+      </ol>
     </v-card>
   </v-app>
 </template>
@@ -61,6 +56,8 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import CardWithHeader from './modules/CardWithHeader.vue';
+import ButtonBase from './modules/ButtonBase.vue';
 
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
@@ -72,7 +69,8 @@ axios.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-export default {
+export default { 
+  components: { CardWithHeader, ButtonBase },
   data: function () {
     return {
       movie: {
@@ -162,11 +160,14 @@ export default {
           this.error = null;
           this.unsavedError = null;
           let e = response.data;
-          this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
+          if(e.items[0].snippet.thumbnails.medium) {
+            this.movie.thumbnail = e.items[0].snippet.thumbnails.medium.url
+          } else {
+            this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
+          }
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
           this.movie.date = this.formattedDate
-          this.$vuetify.goTo("#movie-input")
         })
         .catch(error => {
           console.error(error);
@@ -178,15 +179,45 @@ export default {
 </script>
 
 <style scoped>
-div {
-  text-align: center;
+.input-form-card {
+  border: 0.5px solid #949494 !important;
+  border-radius: 2px !important;
 }
 .input-form-header-title {
-  font-size: 20px;
+  font-size: 15px;
   color: #333333;
 }
 .input-form-header-body {
-  font-size: 40px;
+  font-size: 30px;
   color: #333333;
+}
+.minute-text {
+  font-size: 15px;
+}
+.how-to-use {
+  font-size: 15px;
+}
+.movie-thumbnail-area {
+  position: relative;
+}
+.movie-thumbnail {
+  width: 100%;
+}
+.movie-duration {
+  position: absolute;
+  top: 120px;
+  right: 6px;
+  font-size: 13px;
+  background-color: #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.movie-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 13px;
 }
 </style>

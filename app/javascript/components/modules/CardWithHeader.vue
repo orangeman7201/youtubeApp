@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" flat>
+  <v-card class="card" width="100%" flat>
     <div class="header">{{ headerText }}</div>
     <div class="">
       <slot /> 
@@ -19,6 +19,9 @@ export default {
 </script>
 
 <style scoped>
+.card {
+  border-radius: 2px !important;
+}
 .header {
   color: #FFFFFF;
   background-color: #48A6BC;
