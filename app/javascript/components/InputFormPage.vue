@@ -1,23 +1,22 @@
 <template>
   <v-app class="pa-5 grey lighten-3">
-    <v-card class="pa-4 mb-4 mx-12" flat>
+    <v-card class="pa-4 mt-6 mb-11 mx-12 input-form-card" flat>
       <div class="d-flex justify-center input-form-header-title pt-0">今日の総再生時間</div>
       <div class='d-flex justify-center input-form-header-body ml-1'>
         {{Math.floor(totalDuration/60%60)}}<span class="minute-text ml-1 mt-4">分</span>
       </div>
     </v-card>
-    <v-card class="p-5 mb-16" flat width="100%">
-      <v-form @submit.prevent="submitData" class="ma-5"> 
-        <v-row>
-          <v-col cols="12">
-            <v-text-field
-              v-model="movie.url"
-              @change="serchMovie"
-              label="url"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col v-if="movie.thumbnail && error === null">
+    <CardWithHeader headerText="動画を記録する" class="p-5 mb-16">
+      <v-form @submit.prevent="submitData" class="mx-11 mt-13"> 
+        <div class="d-flex justify-center flex-column">
+          <v-text-field
+            v-model="movie.url"
+            @change="serchMovie"
+            label="URL"
+            required
+            class="mb-7"
+          ></v-text-field>
+          <div v-if="movie.thumbnail && error === null">
             <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
               <div bottom class="mt-1 mr-2 black white--text text-right">
                 <span v-if="movie.duration >= 3600">
@@ -28,27 +27,22 @@
                 </span>{{movie.duration%60}}秒
               </div>
             </v-img>
-          </v-col>
-          <v-col cols="12" v-if="error !== null">
+          </div>
+          <div v-if="error !== null">
             <p class="red--text mt-5 text-h6">動画が見つかりません</p>
-          </v-col>
-          <v-col cols="12" v-if="unsavedError !== null">
+          </div>
+          <div v-if="unsavedError !== null">
             <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを再度入力してください。</p>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea
-              v-model="movie.comment"
-              label="コメント"
-              outlined
-              id="movie-input"
-            ></v-textarea>
-          </v-col>
-          <v-col cols="12" class="d-flex justify-center">
-            <v-btn @click="movieReset" class="white--text mb-5 mr-5" color="#A7DDEA" width="100px">キャンセル</v-btn>
-            <v-btn type="submit" class="white--text mb-5" width="100px" color="#18B1CE">保存</v-btn>
-          </v-col>
-        </v-row>
+          </div>
+          <div class="d-flex justify-center">
+            <ButtonBase color="#949494">キャンセル</ButtonBase>
+            <ButtonBase color="#E8730E">保存</ButtonBase>
+          </div>
+        </div>
       </v-form>
+    </CardWithHeader>
+    <v-card class="input-form-card">
+
     </v-card>
   </v-app>
 </template>
@@ -56,6 +50,8 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import CardWithHeader from './modules/CardWithHeader.vue';
+import ButtonBase from './modules/ButtonBase.vue';
 
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
@@ -67,7 +63,8 @@ axios.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-export default {
+export default { 
+  components: { CardWithHeader, ButtonBase },
   data: function () {
     return {
       movie: {
@@ -175,6 +172,10 @@ export default {
 <style scoped>
 div {
   text-align: center;
+}
+.input-form-card {
+  border: 0.5px solid #949494 !important;
+  border-radius: 2px !important;
 }
 .input-form-header-title {
   font-size: 15px;
