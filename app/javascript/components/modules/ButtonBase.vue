@@ -18,8 +18,8 @@ export default {
 <style scoped>
 .button-base {
   font-size: 15px;
-  width: 106px;
-  height: 48px;
+  width: 106px !important;
+  height: 48px !important;
   border-radius: 2px;
 }
 </style>

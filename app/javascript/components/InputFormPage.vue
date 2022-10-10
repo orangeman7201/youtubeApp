@@ -6,7 +6,7 @@
         {{Math.floor(totalDuration/60%60)}}<span class="minute-text ml-1 mt-4">分</span>
       </div>
     </v-card>
-    <CardWithHeader headerText="動画を記録する" class="p-5 mb-16">
+    <CardWithHeader headerText="動画を記録する" class="p-5 mb-7">
       <v-form @submit.prevent="submitData" class="mx-11 mt-13"> 
         <div class="d-flex justify-center flex-column">
           <v-text-field
@@ -14,7 +14,7 @@
             @change="serchMovie"
             label="URL"
             required
-            class="mb-7"
+            class="mb-2"
           ></v-text-field>
           <div v-if="movie.thumbnail && error === null">
             <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
@@ -34,15 +34,19 @@
           <div v-if="unsavedError !== null">
             <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを再度入力してください。</p>
           </div>
-          <div class="d-flex justify-center">
+          <div class="mb-7 d-flex justify-center">
             <ButtonBase color="#949494">キャンセル</ButtonBase>
             <ButtonBase color="#E8730E">保存</ButtonBase>
           </div>
         </div>
       </v-form>
     </CardWithHeader>
-    <v-card class="input-form-card">
-
+    <v-card class="pa-6 input-form-card" flat>
+      <ol class="how-to-use">
+        <li class="mb-2">Youtube動画詳細欄の「共有」を選択</li>
+        <li class="mb-2">URLをコピーする</li>
+        <li class="mb-2">上ボックスに貼り付ける</li>
+      </ol>
     </v-card>
   </v-app>
 </template>
@@ -170,9 +174,6 @@ export default {
 </script>
 
 <style scoped>
-div {
-  text-align: center;
-}
 .input-form-card {
   border: 0.5px solid #949494 !important;
   border-radius: 2px !important;
@@ -186,6 +187,9 @@ div {
   color: #333333;
 }
 .minute-text {
+  font-size: 15px;
+}
+.how-to-use {
   font-size: 15px;
 }
 </style>
