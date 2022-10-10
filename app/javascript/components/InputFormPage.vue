@@ -11,22 +11,21 @@
         <div class="d-flex justify-center flex-column">
           <v-text-field
             v-model="movie.url"
-            @change="serchMovie"
+            @input="serchMovie"
             label="URL"
             required
             class="mb-2"
           ></v-text-field>
           <div v-if="movie.thumbnail && error === null">
-            <v-img :src="movie.thumbnail" :aspect-ratio="4/3" max-width="400px">
-              <div bottom class="mt-1 mr-2 black white--text text-right">
+            <img :src="movie.thumbnail" alt="" class="movie-thumbnail">
+                            <!-- <div bottom class="mt-1 mr-2 black white--text text-right">
                 <span v-if="movie.duration >= 3600">
                   {{Math.floor(movie.duration/3600)}}時間
                 </span>
                 <span v-if="movie.duration >= 60">
                   {{Math.floor(movie.duration/60%60)}}分
                 </span>{{movie.duration%60}}秒
-              </div>
-            </v-img>
+              </div> -->
           </div>
           <div v-if="error !== null">
             <p class="red--text mt-5 text-h6">動画が見つかりません</p>
@@ -158,11 +157,14 @@ export default {
           this.error = null;
           this.unsavedError = null;
           let e = response.data;
-          this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
+          if(e.items[0].snippet.thumbnails.medium) {
+            this.movie.thumbnail = e.items[0].snippet.thumbnails.medium.url
+          } else {
+            this.movie.thumbnail = e.items[0].snippet.thumbnails.high.url
+          }
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
           this.movie.date = this.formattedDate
-          this.$vuetify.goTo("#movie-input")
         })
         .catch(error => {
           console.error(error);
