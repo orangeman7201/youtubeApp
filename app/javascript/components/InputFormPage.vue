@@ -194,4 +194,7 @@ export default {
 .how-to-use {
   font-size: 15px;
 }
+.movie-thumbnail {
+  width: 100%;
+}
 </style>
