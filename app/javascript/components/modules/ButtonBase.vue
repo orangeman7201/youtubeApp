@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="white--text mb-5 mr-5 button-base" :color="color">
+  <v-btn class="white--text button-base" :color="color">
     <slot />
   </v-btn>
 </template>

@@ -37,7 +37,7 @@
             <p class="red--text mt-5 text-h6">動画を保存できませんでした。URLを再度入力してください。</p>
           </div>
           <div class="mb-7 d-flex justify-center">
-            <ButtonBase color="#949494" @click.native="movieReset">キャンセル</ButtonBase>
+            <ButtonBase color="#949494" @click.native="movieReset" class="mr-7" >キャンセル</ButtonBase>
             <ButtonBase color="#E8730E" @click.native="submitData">保存</ButtonBase>
           </div>
         </div>
