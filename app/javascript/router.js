@@ -32,7 +32,7 @@ export default new Router ({
       name: 'MovieHistory',
       component: MovieHistory,
       meta: {
-      requireAuth: true
+        requireAuth: true
       },
     }, 
     { path: '/movies/:id(\\d+)',
@@ -67,7 +67,8 @@ export default new Router ({
       name: 'UserSerchForm',
       component: UserSerchForm,
       meta: {
-        requireAuth: true
+        requireAuth: true,
+        title: "フレンド"
       },
     }, 
     { path: '/freinds/index',

@@ -1,25 +1,38 @@
 <template>
-        <v-form @submit.prevent="submitData" class="ma-5"> 
-            <v-row align="center" justify="center">
-              <v-col cols="12" v-if="error !== ''">
-                <p class="red--text mt-5 text-h6">ユーザーが見つかりません</p>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="inputUserName.userName"
-                  label="ユーザー名"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" class="d-flex justify-center">
-                <v-btn type="submit" class="white--text green accent-3 mb-5">検索</v-btn>
-              </v-col>
-            </v-row>
-        </v-form>
+  <div class="py-11 px-5 user-serch-backgound">
+    <CardWithHeader headerText="フレンド検索" class="mb-11">
+      <div class="d-flex justify-center flex-column py-7 px-11">
+        <div v-if="error !== ''">
+          <p class="red--text mt-5 text-h6">ユーザーが見つかりません</p>
+        </div>
+        <div>
+          <v-text-field
+            v-model="inputUserName.userName"
+            label="ID"
+            required
+            class="mb-2"
+          ></v-text-field>
+        </div>
+        <div class="d-flex justify-center">
+          <ButtonBase color="#949494" @click.native="cancel" class="mr-7" >キャンセル</ButtonBase>
+          <ButtonBase color="#E8730E" @click.native="submitData">検索</ButtonBase>
+        </div>
+      </div>
+    </CardWithHeader>
+    <CardWithHeader :headerText="friendIndexCardText">
+      <div class="d-flex justify-center flex-column py-7 px-11">
+
+      </div>
+    </CardWithHeader>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
+import CardWithHeader from './modules/CardWithHeader.vue'
+import ButtonBase from './modules/ButtonBase.vue'
+import moment from 'moment';
+
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
     config.headers['X-Requested-With'] = 'XMLHttpReq'
@@ -31,6 +44,7 @@ axios.interceptors.request.use((config) => {
 });
 
 export default {
+  components: { CardWithHeader, ButtonBase },
   data: function () {
     return {
       inputUserName: {
@@ -38,6 +52,15 @@ export default {
       },
       error: ''
     }  
+  },
+  computed: {
+    formatDate: function() {
+      moment.locale("ja");
+      return moment(new Date()).format("MM月DD日")
+    },
+    friendIndexCardText() {
+      return `フレンド ${this.formatDate}の記録`
+    }
   },
   methods: {
     submitData: function() {
@@ -53,13 +76,17 @@ export default {
           })
           .catch(this.error = 'error')
       }
+    },
+    cancel: function() {
+      this.inputUserName.userName = ''
     }
   }
 }
 </script>
 
 <style scoped>
-div {
-  text-align: center;
+.user-serch-backgound {
+  display: block;
+  background-color: #F1F1F1;
 }
 </style>
