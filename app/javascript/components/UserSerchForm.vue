@@ -7,7 +7,7 @@
         </div>
         <div>
           <v-text-field
-            v-model="inputUserName.userName"
+            v-model="uuid"
             label="ID"
             required
             class="mb-2"
@@ -57,9 +57,7 @@ export default {
   components: { CardWithHeader, ButtonBase },
   data: function () {
     return {
-      inputUserName: {
-        userName: ''
-      },
+      uuid: '',
       friends: [],
       error: ''
     }  
@@ -78,12 +76,14 @@ export default {
   },
   methods: {
     submitData: function() {
-      if( this.inputUserName === '' ) {
+      if (this.uuid === '') {
         this.error = 'error';
       } else {
         this.error = '';
         axios
-          .post('/requests', this.inputUserName)
+          .post('/requests/serch', {
+            uuid: this.uuid
+          })
           .then(response => {
             let e = response;
             this.$router.push({name: 'UserDetailPage', params: { id: e.data.id } })
@@ -92,7 +92,7 @@ export default {
       }
     },
     cancel: function() {
-      this.inputUserName.userName = ''
+      this.uuid = ''
     },
     getFriends: function() {
       axios

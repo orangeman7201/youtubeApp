@@ -11,17 +11,12 @@ class RequestsController < ApplicationController
   end
   
   def serch
-    input_user  =  User.find_by(name: params[:userName])
+    input_user  =  User.find_by(uuid: params[:uuid])
     render json: input_user
   end
 
   def destroy
     request = Request.find_by(from_user: params[:id], to_user_id: current_user.id)
     request.destroy
-  end
-  
-  private
-  def input_user_params
-    params.fetch(:request, {}).permit(:from_user_id, :to_user_id)
   end
 end

@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   post "sign_up", to: "users#create"
   get "session_check", to: "sessions#session_check"
   post "gest/login", to: "sessions#gest_login"
-  post "requests", to: "requests#serch"
+  post "requests/serch", to: "requests#serch"
   get "requests", to: "requests#index"
   post "requests/create", to: "requests#create"
   post "requests/destroy", to: "requests#destroy"
