@@ -20,8 +20,18 @@
       </div>
     </CardWithHeader>
     <CardWithHeader :headerText="friendIndexCardText">
-      <div class="d-flex justify-center flex-column py-7 px-11">
-
+      <div class="d-flex justify-center flex-column px-5">
+        <div v-for="(friend, index) in friends" :key="friend.id" class="d-flex justify-space-between py-3" :class ="{'frined-item-border': index > 0}">
+          <div class="friend-info-contents">
+            <img v-if="friend.image_url" :src="friend.image_url" art="" class="mr-2 friend-image" />
+            <img v-else src="~user_default.svg" art="" class="mr-2 friend-image" />
+            <div class="friend-name">{{ friend.name }}</div>
+          </div>
+          <div class="friend-movie-info-contents">
+            <div class="mr-2"><span class="friend-duration-text">{{ friend.duration / 60 }}</span> 分</div>
+            <div class="pt-3">/ {{ friend.limit / 60 }}<span>分</span></div>
+          </div>
+        </div>
       </div>
     </CardWithHeader>
   </div>
@@ -50,8 +60,12 @@ export default {
       inputUserName: {
         userName: ''
       },
+      friends: [],
       error: ''
     }  
+  },
+  mounted () {
+    this.getFriends();
   },
   computed: {
     formatDate: function() {
@@ -79,7 +93,16 @@ export default {
     },
     cancel: function() {
       this.inputUserName.userName = ''
-    }
+    },
+    getFriends: function() {
+      axios
+        .get(`/friends.json`)
+        .then(response => {
+          response.data.forEach(element => {
+            this.friends.push(element)
+          });
+        })
+    },
   }
 }
 </script>
@@ -88,5 +111,28 @@ export default {
 .user-serch-backgound {
   display: block;
   background-color: #F1F1F1;
+}
+.friend-info-contents {
+  display: flex;
+  align-items: center;
+}
+.friend-image {
+  width: 30px;
+  height: 30px;
+}
+.frined-item-border {
+  border-top: 1px solid #949494;
+}
+.friend-name {
+  font-size: 15px;
+}
+.friend-movie-info-contents {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+.friend-duration-text {
+  font-weight: 400;
+  font-size: 30px;
 }
 </style>
