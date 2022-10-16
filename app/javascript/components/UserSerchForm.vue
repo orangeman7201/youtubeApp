@@ -13,6 +13,7 @@
             class="mb-2"
           ></v-text-field>
         </div>
+        <FriendInfoBox v-if="serchedFriend" :user="serchedFriend"/>
         <div class="d-flex justify-center">
           <ButtonBase color="#949494" @click.native="cancel" class="mr-7" >キャンセル</ButtonBase>
           <ButtonBase color="#E8730E" @click.native="submitData">検索</ButtonBase>
@@ -41,6 +42,7 @@
 import axios from 'axios';
 import CardWithHeader from './modules/CardWithHeader.vue'
 import ButtonBase from './modules/ButtonBase.vue'
+import FriendInfoBox from './modules/FriendInfoBox.vue'
 import moment from 'moment';
 
 axios.interceptors.request.use((config) => {
@@ -54,7 +56,7 @@ axios.interceptors.request.use((config) => {
 });
 
 export default {
-  components: { CardWithHeader, ButtonBase },
+  components: { CardWithHeader, ButtonBase, FriendInfoBox },
   data: function () {
     return {
       uuid: '',
@@ -95,6 +97,7 @@ export default {
     },
     cancel: function() {
       this.uuid = ''
+      this.serchedFriend = null
     },
     getFriends: function() {
       axios
