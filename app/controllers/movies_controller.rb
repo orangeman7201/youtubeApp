@@ -14,12 +14,9 @@ class MoviesController < ApplicationController
   end
 
   def create
-    movieData = Movie.new(movie_params)
-    movieData.user_id = current_user.id
-    if movieData.save
-      current_total_duration = current_user.total_duration + movieData.duration
-      current_user.update_attribute(:total_duration, current_total_duration)
-      render json: movieData, status: :created
+    movie = current_user.movies.build(movie_params)
+    if movie.save
+      render json: movie, status: :created
     else
       render json:{ errors: movie.errors.full_messages }, status: :unprocessable_entity
     end
