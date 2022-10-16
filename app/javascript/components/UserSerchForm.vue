@@ -5,6 +5,17 @@
         <div v-if="error !== ''" class="not-found-user">
           ユーザーが見つかりません
         </div>
+        <v-alert
+          v-model="isSendRequestSuccess"
+          close-text="Close Alert"
+          dismissible
+          dense
+          outlined
+          type="success"
+          text
+          transition="scale-transition"
+          class="card-alert"
+        >申請しました</v-alert>
         <div>
           <v-text-field
             v-model="uuid"
@@ -16,7 +27,8 @@
         <FriendInfoBox v-if="serchedFriend" :user="serchedFriend"/>
         <div class="d-flex justify-center">
           <ButtonBase color="#949494" @click.native="cancel" class="mr-7" >キャンセル</ButtonBase>
-          <ButtonBase color="#E8730E" @click.native="submitData">検索</ButtonBase>
+          <ButtonBase color="#E8730E" @click.native="sendRequest" v-if="serchedFriend">申請</ButtonBase>
+          <ButtonBase color="#E8730E" @click.native="submitData" v-else>検索</ButtonBase>
         </div>
       </div>
     </CardWithHeader>
@@ -62,7 +74,8 @@ export default {
       uuid: '',
       friends: [],
       serchedFriend: null,
-      error: ''
+      error: '',
+      isSendRequestSuccess: false,
     }  
   },
   mounted () {
@@ -108,6 +121,24 @@ export default {
           });
         })
     },
+    sendRequest: function() {
+      axios
+        .post('/requests/create', {
+            uuid: this.uuid
+          })
+        .then(() => {
+          this.isSendRequestSuccess = true
+          setTimeout(() => {
+            this.isSendRequestSuccess = false
+            this.uuid = ""
+            this.serchedFriend = null
+          }, 2000)
+        })
+        .catch(error => {
+          console.error(error);
+          console.error('Rubyの方の通信エラーです');
+        })
+    }
   }
 }
 </script>
