@@ -1,10 +1,6 @@
 <template>
   <div class="profile">
-    <ProfileEditCard @changeName="changeName" @changeLimit="changeLimit" @setImage="setImage"/>
-    <div class="card-buttons">
-      <v-btn color="#A7DDEA" width="120px" height="56px" class="card-button-cancel" @click="cancel">キャンセル</v-btn>
-      <v-btn color="#18B1CE" width="120px" height="56px" class="card-button-post" @click.prevent="submit">保存</v-btn>
-    </div>
+    <ProfileEditCard @changeName="changeName" @changeUuid="changeUuid" @changeLimit="changeLimit" @setImage="setImage" @submit="submit"/>
   </div>
 </template>
 
@@ -17,6 +13,7 @@ export default {
     return {
       params: {
         name: "",
+        uuid: "",
         limit: null,
         image: null,
       }
@@ -37,16 +34,14 @@ export default {
     changeName: function(name) {
       this.params.name = name
     },
+    changeUuid: function(uuid) {
+      this.params.uuid = uuid
+    },
     changeLimit: function(limit) {
       this.params.limit = limit * 60
     },
     setImage: function(image) {
       this.params.image = image.target.files[0]
-    },
-    cancel() {
-      if(confirm('内容は保存されませんが、よろしいでしょうか？')){
-        this.$router.push('/profile')
-      }
     },
     async submit() {
       if(this.params.name === "") {

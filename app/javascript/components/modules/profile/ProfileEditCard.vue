@@ -1,20 +1,25 @@
 <template>
   <div>
     <Card v-if="storeUserLoaded">
-      <div class="card-header">
+      <div class="card-contents">
         <label for="edit-profile-image" class="file-input-label">
-          <v-icon class="white--text profile-image-edit-icon">mdi-camera</v-icon>
-          <img v-if="storeUser.image_url" :src="imageUrl" art="" class="mr-4 card-image" />
+          <img v-if="storeUser.image_url" :src="imageUrl" art="" class="card-image" />
           <div v-else class="mr-4 card-image grey lighten-3" />
         </label>
         <input type="file" id="edit-profile-image" accept="image/png,image/jpeg" @change="setImage" class="file-input"/>
         <div class="card-user-profile">
           <v-text-field
             :value="storeUser.name"
-            label="ユーザー名"
+            label="ユーザーネーム"
             required
-            counter ="20"
+            counter ="8"
             @change="changeParamsName"
+          ></v-text-field>
+          <v-text-field
+            :value="storeUser.uuid"
+            label="ユーザーID"
+            required
+            @change="changeParamsUuid"
           ></v-text-field>
           <v-select
             :value="storeUser.limit / 60"
@@ -24,6 +29,7 @@
             @change="changeParamsLimit"
           ></v-select>
         </div>
+        <ButtonBase color="#E8730E" @click.native="submit">保存</ButtonBase>
       </div>
     </Card>
   </div>
@@ -32,11 +38,10 @@
 <script>
 import Card from "../Card.vue"
 import 'user_default.svg'
+import ButtonBase from "../../modules/ButtonBase.vue"
 
 export default {
-  components: {
-    Card
-  },
+  components: { Card, ButtonBase },
   data() {
     return {
       previewImageUrl: null,
@@ -60,6 +65,9 @@ export default {
     changeParamsName(event) {
       this.$emit('changeName', event);
     },
+    changeParamsName(event) {
+      this.$emit('changeUuid', event);
+    },
     changeParamsLimit(event) {
       this.$emit('changeLimit', event);
     },
@@ -67,6 +75,9 @@ export default {
       this.$emit('setImage', event);
       const file = event.target.files[0];
       this.previewImageUrl = URL.createObjectURL(file)
+    },
+    submit() {
+      this.$emit('submit');
     },
   }
 
@@ -80,9 +91,15 @@ export default {
 .timeline_contents {
   padding: 20px;
 }
+.card-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
 .card-image {
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
 }
 .card-header {
@@ -111,11 +128,5 @@ export default {
 .file-input-label {
   cursor : pointer;
   position: relative;
-}
-.profile-image-edit-icon {
-  position: absolute !important;
-  /* 29pxが画像の中心に来てていい感じでした */
-  top: 29px;
-  left: 29px;
 }
 </style>
