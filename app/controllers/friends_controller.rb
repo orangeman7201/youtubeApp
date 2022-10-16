@@ -1,7 +1,7 @@
 class FriendsController < ApplicationController
   def index
-    friends = current_user.friends
-    render json: friends
+    friends ||= current_user.friends
+    render json: friends, each_serializer: FriendSerializer
   end
 
   def create
