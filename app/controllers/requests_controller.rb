@@ -11,8 +11,11 @@ class RequestsController < ApplicationController
   end
   
   def serch
-    input_user  =  User.find_by(uuid: params[:uuid])
-    render json: input_user
+    if input_user = User.find_by(uuid: params[:uuid])
+      render json: input_user
+    else 
+      render json: { error: 'user not found' }, status: 404
+    end
   end
 
   def destroy
