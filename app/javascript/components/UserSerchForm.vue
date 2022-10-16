@@ -2,8 +2,8 @@
   <div class="py-11 px-5 user-serch-backgound">
     <CardWithHeader headerText="フレンド検索" class="mb-11">
       <div class="d-flex justify-center flex-column py-7 px-11">
-        <div v-if="error !== ''">
-          <p class="red--text mt-5 text-h6">ユーザーが見つかりません</p>
+        <div v-if="error !== ''" class="not-found-user">
+          ユーザーが見つかりません
         </div>
         <div>
           <v-text-field
@@ -59,6 +59,7 @@ export default {
     return {
       uuid: '',
       friends: [],
+      serchedFriend: null,
       error: ''
     }  
   },
@@ -85,10 +86,11 @@ export default {
             uuid: this.uuid
           })
           .then(response => {
-            let e = response;
-            this.$router.push({name: 'UserDetailPage', params: { id: e.data.id } })
+            this.serchedFriend = response.data
           })
-          .catch(this.error = 'error')
+          .catch(error => {
+            this.error = error
+          })
       }
     },
     cancel: function() {
@@ -108,6 +110,10 @@ export default {
 </script>
 
 <style scoped>
+.not-found-user {
+  color: #E83902;
+  font-size: 15px;
+}
 .user-serch-backgound {
   display: block;
   background-color: #F1F1F1;
