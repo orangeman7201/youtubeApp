@@ -11,8 +11,8 @@ class RequestsController < ApplicationController
   end
   
   def serch
-    if input_user = User.find_by(uuid: params[:uuid])
-      render json: input_user
+    if serched_user = User.find_by(uuid: params[:uuid])
+      render json: serched_user, serializer: RequestSerializer
     else 
       render json: { error: 'user not found' }, status: 404
     end
