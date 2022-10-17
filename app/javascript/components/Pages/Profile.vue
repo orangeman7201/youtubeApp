@@ -1,40 +1,80 @@
 <template>
   <div class="profile">
-    <ProfileCard class="mb-2" :isEditSuccessNoticeVisible="isEditSuccessNoticeVisible"/>
-    <v-card class="px-5 py-4 profile-edit-button" width="100%" flat color="#A7DDEA" @click="moveEditPage">
-      プロフィールの編集
-    </v-card>
+    <ProfileEditCard @changeName="changeName" @changeUuid="changeUuid" @changeLimit="changeLimit" @setImage="setImage" @submit="submit"/>
   </div>
 </template>
 
 <script>
-import ProfileCard from "../modules/profile/ProfileCard.vue"
+import ProfileEditCard from "../modules/profile/ProfileEditCard.vue"
+import axios from 'axios';
 
 export default {
-  components: {
-    ProfileCard,
-  },
   data () {
     return {
-      isEditSuccessNoticeVisible: false,
-    }
-  },
-  mounted() {
-    this.changeEditSuccessState()
-  },
-  methods: {
-    moveEditPage: function() {
-      this.$router.push('/profile/edit')
-    },
-    changeEditSuccessState: function() {
-      if(this.$route.params.editStatus) {
-        this.isEditSuccessNoticeVisible = true
-        setTimeout(() => {
-          this.isEditSuccessNoticeVisible = false
-        }, 4000)
+      params: {
+        name: "",
+        uuid: "",
+        limit: null,
+        image: null,
       }
     }
+  },
+  components: {
+    ProfileEditCard,
+  },
+  computed: {
+    storeUser: function() {
+      return this.$store.getters.storeUser 
+    },
+    storeUserLoaded: function() {
+      return this.$store.getters.storeUserLoaded 
+    },
+  },
+  methods: {
+    changeName: function(name) {
+      this.params.name = name
+    },
+    changeUuid: function(uuid) {
+      this.params.uuid = uuid
+    },
+    changeLimit: function(limit) {
+      this.params.limit = limit * 60
+    },
+    setImage: function(image) {
+      this.params.image = image.target.files[0]
+    },
+    async submit() {
+      if(this.params.name === "") {
+        this.params.name = this.storeUser.name
+      }
+      if(this.params.limit === null) {
+        this.params.limit = this.storeUser.limit
+      }
+      if (this.params.image) {
+        const formData = new FormData();
+        formData.append("title", "title");
+        formData.append("image", this.params.image);
+        await axios
+        .put(`/users/${this.storeUser.id}/update_image`, formData)
+        .catch(error => {
+          console.log(error.message)
+        })
+      }
+      axios
+      .patch(`/users/${this.storeUser.id}`, {
+        name: this.params.name,
+        limit: this.params.limit
+      })
+      .then(response => {
+        this.$store.dispatch('updateUserStatus', response.data)
+        this.$router.push({ name: 'Profile', params: { editStatus: 'success' } })
+      })
+      .catch(error => {
+        console.log(error.message)
+      })
+    }
   }
+
 }
 </script>
 
@@ -50,5 +90,20 @@ export default {
   background-color: #A7DDEA;
   cursor: pointer;
   font-size: 16px;
+}
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.card-button-cancel{
+  color: #FFFFFF !important;
+  font-size: 16px !important;
+  margin-right: 20px;
+}
+.card-button-post{
+  color: #FFFFFF !important;
+  font-size: 20px !important;
+  margin-left: 20px;
 }
 </style>

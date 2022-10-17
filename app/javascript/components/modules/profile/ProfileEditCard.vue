@@ -65,7 +65,7 @@ export default {
     changeParamsName(event) {
       this.$emit('changeName', event);
     },
-    changeParamsName(event) {
+    changeParamsUuid(event) {
       this.$emit('changeUuid', event);
     },
     changeParamsLimit(event) {

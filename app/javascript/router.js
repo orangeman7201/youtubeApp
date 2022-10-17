@@ -11,7 +11,6 @@ import FriendIndexPage from './components/FriendIndexPage.vue';
 import About from './components/About.vue';
 import Timeline from './components/Pages/Timeline.vue';
 import Profile from './components/Pages/Profile.vue';
-import ProfileEdit from './components/Pages/ProfileEdit.vue';
 import MovieHistory from './components/Pages/MovieHistory';
 
 Vue.use(Router);
@@ -88,13 +87,6 @@ export default new Router ({
     { path: '/profile',
       name: 'Profile',
       component: Profile,
-      meta: {
-        requireAuth: true
-      },
-    }, 
-    { path: '/profile/edit',
-      name: 'ProfileEdit',
-      component: ProfileEdit,
       meta: {
         requireAuth: true
       },
