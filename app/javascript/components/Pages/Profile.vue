@@ -67,7 +67,6 @@ export default {
       })
       .then(response => {
         this.$store.dispatch('updateUserStatus', response.data)
-        this.$router.push({ name: 'Profile', params: { editStatus: 'success' } })
       })
       .catch(error => {
         console.log(error.message)
