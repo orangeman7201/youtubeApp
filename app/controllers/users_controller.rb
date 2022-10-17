@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    if user.update_columns(name: params[:name], limit: params[:limit])
+    if user.update(update_params)
       render json: user, serializer: UserSerializer
     else
       render json:{ errors: user.errors.full_messages }, status: :unprocessable_entity
@@ -41,6 +41,6 @@ class UsersController < ApplicationController
   private
 
   def update_params
-    params.permit(:name, :uuid, :limit, :image)
+    params.require(:user).permit(:name, :uuid, :limit)
   end
 end

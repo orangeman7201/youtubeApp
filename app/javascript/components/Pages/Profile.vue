@@ -48,6 +48,9 @@ export default {
       if(this.params.name === "") {
         this.params.name = this.storeUser.name
       }
+      if(this.params.uuid === "") {
+        this.params.name = this.storeUser.uuid
+      }
       if(this.params.limit === null) {
         this.params.limit = this.storeUser.limit
       }
@@ -64,7 +67,8 @@ export default {
       axios
       .patch(`/users/${this.storeUser.id}`, {
         name: this.params.name,
-        limit: this.params.limit
+        limit: this.params.limit,
+        uuid: this.params.uuid
       })
       .then(response => {
         this.$store.dispatch('updateUserStatus', response.data)
