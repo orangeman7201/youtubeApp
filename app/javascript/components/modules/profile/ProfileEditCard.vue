@@ -2,6 +2,17 @@
   <div>
     <Card v-if="storeUserLoaded">
       <div class="card-contents">
+        <v-alert
+          v-model="isUpdateSuccess"
+          close-text="Close Alert"
+          dismissible
+          dense
+          outlined
+          type="success"
+          text
+          transition="scale-transition"
+          class="card-alert"
+        >更新しました</v-alert>
         <label for="edit-profile-image" class="file-input-label">
           <img v-if="storeUser.image_url" :src="imageUrl" art="" class="card-image" />
           <div v-else class="mr-4 card-image grey lighten-3" />
@@ -42,6 +53,7 @@ import ButtonBase from "../../modules/ButtonBase.vue"
 
 export default {
   components: { Card, ButtonBase },
+  props: ["isUpdateSuccess"],
   data() {
     return {
       previewImageUrl: null,

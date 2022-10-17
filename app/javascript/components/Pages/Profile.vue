@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <ProfileEditCard @changeName="changeName" @changeUuid="changeUuid" @changeLimit="changeLimit" @setImage="setImage" @submit="submit"/>
+    <ProfileEditCard @changeName="changeName" @changeUuid="changeUuid" @changeLimit="changeLimit" @setImage="setImage" @submit="submit" :isUpdateSuccess="isUpdateSuccess"/>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
         uuid: "",
         limit: null,
         image: null,
-      }
+      },
+      isUpdateSuccess: false,
     }
   },
   components: {
@@ -67,6 +68,11 @@ export default {
       })
       .then(response => {
         this.$store.dispatch('updateUserStatus', response.data)
+        this.isUpdateSuccess = true
+        this.params = {}
+        setTimeout(() => {
+          this.isUpdateSuccess = false
+        }, 2000)
       })
       .catch(error => {
         console.log(error.message)
