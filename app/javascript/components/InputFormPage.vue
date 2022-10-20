@@ -90,7 +90,6 @@ export default {
   },
   computed: {
     apiUrl: function() {
-      /// TODO : このキーも環境変数に設定する
       const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
       let movieId = ""
       let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
