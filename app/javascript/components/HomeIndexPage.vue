@@ -4,7 +4,7 @@
       <v-card class="mt-6 mx-7 mb-8 pt-6 px-8 pb-3" flat>
         <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
         <v-card-text class='d-flex justify-center home-header-body'>
-          {{ formattedTotalDuration}}<span class="text-minute">分</span>
+          {{ formattedTotalDuration }}<span class="text-minute">分</span>
         </v-card-text>
         <v-card-text v-if="storeUser" class='d-flex justify-end home-header-target-time'>目標 <span class="home-header-target-time-text">{{ storeUser.limit / 60 }}</span>分</v-card-text>
         <div class='home-header-progress'>

@@ -3,7 +3,7 @@
     <v-card class="pa-4 mt-6 mb-11 mx-12 input-form-card" flat>
       <div class="d-flex justify-center input-form-header-title pt-0">今日の総再生時間</div>
       <div class='d-flex justify-center input-form-header-body ml-1'>
-        {{Math.floor(totalDuration/60%60)}}<span class="minute-text ml-1 mt-4">分</span>
+        {{ formattedTotalDuration }}<span class="minute-text ml-1 mt-4">分</span>
       </div>
     </v-card>
     <CardWithHeader headerText="動画を記録する" class="p-5 mb-7">
@@ -100,6 +100,9 @@ export default {
     },
     totalDuration: function() {
       return this.$store.getters.totalDuration
+    },
+    formattedTotalDuration: function() {
+      return Math.floor(this.totalDuration/60)
     },
     dateStatus: function() {
       return this.$store.getters.dateStatus
