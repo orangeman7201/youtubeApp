@@ -90,10 +90,18 @@ export default {
   },
   computed: {
     apiUrl: function() {
+      /// TODO : このキーも環境変数に設定する
       const Key = 'AIzaSyDmNgXHcyUTEkPFoxXsyVTZms7RIhwguBY';
-      let Id = this.movie.url.split('=')[1]
+      let movieId = ""
       let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
-      apiUrl += '?id=' + Id;
+      if (this.movie.url.includes("youtu.be")) {
+        movieId = this.movie.url.split('/')[3]
+      } else if (this.movie.url.includes("short")) {
+        movieId = this.movie.url.split('/')[4]
+      } else {
+        movieId = this.movie.url.split('=')[1]
+      }
+      apiUrl += '?id=' + movieId;
       apiUrl += '&key=' + Key;
       apiUrl += '&part=snippet,contentDetails'
       return apiUrl;
