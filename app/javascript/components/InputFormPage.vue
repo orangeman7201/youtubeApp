@@ -96,8 +96,8 @@ export default {
       let apiUrl = 'https://www.googleapis.com/youtube/v3/videos'; 
       if (this.movie.url.includes("youtu.be")) {
         movieId = this.movie.url.split('/')[3]
-      } else if (this.movie.url.includes("short")) {
-        movieId = this.movie.url.split('/')[4]
+      } else if (this.movie.url.includes("shorts")) {
+        movieId = this.movie.url.split('?')[0].split('/')[4]
       } else {
         movieId = this.movie.url.split('=')[1]
       }
