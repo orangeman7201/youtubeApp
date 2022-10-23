@@ -1,20 +1,50 @@
 <template>
   <div>
     <Card v-if="storeUserLoaded">
-      <div class="card-header">
+      <div class="card-contents">
+        <v-alert
+          v-model="isUpdateSuccess"
+          close-text="Close Alert"
+          dismissible
+          dense
+          outlined
+          type="success"
+          text
+          transition="scale-transition"
+          width="100%"
+          class="card-alert"
+        >更新しました</v-alert>
+        <v-alert
+          v-model="isUpdateFail"
+          close-text="Close Alert"
+          dismissible
+          dense
+          outlined
+          type="error"
+          text
+          transition="scale-transition"
+          width="100%"
+          class="card-alert"
+        >{{ errorMessage }}</v-alert>
         <label for="edit-profile-image" class="file-input-label">
-          <v-icon class="white--text profile-image-edit-icon">mdi-camera</v-icon>
-          <img v-if="storeUser.image_url" :src="imageUrl" art="" class="mr-4 card-image" />
+          <img v-if="storeUser.image_url" :src="imageUrl" art="" class="card-image" />
           <div v-else class="mr-4 card-image grey lighten-3" />
         </label>
         <input type="file" id="edit-profile-image" accept="image/png,image/jpeg" @change="setImage" class="file-input"/>
         <div class="card-user-profile">
           <v-text-field
             :value="storeUser.name"
-            label="ユーザー名"
+            label="ユーザーネーム"
+            :rules="nameRules"
             required
-            counter ="20"
-            @change="changeParamsName"
+            counter ="16"
+            @input="changeParamsName"
+          ></v-text-field>
+          <v-text-field
+            :value="storeUser.uuid"
+            label="ユーザーID"
+            required
+            @input="changeParamsUuid"
           ></v-text-field>
           <v-select
             :value="storeUser.limit / 60"
@@ -24,6 +54,7 @@
             @change="changeParamsLimit"
           ></v-select>
         </div>
+        <ButtonBase color="#E8730E" :disabled="!isReadyToSubmit"  @click.native="submit">保存</ButtonBase>
       </div>
     </Card>
   </div>
@@ -32,14 +63,18 @@
 <script>
 import Card from "../Card.vue"
 import 'user_default.svg'
+import ButtonBase from "../../modules/ButtonBase.vue"
 
 export default {
-  components: {
-    Card
-  },
+  components: { Card, ButtonBase },
+  props: ["isUpdateSuccess", "isUpdateFail", "isReadyToSubmit", "errorMessage"],
   data() {
     return {
       previewImageUrl: null,
+      nameRules: [
+        v => !!v || 'ユーザーネームを入力してください',
+        v => v.length <= 16 || 'ユーザーネームは16文字で入力してください',
+      ],
     }
   },
   computed: {
@@ -60,6 +95,9 @@ export default {
     changeParamsName(event) {
       this.$emit('changeName', event);
     },
+    changeParamsUuid(event) {
+      this.$emit('changeUuid', event);
+    },
     changeParamsLimit(event) {
       this.$emit('changeLimit', event);
     },
@@ -67,6 +105,9 @@ export default {
       this.$emit('setImage', event);
       const file = event.target.files[0];
       this.previewImageUrl = URL.createObjectURL(file)
+    },
+    submit() {
+      this.$emit('submit');
     },
   }
 
@@ -80,9 +121,15 @@ export default {
 .timeline_contents {
   padding: 20px;
 }
+.card-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
 .card-image {
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
 }
 .card-header {
@@ -111,11 +158,5 @@ export default {
 .file-input-label {
   cursor : pointer;
   position: relative;
-}
-.profile-image-edit-icon {
-  position: absolute !important;
-  /* 29pxが画像の中心に来てていい感じでした */
-  top: 29px;
-  left: 29px;
 }
 </style>

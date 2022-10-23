@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="white--text button-base" :color="color">
+  <v-btn class="white--text button-base" :color="color" :disabled="disabled">
     <slot />
   </v-btn>
 </template>
@@ -10,6 +10,10 @@ export default {
     color: {
       type: String,
       default: "#fff"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     },
   }
 }
