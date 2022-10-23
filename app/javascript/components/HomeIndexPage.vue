@@ -20,7 +20,7 @@
         </div>
       </v-card>
       <CardWithHeader headerText="週間サマリー">
-        <Chart class="pt-5 pb-14 chart" :chartData="chartItems" :options="chartOptions" :height="chartheight" :width="chartWidth" />
+        <Chart class="pt-5 pb-14 px-4" :chartData="chartItems" :options="chartOptions" />
         <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
       </CardWithHeader>
     </div>
@@ -47,11 +47,11 @@ export default {
       weeklyDurationSum: {},
       loaded: false,
       chartOptions: {
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
           display: false
         },
-        responsive: false,
         scales: {
           xAxes: [{
             display: true,
@@ -206,8 +206,5 @@ export default {
     border: 0.8px solid #EB440C;
     margin-right: 4px;
     padding: 0 7px;
-  }
-  .chart {
-    padding: 0 6px;
   }
 </style>
