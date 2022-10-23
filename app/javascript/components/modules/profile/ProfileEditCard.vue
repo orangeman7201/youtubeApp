@@ -11,6 +11,7 @@
           type="success"
           text
           transition="scale-transition"
+          width="100%"
           class="card-alert"
         >更新しました</v-alert>
         <v-alert
@@ -22,6 +23,7 @@
           type="error"
           text
           transition="scale-transition"
+          width="100%"
           class="card-alert"
         >{{ errorMessage }}</v-alert>
         <label for="edit-profile-image" class="file-input-label">
@@ -33,6 +35,7 @@
           <v-text-field
             :value="storeUser.name"
             label="ユーザーネーム"
+            :rules="nameRules"
             required
             counter ="16"
             @input="changeParamsName"
@@ -68,6 +71,10 @@ export default {
   data() {
     return {
       previewImageUrl: null,
+      nameRules: [
+        v => !!v || 'ユーザーネームを入力してください',
+        v => v.length <= 16 || 'ユーザーネームは18文字で入力してください',
+      ],
     }
   },
   computed: {
