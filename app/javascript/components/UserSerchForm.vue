@@ -151,6 +151,7 @@ export default {
 .user-serch-backgound {
   display: block;
   background-color: #F1F1F1;
+  height: 100%;
 }
 .friend-info-contents {
   display: flex;

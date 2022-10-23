@@ -34,14 +34,14 @@ export default {
     return {
       drawer: false,
       lists: [
-        {icon: 'mdi-account', title: 'マイページ', route: '/profile'},
         {icon: 'mdi-home', title: 'ホーム', route: '/home'},
         // ↓path編集必要？？
-        {icon: 'mdi-pencil', title: '記録', route: '/timeline'},
+        // {icon: 'mdi-pencil', title: '記録', route: '/timeline'},
         // ↓path編集必要??
         {icon: 'mdi-account-group ', title: 'フレンド', route: '/users/serch'},
+        {icon: 'mdi-account', title: 'マイページ', route: '/profile'},
         // ↓path編集必要
-        {icon: 'mdi-bell', title: 'お知らせ', route: '/freinds/index'},
+        // {icon: 'mdi-bell', title: 'お知らせ', route: '/freinds/index'},
       ],
     }
   },
