@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token
   before_save { self.email = self.email.downcase }
-  before_validation :set_uuid
+  before_create :set_uuid
 
   validates :name,  presence: true, length: { maximum: 50 }
 

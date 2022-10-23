@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <ProfileEditCard @changeName="changeName" @changeUuid="changeUuid" @changeLimit="changeLimit" @setImage="setImage" @submit="submit" :isUpdateSuccess="isUpdateSuccess"/>
+    <ProfileEditCard @changeName="changeName" @changeUuid="changeUuid" @changeLimit="changeLimit" @setImage="setImage" @submit="submit" :isUpdateSuccess="isUpdateSuccess" :isUpdateFail="isUpdateFail"/>
   </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
         image: null,
       },
       isUpdateSuccess: false,
+      isUpdateFail: false,
     }
   },
   components: {
@@ -49,7 +50,7 @@ export default {
         this.params.name = this.storeUser.name
       }
       if(this.params.uuid === "") {
-        this.params.name = this.storeUser.uuid
+        this.params.uuid = this.storeUser.uuid
       }
       if(this.params.limit === null) {
         this.params.limit = this.storeUser.limit
@@ -73,14 +74,25 @@ export default {
       .then(response => {
         this.$store.dispatch('updateUserStatus', response.data)
         this.isUpdateSuccess = true
-        this.params = {}
+        this.paramsReset()
         setTimeout(() => {
           this.isUpdateSuccess = false
         }, 2000)
       })
-      .catch(error => {
-        console.log(error.message)
+      .catch(() => {
+        this.isUpdateFail = true
+        setTimeout(() => {
+          this.isUpdateFail = false
+        }, 2000)
       })
+    },
+    paramsReset() {
+      this.params = {
+        name: "",
+        uuid: "",
+        limit: null,
+        image: null,
+      }
     }
   }
 
