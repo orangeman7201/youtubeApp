@@ -73,7 +73,7 @@ export default {
       previewImageUrl: null,
       nameRules: [
         v => !!v || 'ユーザーネームを入力してください',
-        v => v.length <= 16 || 'ユーザーネームは18文字で入力してください',
+        v => v.length <= 16 || 'ユーザーネームは16文字で入力してください',
       ],
     }
   },

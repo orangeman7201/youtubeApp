@@ -29,7 +29,6 @@ export default {
       },
       isUpdateSuccess: false,
       isUpdateFail: false,
-      isUuidDuplicated: false,
       errorMessage: "",
     }
   },
@@ -48,7 +47,7 @@ export default {
       if(params.name === "" && params.uuid === "" && params.limit === null && params.image === null) {
         return false
       }
-      if(params.name.length > 16 || this.isUuidDuplicated) {
+      if(params.name.length > 16) {
         return false
       }
       return true
