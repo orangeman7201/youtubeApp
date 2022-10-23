@@ -23,7 +23,7 @@
           text
           transition="scale-transition"
           class="card-alert"
-        >更新が失敗しました</v-alert>
+        >{{ errorMessage }}</v-alert>
         <label for="edit-profile-image" class="file-input-label">
           <img v-if="storeUser.image_url" :src="imageUrl" art="" class="card-image" />
           <div v-else class="mr-4 card-image grey lighten-3" />
@@ -64,7 +64,7 @@ import ButtonBase from "../../modules/ButtonBase.vue"
 
 export default {
   components: { Card, ButtonBase },
-  props: ["isUpdateSuccess", "isUpdateFail", "isReadyToSubmit"],
+  props: ["isUpdateSuccess", "isUpdateFail", "isReadyToSubmit", "errorMessage"],
   data() {
     return {
       previewImageUrl: null,

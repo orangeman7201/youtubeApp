@@ -9,6 +9,7 @@
       :isUpdateSuccess="isUpdateSuccess"
       :isUpdateFail="isUpdateFail"
       :isReadyToSubmit="isReadyToSubmit"
+      :errorMessage="errorMessage"
     />
   </div>
 </template>
@@ -29,6 +30,7 @@ export default {
       isUpdateSuccess: false,
       isUpdateFail: false,
       isUuidDuplicated: false,
+      errorMessage: "",
     }
   },
   components: {
@@ -105,7 +107,8 @@ export default {
           this.isUpdateSuccess = false
         }, 2000)
       })
-      .catch(() => {
+      .catch(error => {
+        this.errorMessage = error
         this.isUpdateFail = true
         setTimeout(() => {
           this.isUpdateFail = false
