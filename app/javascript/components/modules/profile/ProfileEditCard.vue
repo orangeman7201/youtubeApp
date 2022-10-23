@@ -34,8 +34,8 @@
             :value="storeUser.name"
             label="ユーザーネーム"
             required
-            counter ="8"
-            @change="changeParamsName"
+            counter ="16"
+            @input="changeParamsName"
           ></v-text-field>
           <v-text-field
             :value="storeUser.uuid"
@@ -51,7 +51,7 @@
             @change="changeParamsLimit"
           ></v-select>
         </div>
-        <ButtonBase color="#E8730E" @click.native="submit">保存</ButtonBase>
+        <ButtonBase color="#E8730E" :disabled="!isReadyToSubmit"  @click.native="submit">保存</ButtonBase>
       </div>
     </Card>
   </div>
@@ -64,7 +64,7 @@ import ButtonBase from "../../modules/ButtonBase.vue"
 
 export default {
   components: { Card, ButtonBase },
-  props: ["isUpdateSuccess", "isUpdateFail"],
+  props: ["isUpdateSuccess", "isUpdateFail", "isReadyToSubmit"],
   data() {
     return {
       previewImageUrl: null,

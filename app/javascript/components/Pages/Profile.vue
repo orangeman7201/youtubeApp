@@ -1,6 +1,15 @@
 <template>
   <div class="profile">
-    <ProfileEditCard @changeName="changeName" @changeUuid="changeUuid" @changeLimit="changeLimit" @setImage="setImage" @submit="submit" :isUpdateSuccess="isUpdateSuccess" :isUpdateFail="isUpdateFail"/>
+    <ProfileEditCard
+      @changeName="changeName"
+      @changeUuid="changeUuid"
+      @changeLimit="changeLimit"
+      @setImage="setImage"
+      @submit="submit"
+      :isUpdateSuccess="isUpdateSuccess"
+      :isUpdateFail="isUpdateFail"
+      :isReadyToSubmit="isReadyToSubmit"
+    />
   </div>
 </template>
 
@@ -19,6 +28,7 @@ export default {
       },
       isUpdateSuccess: false,
       isUpdateFail: false,
+      isUuidDuplicated: false,
     }
   },
   components: {
@@ -31,6 +41,19 @@ export default {
     storeUserLoaded: function() {
       return this.$store.getters.storeUserLoaded 
     },
+    isReadyToSubmit: function() {
+      const params = this.params
+      if(params.name === "" && params.uuid === "" && params.limit === null && params.image === null) {
+        return false
+      }
+      if(params.name.length > 16) {
+        return false
+      }
+      if(this.isUuidDuplicated) {
+        return false
+      }
+      return true
+    }
   },
   methods: {
     changeName: function(name) {
