@@ -160,6 +160,7 @@ export default {
 .friend-image {
   width: 30px;
   height: 30px;
+  border-radius: 50%;
 }
 .frined-item-border {
   border-top: 1px solid #949494;
