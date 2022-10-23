@@ -19,9 +19,9 @@ class SessionsController < ApplicationController
   end
 
   def gest_login
-    user = User.find_by(email: "gest@example.com")
-    if user
-      log_in(user)
+    if user = User.find_by(email: "guest@example.com")
+      sign_in(user)
+      remember(user)
     else
       render json:{ errors: user.errors.full_messages }, status: :unprocessable_entity 
     end
