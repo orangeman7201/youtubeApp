@@ -41,7 +41,7 @@
             <div class="friend-name">{{ friend.name }}</div>
           </div>
           <div class="friend-movie-info-contents">
-            <div class="mr-2"><span class="friend-duration-text">{{ friend.duration / 60 }}</span> 分</div>
+            <div class="mr-2"><span class="friend-duration-text">{{ Math.floor(friend.duration/ 60) }}</span> 分</div>
             <div class="pt-3">/ {{ friend.limit / 60 }}<span>分</span></div>
           </div>
         </div>

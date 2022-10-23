@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="card-limit">
-      <span class="card-limit-duration">{{ post.duration / 60 }}分</span>
+      <span class="card-limit-duration">{{  Math.floor(post.duration) / 60 }}分</span>
       <span class="card-limit-limit">/{{  post.user.limit / 60 }}分 </span>
     </div>
     <v-textarea
