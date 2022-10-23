@@ -151,19 +151,19 @@ export default {
         console.log('失敗です')
       }
     },
-    // gestlogin: function() {
-    //   axios
-    //     .post('/gest/login', 'gest@example.com')
-    //     .then(() => {
-    //       this.$router.push({name: 'HomeIndexPage' })
-    //     })
-    //     .catch(error => {
-    //       if (error.response.data && error.response.data.errors) {
-    //         this.errors = error.response.data.errors;
-    //       }
-    //       console.error('通信エラーです');
-    //     })
-    // }
+    gestlogin: function() {
+      axios
+        .post('/gest/login')
+        .then(() => {
+          this.$router.push({name: 'HomeIndexPage' })
+        })
+        .catch(error => {
+          if (error.response.data && error.response.data.errors) {
+            this.errors = error.response.data.errors;
+          }
+          console.error('通信エラーです');
+        })
+    }
   }
 }
 </script>

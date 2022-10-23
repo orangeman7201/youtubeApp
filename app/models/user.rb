@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token
   before_save { self.email = self.email.downcase }
+  before_validation :set_uuid
 
   validates :name,  presence: true, length: { maximum: 50 }
 
@@ -58,5 +59,11 @@ class User < ApplicationRecord
 
   def image_url
     image.attached? ? url_for(image) : nil
+  end
+
+  def set_uuid
+    while self.uuid.blank? || User.find_by(uuid: self.uuid).present? do
+      self.uuid = SecureRandom.urlsafe_base64(10)
+    end
   end
 end
