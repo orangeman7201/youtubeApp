@@ -41,7 +41,7 @@
             :value="storeUser.uuid"
             label="ユーザーID"
             required
-            @change="changeParamsUuid"
+            @input="changeParamsUuid"
           ></v-text-field>
           <v-select
             :value="storeUser.limit / 60"

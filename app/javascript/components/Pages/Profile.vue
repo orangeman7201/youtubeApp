@@ -48,13 +48,7 @@ export default {
       if(params.name === "" && params.uuid === "" && params.limit === null && params.image === null) {
         return false
       }
-      if(params.name.length > 16) {
-        return false
-      }
-      if(this.isUuidDuplicated) {
-        return false
-      }
-      if(params.name === "") {
+      if(params.name.length > 16 || this.isUuidDuplicated) {
         return false
       }
       return true
@@ -108,7 +102,7 @@ export default {
         }, 2000)
       })
       .catch(error => {
-        this.errorMessage = error
+        this.errorMessage = error.response.data.errors[0]
         this.isUpdateFail = true
         setTimeout(() => {
           this.isUpdateFail = false
