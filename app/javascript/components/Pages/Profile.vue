@@ -52,6 +52,9 @@ export default {
       if(this.isUuidDuplicated) {
         return false
       }
+      if(params.name === "") {
+        return false
+      }
       return true
     }
   },
