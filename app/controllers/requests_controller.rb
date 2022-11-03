@@ -2,7 +2,7 @@ class RequestsController < ApplicationController
 
   def index
     requests = current_user.requested
-    render json: requests
+    render json: requests, each_serializer: RequestSerializer
   end
 
   def create
