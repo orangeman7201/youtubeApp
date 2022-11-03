@@ -40,8 +40,7 @@ export default {
         // ↓path編集必要??
         {icon: 'mdi-account-group ', title: 'フレンド', route: '/users/serch'},
         {icon: 'mdi-account', title: 'マイページ', route: '/profile'},
-        // ↓path編集必要
-        // {icon: 'mdi-bell', title: 'お知らせ', route: '/freinds/index'},
+        {icon: 'mdi-bell', title: '通知', route: '/notification'},
       ],
     }
   },
