@@ -1,14 +1,16 @@
 <template>
   <div>
     <div class="mb-3">
-      <div class="date-text">{{ date }}</div>
+      <div class="date-text">
+        <span class="mr-2">{{ date }}</span><InfoBatch>フレンド</InfoBatch>
+      </div>
     </div>
     <div class="request-description">『{{ request.name }}』さんからフレンド申請が届きました</div>
     <div class="px-6">
       <FriendInfoBox :user="request" />
       <div class="d-flex justify-space-between">
         <ButtonBase color="#949494">キャンセル</ButtonBase>
-        <ButtonBase color="#E8730E">保存</ButtonBase>
+        <ButtonBase color="#E8730E">承認</ButtonBase>
       </div>
     </div>
   </div>
@@ -18,11 +20,13 @@
 import moment from 'moment';
 import FriendInfoBox from './FriendInfoBox.vue'
 import ButtonBase from './ButtonBase.vue'
+import InfoBatch from './InfoBatch.vue'
 
 export default {
   components: {
     FriendInfoBox,
     ButtonBase,
+    InfoBatch,
   },
   props: ['request'],
   computed: {
