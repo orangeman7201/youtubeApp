@@ -12,6 +12,7 @@ import About from './components/About.vue';
 import Timeline from './components/Pages/Timeline.vue';
 import Profile from './components/Pages/Profile.vue';
 import MovieHistory from './components/Pages/MovieHistory';
+import Notification from './components/Pages/Notification';
 
 Vue.use(Router);
 
@@ -87,6 +88,13 @@ export default new Router ({
     { path: '/profile',
       name: 'Profile',
       component: Profile,
+      meta: {
+        requireAuth: true
+      },
+    }, 
+    { path: '/notification',
+      name: 'Notification',
+      component: Notification,
       meta: {
         requireAuth: true
       },
