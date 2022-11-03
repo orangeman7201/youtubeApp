@@ -31,6 +31,7 @@ export default {
 .user-image {
   width: 45px;
   height: 45px;
+  border-radius: 50%;
 }
 .user-name-text {
   font-size: 15px;

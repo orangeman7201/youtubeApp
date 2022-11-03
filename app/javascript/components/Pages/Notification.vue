@@ -1,18 +1,23 @@
 <template>
-  <div> 
-    <div  v-for="request in requests" :key="request.id">
-      <div>name : {{ request.name }}</div>
-      <div>uuid : {{ request.uuid }}</div> 
-      <div>image_url : {{ request.image_url }}</div>
-      <div>date : {{ request.created_at }}</div>
-    </div>
+  <div class="pa-5 home-backgound">
+    <Card>
+      <div  v-for="request in requests" :key="request.id">
+        <FriendRequest :request="request" />
+      </div>
+    </Card>
   </div>
 </template>
 
 <script>
+import FriendRequest from '../modules/FriendRequest.vue';
 import axios from 'axios';
+import Card from '../modules/Card.vue'
 
 export default {
+  components: {
+    FriendRequest,
+    Card
+  },
   data () {
     return {
       requests: [],
@@ -46,3 +51,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .home-backgound {
+    display: block;
+    background-color: #F1F1F1;
+    height: 100%;
+  }
+</style>
