@@ -64,7 +64,7 @@ class User < ApplicationRecord
   def set_uuid
     if self.uuid.blank?
       uuid = SecureRandom.urlsafe_base64(10)
-      while User.exist?(uuid: uuid) do
+      while User.exists?(uuid: uuid) do
         uuid = SecureRandom.urlsafe_base64(10)
       end
       self.uuid = uuid

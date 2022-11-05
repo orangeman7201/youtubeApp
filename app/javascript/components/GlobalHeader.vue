@@ -64,8 +64,6 @@ export default {
         axios
           .post('/sessions/logout')
           .then(response => {
-            console.log(response)
-            console.log('ログアウトしました')
             this.$store.dispatch('lostUser')
             this.$router.push({name: 'LoginForm' })
           })

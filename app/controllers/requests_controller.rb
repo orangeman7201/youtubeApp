@@ -1,6 +1,7 @@
 class RequestsController < ApplicationController
 
   def index
+    debugger
     requests = current_user.requested
     render json: requests, each_serializer: RequestSerializer
   end

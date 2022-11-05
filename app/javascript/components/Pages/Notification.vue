@@ -21,6 +21,7 @@ export default {
   data () {
     return {
       requests: [],
+      isRequestProcessSuccess: false
     }
   },
   mounted() {
@@ -33,20 +34,6 @@ export default {
       axios
         .get(`/requests.json`)
         .then(response => (this.requests = response.data))
-    },
-    accept: function(request) {
-      axios
-        .post('/friends', request)
-        .then(response => {
-          this.$router.push({name: 'HomeIndexPage' })
-        })
-        .catch(error => {
-          console.error(error);
-          if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors;
-          }
-          console.error('通信エラーです');
-        })
     },
   }
 }
