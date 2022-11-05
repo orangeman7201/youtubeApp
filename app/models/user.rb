@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   attr_accessor :remember_token
   before_save { self.email = self.email.downcase }
-  before_create :set_uuid
+  before_validation :set_uuid
 
   validates :name,  presence: true, length: { maximum: 16 }
 
@@ -62,8 +62,12 @@ class User < ApplicationRecord
   end
 
   def set_uuid
-    while self.uuid.blank? || User.find_by(uuid: self.uuid).present? do
-      self.uuid = SecureRandom.urlsafe_base64(10)
+    if self.uuid.blank?
+      uuid = SecureRandom.urlsafe_base64(10)
+      while User.exist?(uuid: uuid) do
+        uuid = SecureRandom.urlsafe_base64(10)
+      end
+      self.uuid = uuid
     end
   end
 end
