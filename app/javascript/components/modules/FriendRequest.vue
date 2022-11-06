@@ -95,6 +95,7 @@ export default {
           this.isAcceptSuccess = true
           setTimeout(() => {
             this.isAcceptSuccess = false
+            this.$emit("getRequests")
           }, 2000)
         })
         .catch(() => {
@@ -113,6 +114,7 @@ export default {
           this.isRejectSuccess = true
           setTimeout(() => {
             this.isRejectSuccess = false
+            this.$emit("getRequests")
           }, 2000)
         })
         .catch(() => {
