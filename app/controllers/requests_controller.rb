@@ -2,11 +2,12 @@ class RequestsController < ApplicationController
 
   def index
     requests = current_user.requested
-    render json: requests
+    render json: requests, each_serializer: RequestSerializer
   end
 
   def create
-    request = Request.new(from_user_id: current_user.id, to_user_id: params[:id])
+    to_user = User.find_by(uuid: params[:uuid])
+    request = Request.new(from_user_id: current_user.id, to_user_id: to_user.id)
     request.save
   end
   
