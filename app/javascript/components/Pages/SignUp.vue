@@ -16,13 +16,13 @@
     </div>
     <v-form @submit.prevent="submitData" class="signin-form">
       <v-text-field
-        v-model="users.email"
+        v-model="users.name"
         label="ユーザー名"
         autofocus
         class="text-field"
       ></v-text-field>
       <v-text-field
-        v-model="users.name"
+        v-model="users.email"
         :rules="emailRules"
         label="メールアドレス"
         required
@@ -81,8 +81,8 @@ export default {
   methods: {
     submitData: function() { 
       axios
-        .post('/users', this.users)
-        .then(response => {
+        .post('/sign_up', this.users)
+        .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {
