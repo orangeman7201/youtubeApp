@@ -4,9 +4,7 @@
       <img src="~stopper.svg" art="" width="200px" height="110px">
     </div>
     <div class="about-buttons">
-      <router-link to="/login">
-        <button type="submit" class="start-button" dark  rounded >さっそく始める</button>
-      </router-link>
+      <router-link to="/signup" class="start-button">さっそく始める</router-link>
       <router-link to="/login" class="login-button">ログイン</router-link>
     </div>
   </div>  
