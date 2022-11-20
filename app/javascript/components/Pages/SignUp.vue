@@ -15,6 +15,9 @@
       <h3 class="signin-text">アカウント登録</h3>
     </div>
     <v-form @submit.prevent="submitData" class="signin-form">
+      <ul v-for="error in errors" :key="error.id" class="error-message">
+        <li>{{ error }}</li>
+      </ul>
       <v-text-field
         v-model="users.name"
         label="ユーザー名"
@@ -45,7 +48,7 @@
         class="mb-2"
       ></v-text-field>
       <div class="d-flex justify-center">
-        <v-btn type="submit" class="white--text signin-button" rounded width="80%" height="44px">登録</v-btn>
+        <v-btn type="submit" class="white--text signin-button" rounded width="80%" height="44px" :disabled="isAbleSignin">登録</v-btn>
       </div>
     </v-form>
   </v-app>
@@ -76,7 +79,10 @@ export default {
       const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
       const type = this.show ? 'text' : 'password'
       return { icon, type }
-    }
+    },
+    isAbleSignin() {
+      return Object.values(this.users).includes('')
+    },
   },
   methods: {
     submitData: function() { 
@@ -86,11 +92,9 @@ export default {
           this.$router.push({name: 'HomeIndexPage' })
         })
         .catch(error => {
-          console.error(error);
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors;
           }
-          console.error('通信エラーです');
         })
     },
   }
@@ -125,5 +129,9 @@ export default {
   background-color: #1995ad !important;
   max-width: 280px;
   font-size: 16px
+}
+.error-message {
+  font-size: 12px;
+  color: #EB440C;
 }
 </style>
