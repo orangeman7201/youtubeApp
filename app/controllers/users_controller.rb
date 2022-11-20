@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     new_user = User.create(name: params["name"], email: params["email"], password: params["password"], password_confirmation: params["passwordConfirmation"])
     if new_user.save
       sign_in(new_user)
+      remember(new_user)
     else
       render json:{ errors: new_user.errors.full_messages }, status: :unprocessable_entity
     end

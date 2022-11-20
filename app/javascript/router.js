@@ -3,12 +3,12 @@ import Router from 'vue-router';
 import HomeIndexPage from './components/HomeIndexPage.vue';
 import MovieDetailPage from './components/MovieDetailPage.vue';
 import InputFormPage from './components/InputFormPage.vue';
-import SignUpForm from './components/SignUpForm.vue';
+import SignUp from './components/Pages/SignUp.vue';
 import LoginForm from './components/LoginForm.vue';
 import UserDetailPage from './components/UserDetailPage.vue';
 import UserSerchForm from './components/UserSerchForm.vue';
 import FriendIndexPage from './components/FriendIndexPage.vue';
-import About from './components/About.vue';
+import About from './components/Pages/About.vue';
 import Timeline from './components/Pages/Timeline.vue';
 import Profile from './components/Pages/Profile.vue';
 import MovieHistory from './components/Pages/MovieHistory';
@@ -50,7 +50,7 @@ export default new Router ({
     }, 
     { 
       path: '/signup',
-      component: SignUpForm,
+      component: SignUp,
     }, 
     { path: '/login',
       name: 'LoginForm',
