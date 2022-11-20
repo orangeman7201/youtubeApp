@@ -8,7 +8,7 @@ import LoginForm from './components/LoginForm.vue';
 import UserDetailPage from './components/UserDetailPage.vue';
 import UserSerchForm from './components/UserSerchForm.vue';
 import FriendIndexPage from './components/FriendIndexPage.vue';
-import About from './components/About.vue';
+import About from './components/Pages/About.vue';
 import Timeline from './components/Pages/Timeline.vue';
 import Profile from './components/Pages/Profile.vue';
 import MovieHistory from './components/Pages/MovieHistory';
