@@ -12,45 +12,8 @@
           <v-icon size="24px">mdi-chevron-left</v-icon>
         </v-btn>
       </router-link>
-      <h3 class="signin-text">アカウント登録</h3>
     </div>
-    <v-form @submit.prevent="submitData" class="signin-form">
-      <ul v-for="error in errors" :key="error.id" class="error-message">
-        <li>{{ error }}</li>
-      </ul>
-      <v-text-field
-        v-model="users.name"
-        label="ユーザー名"
-        autofocus
-        class="text-field"
-      ></v-text-field>
-      <v-text-field
-        v-model="users.email"
-        :rules="emailRules"
-        label="メールアドレス"
-        required
-        class="text-field"
-      ></v-text-field>
-      <v-text-field
-        v-model="users.password"
-        label="パスワード"
-        required
-        autocomplete="on"
-        type="password"
-        class="mb-2"
-      ></v-text-field>
-      <v-text-field
-        v-model="users.passwordConfirmation"
-        label="パスワード確認"
-        required
-        autocomplete="on"
-        type="password"
-        class="mb-2"
-      ></v-text-field>
-      <div class="d-flex justify-center">
-        <v-btn type="submit" class="white--text signin-button" rounded width="80%" height="44px" :disabled="isAbleSignin">登録</v-btn>
-      </div>
-    </v-form>
+    <router-view></router-view>
   </v-app>
 </template>
 
