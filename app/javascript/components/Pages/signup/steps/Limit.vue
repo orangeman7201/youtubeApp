@@ -1,21 +1,48 @@
 <template>
   <div>
-    <input
-      type="number"
-      placeholder="分"
-      autofocus
-      :value="limit / 60"
-      @input="changeParentValueWithPath"
-    >
+    <div class="header">
+      <img src="~access_time.svg" art="" width="70px" height="70px" class="mb-5">
+      <h3>１日あたりの目標時間</h3>
+    </div>
+    <div class="input-area">
+      <div class="input-area2">
+        <input
+          class="input-box"
+          type="number"
+          autofocus
+          placeholder="0"
+          :value="inputValue"
+          @input="changeParentValueWithPath"
+        >
+        <span class="minute-text" :style="minuteTextColor">分</span>
+      </div>
+    </div>
+    <div class="d-flex justify-center">
+      <RoundedButtonBase
+        color="#1995AD"
+        width="80%"
+      >次へ</RoundedButtonBase>
+    </div>
   </div>
 </template>
 
 <script>
+import RoundedButtonBase from '../../../modules/RoundedButtonBase.vue'
+
 export default {
+  components: { RoundedButtonBase },
   props: {
     limit: {
       type: Number,
     },
+  },
+  computed: {
+    inputValue() {
+      return this.limit === 0 ? null : this.limit / 60
+    },
+    minuteTextColor() {
+      return this.limit === 0 ? 'color: #8C8C8C' : 'color: #000000'
+    }
   },
   methods: {
     changeParentValueWithPath(event) {
@@ -34,4 +61,43 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 53px;
+}
+.input-area {
+  margin-bottom: 144px;
+  display: flex;
+  justify-content: center;
+}
+.input-area2 {
+  width: 60px;
+  position: relative;
+}
+.input-box {
+  width: 60px;
+  font-size: 37px;
+  text-align: center;
+  outline: none;
+  caret-color: #1995AD;
+}
+input::placeholder {
+  color: #8C8C8C;
+}
+.minute-text {
+  position: absolute;
+  bottom: 8px;
+  right: -36px;
+  font-size: 16px;
+}
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+} 
+input[type="number"] { 
+  -moz-appearance:textfield; 
+} 
 </style>
