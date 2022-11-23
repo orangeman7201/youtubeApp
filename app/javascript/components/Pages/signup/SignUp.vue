@@ -1,6 +1,7 @@
 <template>
   <v-app class="signin-background">
     <div class="header">
+      <!-- 遷移先はそれぞれcomputedで変えてコンポーネントごとに遷移先を宣言的に変えたい -->
       <router-link to="/">
         <v-btn
           icon
@@ -13,7 +14,10 @@
         </v-btn>
       </router-link>
     </div>
-    <router-view></router-view>
+    <router-view
+      :limit="user.limit"
+      @change="handleChange"
+    ></router-view>
   </v-app>
 </template>
 
@@ -23,9 +27,10 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
-      users: {
+      user: {
         name: '',
         email: '',
+        limit: 0,
         password: '',
         passwordConfirmation: '',
       },
@@ -38,19 +43,18 @@ export default {
     }  
   },
   computed: {
-    toggle () {
-      const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
-      const type = this.show ? 'text' : 'password'
-      return { icon, type }
-    },
     isAbleSignin() {
-      return Object.values(this.users).includes('')
+      return Object.values(this.user).includes('')
     },
   },
   methods: {
+    handleChange(event, path) {
+      const element = path.split('/')[2]
+      this.user[element] = event
+    },
     submitData: function() { 
       axios
-        .post('/sign_up', this.users)
+        .post('/sign_up', this.user)
         .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
