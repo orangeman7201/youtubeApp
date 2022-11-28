@@ -18,10 +18,7 @@
       </div>
     </div>
     <div class="d-flex justify-center">
-      <RoundedButtonBase
-        color="#1995AD"
-        width="80%"
-      >次へ</RoundedButtonBase>
+      <router-link  class="next-button" to="/signup/name">次へ</router-link>
     </div>
   </div>
 </template>
@@ -92,6 +89,18 @@ input::placeholder {
   right: -36px;
   font-size: 16px;
 }
+.next-button {
+  width: 80%;
+  height: 44px;
+  padding: 12px 2px;
+  background-color: #1995ad;
+  color: white;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 100px;
+  margin: 0 auto 26px;
+}
 input[type="number"]::-webkit-outer-spin-button, 
 input[type="number"]::-webkit-inner-spin-button { 
   -webkit-appearance: none; 
@@ -99,5 +108,5 @@ input[type="number"]::-webkit-inner-spin-button {
 } 
 input[type="number"] { 
   -moz-appearance:textfield; 
-} 
+}
 </style>
