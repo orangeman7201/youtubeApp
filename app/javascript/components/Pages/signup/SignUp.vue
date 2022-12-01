@@ -16,6 +16,7 @@
     </div>
     <router-view
       :limit="user.limit"
+      :nickname="user.name"
       @change="handleChange"
     ></router-view>
   </v-app>

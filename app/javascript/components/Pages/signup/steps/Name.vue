@@ -11,7 +11,7 @@
         maxlength="10"
         autofocus
         placeholder="全角10文字以内"
-        :value="name"
+        :value="nickname"
         @input="changeParentValueWithPath"
       >
     </div>
@@ -27,7 +27,7 @@ import RoundedButtonBase from '../../../modules/RoundedButtonBase.vue'
 export default {
   components: { RoundedButtonBase },
   props: {
-    name: {
+    nickname: {
       type: String,
       default: "",
     },
