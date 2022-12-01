@@ -18,6 +18,8 @@
       :limit="user.limit"
       :nickname="user.name"
       :email="user.email"
+      :password="user.password"
+      :passwordConfirmation="user.passwordConfirmation"
       @change="handleChange"
     ></router-view>
   </v-app>
