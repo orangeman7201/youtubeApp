@@ -16,7 +16,7 @@
       >
     </div>
     <div class="d-flex justify-center">
-      <router-link  class="next-button" to="/signup/name">次へ</router-link>
+      <router-link  class="next-button" to="/signup/email">次へ</router-link>
     </div>
   </div>
 </template>

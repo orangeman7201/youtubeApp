@@ -17,6 +17,7 @@
     <router-view
       :limit="user.limit"
       :nickname="user.name"
+      :email="user.email"
       @change="handleChange"
     ></router-view>
   </v-app>
