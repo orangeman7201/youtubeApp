@@ -15,7 +15,7 @@
       >
     </div>
     <div class="d-flex justify-center">
-      <router-link  class="next-button" to="/signup/password">次へ</router-link>
+      <router-link  class="next-button" to="/signup/password"  :class="validEmail">次へ</router-link>
     </div>
   </div>
 </template>
@@ -30,6 +30,14 @@ export default {
       type: String,
       default: "",
     },
+  },
+  computed: {
+    validEmail() {
+      if(this.email.length > 0) {
+        return "active-button"
+      }
+      return "disable-button"
+    }
   },
   methods: {
     changeParentValueWithPath(event) {
@@ -65,12 +73,17 @@ export default {
   width: 80%;
   height: 44px;
   padding: 12px 2px;
-  background-color: #1995ad;
   color: white;
   display: block;
   text-decoration: none;
   text-align: center;
   border-radius: 100px;
   margin: 0 auto 26px;
+}
+.active-button {
+  background-color: #1995ad;
+}
+.disable-button {
+  background-color: #D9D9D9;
 }
 </style>
