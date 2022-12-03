@@ -1,7 +1,6 @@
 <template>
   <v-app class="signin-background">
     <div class="header">
-      <!-- 遷移先はそれぞれcomputedで変えてコンポーネントごとに遷移先を宣言的に変えたい -->
       <router-link :to="backButtonPath">
         <v-btn
           icon
@@ -22,6 +21,7 @@
       :password="user.password"
       :passwordConfirmation="user.passwordConfirmation"
       @change="handleChange"
+      @submit="submitData"
     ></router-view>
   </v-app>
 </template>

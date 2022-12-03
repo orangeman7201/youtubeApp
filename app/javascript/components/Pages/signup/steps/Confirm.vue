@@ -33,7 +33,7 @@
         {{ password }}
       </div>
     </div>
-    <button class="submit-button">登録</button>
+    <button class="submit-button" @click.prevent="$emit('submit')">登録</button>
   </div>
 </template>
 
