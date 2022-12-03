@@ -13,6 +13,11 @@
           <v-icon size="24px">mdi-chevron-left</v-icon>
         </v-btn>
       </router-link>
+      <img :src="stepImages" alt=""  width="192px" height="16px">
+      <!-- <img src="~step2.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/name'">
+      <img src="~step3.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/email'">
+      <img src="~step4.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/password'">
+      <img src="~step5.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/confirm'"> -->
     </div>
     <router-view
       :limit="user.limit"
@@ -50,6 +55,21 @@ export default {
     isAbleSignin() {
       return Object.values(this.user).includes('')
     },
+    stepImages() {
+      if(this.$route.path === '/signup/limit') {
+        return require("step1.svg")
+      }
+      if(this.$route.path === '/signup/name') {
+        return require("step2.svg")
+      }
+      if(this.$route.path === '/signup/email') {
+        return require("step3.svg")
+      }
+      if(this.$route.path === '/signup/password') {
+        return require("step4.svg")
+      }
+      return require("step5.svg")
+    }
   },
   methods: {
     handleChange(event, path) {
@@ -76,7 +96,10 @@ export default {
 .header {
   position: relative;
   height: 24px;
-  margin-bottom: 48px
+  margin-bottom: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .back-button {
   position: absolute;
