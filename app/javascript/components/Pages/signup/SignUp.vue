@@ -2,7 +2,7 @@
   <v-app class="signin-background">
     <div class="header">
       <!-- 遷移先はそれぞれcomputedで変えてコンポーネントごとに遷移先を宣言的に変えたい -->
-      <router-link to="/">
+      <router-link :to="backButtonPath">
         <v-btn
           icon
           color="gray"
@@ -14,10 +14,6 @@
         </v-btn>
       </router-link>
       <img :src="stepImages" alt=""  width="192px" height="16px">
-      <!-- <img src="~step2.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/name'">
-      <img src="~step3.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/email'">
-      <img src="~step4.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/password'">
-      <img src="~step5.svg" alt=""  width="192px" height="16px" v-if="$router.path === '/signup/confirm'"> -->
     </div>
     <router-view
       :limit="user.limit"
@@ -69,6 +65,21 @@ export default {
         return require("step4.svg")
       }
       return require("step5.svg")
+    },
+    backButtonPath() {
+      if(this.$route.path === '/signup/limit') {
+        return "/"
+      }
+      if(this.$route.path === '/signup/name') {
+        return "/signup/limit"
+      }
+      if(this.$route.path === '/signup/email') {
+        return "/signup/name"
+      }
+      if(this.$route.path === '/signup/password') {
+        return "/signup/email"
+      }
+      return "/signup/password"
     }
   },
   methods: {
