@@ -9,7 +9,7 @@
         class="input-box"
         type="password"
         autofocus
-        placeholder="半角英数字"
+        placeholder="半角英数字6文字以上"
         :value="password"
         @input="changeParentValueWithPath"
       >
@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     validPassword() {
-      if(this.password.length > 0 && this.password == this.passwordConfirmation) {
+      if(this.password.length > 5 && this.password == this.passwordConfirmation) {
         return "active-button"
       }
       return "disable-button"
