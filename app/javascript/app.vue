@@ -5,7 +5,7 @@
     <v-main>
       <router-view></router-view>
     </v-main>
-    <GlobalFoooter v-if="isHeaderShow"/>
+    <!-- <GlobalFoooter v-if="isHeaderShow"/> -->
   </v-app>  
 </template>
 
