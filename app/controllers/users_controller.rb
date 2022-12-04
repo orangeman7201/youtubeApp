@@ -41,8 +41,12 @@ class UsersController < ApplicationController
 
   private
 
+  def snake_params 
+    params.transform_keys {  |item| item.underscore }
+  end
+
   def create_params
-    params.require(:user).permit(:name, :limit, :email, :password, :passwordConfirmation)
+    snake_params.permit(:name, :limit, :email, :password, :password_confirmation)
   end
 
   def update_params
