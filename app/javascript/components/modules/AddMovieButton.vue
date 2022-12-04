@@ -18,14 +18,14 @@ export default {
 <style scoped>
 .add-movie-button {
   position: fixed;
-  top: 36px;
+  bottom: 24px;
   right: 24px;
   width: 75px;
   height: 75px;
   border-radius: 50%;
   z-index: 1;
   background-color: #E8730E;
-  border: solid 2px #FFFFFF;
+  box-shadow: 0 0 6px rgba(0,0,0,.3);
 }
 .dli-plus {
   display: inline-block;
@@ -49,4 +49,3 @@ export default {
   transform: rotate(90deg);
 }
 </style>
-
