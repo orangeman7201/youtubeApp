@@ -1,7 +1,7 @@
 <template>
   <v-app class="signin-background">
     <div class="header">
-      <router-link to="/">
+      <router-link :to="backButtonPath">
         <v-btn
           icon
           color="gray"
@@ -12,45 +12,17 @@
           <v-icon size="24px">mdi-chevron-left</v-icon>
         </v-btn>
       </router-link>
-      <h3 class="signin-text">アカウント登録</h3>
+      <img :src="stepImages" alt=""  width="192px" height="16px">
     </div>
-    <v-form @submit.prevent="submitData" class="signin-form">
-      <ul v-for="error in errors" :key="error.id" class="error-message">
-        <li>{{ error }}</li>
-      </ul>
-      <v-text-field
-        v-model="users.name"
-        label="ユーザー名"
-        autofocus
-        class="text-field"
-      ></v-text-field>
-      <v-text-field
-        v-model="users.email"
-        :rules="emailRules"
-        label="メールアドレス"
-        required
-        class="text-field"
-      ></v-text-field>
-      <v-text-field
-        v-model="users.password"
-        label="パスワード"
-        required
-        autocomplete="on"
-        type="password"
-        class="mb-2"
-      ></v-text-field>
-      <v-text-field
-        v-model="users.passwordConfirmation"
-        label="パスワード確認"
-        required
-        autocomplete="on"
-        type="password"
-        class="mb-2"
-      ></v-text-field>
-      <div class="d-flex justify-center">
-        <v-btn type="submit" class="white--text signin-button" rounded width="80%" height="44px" :disabled="isAbleSignin">登録</v-btn>
-      </div>
-    </v-form>
+    <router-view
+      :limit="user.limit"
+      :nickname="user.name"
+      :email="user.email"
+      :password="user.password"
+      :passwordConfirmation="user.passwordConfirmation"
+      @change="handleChange"
+      @submit="submitData"
+    ></router-view>
   </v-app>
 </template>
 
@@ -60,9 +32,10 @@ import axios from 'axios';
 export default {
   data: function () {
     return {
-      users: {
+      user: {
         name: '',
         email: '',
+        limit: 0,
         password: '',
         passwordConfirmation: '',
       },
@@ -75,19 +48,48 @@ export default {
     }  
   },
   computed: {
-    toggle () {
-      const icon = this.show ? 'mdi-eye' : 'mdi-eye-off'
-      const type = this.show ? 'text' : 'password'
-      return { icon, type }
-    },
     isAbleSignin() {
-      return Object.values(this.users).includes('')
+      return Object.values(this.user).includes('')
     },
+    stepImages() {
+      if(this.$route.path === '/signup/limit') {
+        return require("step1.svg")
+      }
+      if(this.$route.path === '/signup/name') {
+        return require("step2.svg")
+      }
+      if(this.$route.path === '/signup/email') {
+        return require("step3.svg")
+      }
+      if(this.$route.path === '/signup/password') {
+        return require("step4.svg")
+      }
+      return require("step5.svg")
+    },
+    backButtonPath() {
+      if(this.$route.path === '/signup/limit') {
+        return "/"
+      }
+      if(this.$route.path === '/signup/name') {
+        return "/signup/limit"
+      }
+      if(this.$route.path === '/signup/email') {
+        return "/signup/name"
+      }
+      if(this.$route.path === '/signup/password') {
+        return "/signup/email"
+      }
+      return "/signup/password"
+    }
   },
   methods: {
+    handleChange(event, path) {
+      const element = path.split('/')[2]
+      this.user[element] = event
+    },
     submitData: function() { 
       axios
-        .post('/sign_up', this.users)
+        .post('/sign_up', this.user)
         .then(() => {
           this.$router.push({name: 'HomeIndexPage' })
         })
@@ -105,7 +107,10 @@ export default {
 .header {
   position: relative;
   height: 24px;
-  margin-bottom: 48px
+  margin-bottom: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .back-button {
   position: absolute;

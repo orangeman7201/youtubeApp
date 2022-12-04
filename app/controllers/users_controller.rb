@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    new_user = User.create(name: params["name"], email: params["email"], password: params["password"], password_confirmation: params["passwordConfirmation"])
+    new_user = User.create(create_params)
     if new_user.save
       sign_in(new_user)
       remember(new_user)
@@ -40,6 +40,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def snake_params 
+    params.transform_keys {  |item| item.underscore }
+  end
+
+  def create_params
+    snake_params.permit(:name, :limit, :email, :password, :password_confirmation)
+  end
 
   def update_params
     params.require(:user).permit(:name, :uuid, :limit)

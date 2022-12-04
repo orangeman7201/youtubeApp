@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     isHeaderShow: function() {
-      return !(this.$route.path === '/login' || this.$route.path === '/' || this.$route.path === '/signup')
+      return !(this.$route.path === '/login' || this.$route.path === '/' || this.$route.path.includes('/signup'))
     },
   }
 }
