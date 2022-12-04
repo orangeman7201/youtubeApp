@@ -1,6 +1,6 @@
 <template>
   <div class="pa-5 home-backgound">
-    <div v-if="requests.length !== 0">通知がありません</div>
+    <div v-if="requests.length === 0">通知がありません</div>
     <Card v-else>
       <div  v-for="request in requests" :key="request.id">
         <FriendRequest :request="request" @getRequests="getRequests"/>
