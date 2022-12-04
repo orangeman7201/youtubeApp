@@ -9,13 +9,9 @@ export default new Vuex.Store({
   state: {
     user: null,
     userLoaded: false,
-    dateStatus: 0,
     totalDuration: 0,
   },
   getters: {
-    dateStatus: state => {
-      return state.dateStatus
-    },
     totalDuration: state => {
       return state.totalDuration
     },
@@ -33,17 +29,8 @@ export default new Vuex.Store({
     updateUserLoadStatus(state, bool) {
       state.userLoaded = bool
     },
-    updateDateStatus(state) {
-      state.today = new Date();
-    },
     lostUser(state) {
       state.user = null
-    },
-    oneDayAgo(state) {
-      state.dateStatus--
-    },
-    oneDayAfter(state) {
-      state.dateStatus++
     },
     setTotalDuration(state, totalDuration) {
       state.totalDuration = totalDuration
@@ -57,7 +44,6 @@ export default new Vuex.Store({
         .get('/session_check')
         .then(response => {
           context.dispatch('updateUserStatus', response.data)
-          context.commit('updateDateStatus')
           if (to) {
             router.push({name: 'HomeIndexPage'}, () => {})
           }
@@ -85,9 +71,7 @@ export default new Vuex.Store({
     },
     getTotalDuration(context) {
       axios
-      .get('/durations', { 
-        params: { dateStatus: context.state.dateStatus}
-      })
+      .get('/durations')
       .then(response => {
         context.commit('setTotalDuration', response.data.total_duration)
       })

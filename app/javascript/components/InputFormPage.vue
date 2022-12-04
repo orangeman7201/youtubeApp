@@ -79,7 +79,6 @@ export default {
         title: '',
         comment: '',
         thumbnail: '',
-        date: '',
       },
       error: null,
       unsavedError: null,
@@ -110,12 +109,6 @@ export default {
     },
     formattedTotalDuration: function() {
       return Math.floor(this.totalDuration/60)
-    },
-    dateStatus: function() {
-      return this.$store.getters.dateStatus
-    },
-    formattedDate: function() {
-      return moment().add(this.dateStatus, 'd').toDate()
     },
   },
   methods: {
@@ -159,7 +152,6 @@ export default {
       this.movie.title = '';
       this.movie.comment = '';
       this.movie.thumbnail = '';
-      this.movie.date = '';
       this.error = null;
       this.unsavedError = null;
     },
@@ -177,7 +169,6 @@ export default {
           }
           this.movie.title = e.items[0].snippet.title
           this.movie.duration = this.calculateDuration(e.items[0].contentDetails.duration)
-          this.movie.date = this.formattedDate
         })
         .catch(error => {
           console.error(error);

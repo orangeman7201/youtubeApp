@@ -74,12 +74,6 @@ export default {
       },
     }  
   },
-  watch: {
-    dateStatus: function() {
-      this.getMovie();
-      this.$store.dispatch('getTotalDuration');
-    },
-  },
   computed: {
     chartheight: function() {
       return window.innerHeight / 4
@@ -92,9 +86,6 @@ export default {
     },
     totalDuration: function() {
       return this.$store.getters.totalDuration
-    },
-    dateStatus: function() {
-      return this.$store.getters.dateStatus
     },
     formattedTotalDuration: function() {
       return Math.floor(this.totalDuration/60)
@@ -131,11 +122,7 @@ export default {
     },
     getWeeklyDurationSum() {
       axios
-      .get('/weekly_duration_sum', {
-        params: {
-          dateStatus: this.dateStatus
-        }
-      })
+      .get('/weekly_duration_sum')
       .then(response => {
         this.weeklyDurationSum = response.data
         this.loaded = true

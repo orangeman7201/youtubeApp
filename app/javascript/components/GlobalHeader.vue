@@ -48,12 +48,6 @@ export default {
     storeUser: function() {
       return this.$store.getters.storeUser 
     },
-    dateStatus: function() {
-      return this.$store.getters.dateStatus
-    },
-    formattedDate: function() {
-      return moment().add(this.dateStatus, 'd').format('MM月DD日')
-    },
     isLoginPage: function() {
       return this.$route.path === '/login'
     },
@@ -63,7 +57,7 @@ export default {
       if(confirm('ログアウトしますか')) {
         axios
           .post('/sessions/logout')
-          .then(response => {
+          .then(() => {
             this.$store.dispatch('lostUser')
             this.$router.push({name: 'LoginForm' })
           })
