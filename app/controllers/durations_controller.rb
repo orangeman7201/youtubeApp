@@ -13,7 +13,7 @@ class DurationsController < ApplicationController
         date: nil,
         duration: nil,
       }
-      duration_sum = @weekly_movies.where(date: date.beginning_of_day .. date.end_of_day).sum(:duration)
+      duration_sum = @weekly_movies.where(created_at: date.beginning_of_day .. date.end_of_day).sum(:duration)
       hash[:date] = date
       hash[:duration] = duration_sum
       hash[:duration] = duration_sum
@@ -25,11 +25,11 @@ class DurationsController < ApplicationController
   private
 
   def set_movie
-    @movie ||= current_user.movies.target_date(params[:dateStatus].to_i).order(created_at: :desc)
+    @movie ||= current_user.movies.today.order(created_at: :desc)
   end
 
   def set_weekly_movies
-    @weekly_movies ||= current_user.movies.target_week(params[:dateStatus].to_i)
+    @weekly_movies ||= current_user.movies.this_week
   end
 
   def week_array

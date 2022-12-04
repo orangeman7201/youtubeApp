@@ -7,14 +7,14 @@ class Movie < ApplicationRecord
   # # validates :comment, exclusion: { in: [nil] }入ってなくても保存できる
   # validates :date, exclusion: { in: nil, message: "空欄です" }
 
-  scope :target_date, -> (dateStatus) {
-    target_date = Date.today + dateStatus.day
-      where(date: target_date.beginning_of_day .. target_date.end_of_day)
+  scope :today, -> {
+    today = Date.today
+    where(created_at: today.beginning_of_day .. today.end_of_day)
   }
 
-  scope :target_week, -> (dateStatus) {
-    to = Date.today + dateStatus.day
-    from = Date.today + ( dateStatus - 7 ).day ## 7: 一週間
-    where(date: from.beginning_of_day .. to.end_of_day)
+  scope :this_week, -> {
+    to = Date.today 
+    from = Date.today - ( 7 ).day ## 7: 一週間
+    where(created_at: from.beginning_of_day .. to.end_of_day)
   }
 end

@@ -1,8 +1,7 @@
 class MoviesController < ApplicationController
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
-  before_action :set_movies, only: [:index, :total_duration]
-  before_action :set_weekly_movies, only: [:weekly_duration_sum]
+  before_action :set_movies, only: [:index]
 
   def index
     render json: {movies: movies, total: movies_total}
@@ -32,30 +31,10 @@ class MoviesController < ApplicationController
     movie.destroy
   end
 
-  def total_duration
-    render json: { total_duration: @movies.sum(:duration) }
-  end
-
-  def weekly_duration_sum
-    array = []
-    week_array.each do |date|
-      hash = {
-        date: nil,
-        duration: nil,
-      }
-      duration_sum = @weekly_movies.where(date: date.beginning_of_day .. date.end_of_day).sum(:duration)
-      hash[:date] = date
-      hash[:duration] = duration_sum
-      hash[:duration] = duration_sum
-      array.push(hash)
-    end
-    render json: array.reverse
-  end
-
   private
 
   def movie_params
-    params.fetch(:movie, {}).permit(:url, :duration, :title, :comment, :thumbnail, :date)
+    params.fetch(:movie, {}).permit(:url, :duration, :title, :comment, :thumbnail)
   end
 
   def render_status_404(exception)
@@ -83,16 +62,5 @@ class MoviesController < ApplicationController
             else
               total ||= Movie.where(user_id: current_user.friends.ids).count
             end
-  end
-
-  def set_weekly_movies
-    @weekly_movies ||= current_user.movies.target_week(params[:dateStatus].to_i)
-  end
-
-  def week_array
-    date_array = []
-    today = Date.today + params[:dateStatus].to_i.day
-    7.times { |x| date_array.push(today - x.day) }
-    date_array.reverse
   end
 end
