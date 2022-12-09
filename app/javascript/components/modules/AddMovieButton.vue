@@ -35,8 +35,8 @@ export default {
   height: 3px;
   background: currentColor;
   position: relative;
-  top: 22px;
-  left: 20px
+  top: 22.5px;
+  left: 22.5px
 }
 .dli-plus::before {
   content: '';

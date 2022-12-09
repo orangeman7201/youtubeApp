@@ -1,7 +1,9 @@
 class MoviesController < ApplicationController
+  include SessionCheck
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
   before_action :set_movies, only: [:index]
+  before_action :nothing_return_session_check
 
   def index
     render json: {movies: movies, total: movies_total}
@@ -62,5 +64,9 @@ class MoviesController < ApplicationController
             else
               total ||= Movie.where(user_id: current_user.friends.ids).count
             end
+  end
+
+  def login_user
+
   end
 end
