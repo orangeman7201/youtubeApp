@@ -8,7 +8,7 @@ import SignUpName from './components/Pages/signup/steps/Name.vue';
 import SignUpEmail from './components/Pages/signup/steps/Email.vue';
 import SignUpPassword from './components/Pages/signup/steps/Password.vue';
 import SignUpConfirm from './components/Pages/signup/steps/Confirm.vue';
-import LoginForm from './components/LoginForm.vue';
+import LoginForm from './components/Pages/LoginForm.vue';
 import UserSerchForm from './components/Pages/UserSerchForm.vue';
 import About from './components/Pages/About.vue';
 import Timeline from './components/Pages/Timeline.vue';

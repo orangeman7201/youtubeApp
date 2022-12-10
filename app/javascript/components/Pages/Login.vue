@@ -41,7 +41,7 @@
 <script>
 import axios from "axios";
 import "stopper.svg";
-import Card from "./modules/Card.vue";
+import Card from "../modules/Card.vue";
 
 axios.interceptors.request.use(
   (config) => {
