@@ -56,8 +56,8 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import CardWithHeader from './modules/CardWithHeader.vue';
-import ButtonBase from './modules/ButtonBase.vue';
+import CardWithHeader from '../modules/CardWithHeader.vue';
+import ButtonBase from '../modules/ButtonBase.vue';
 
 axios.interceptors.request.use((config) => {
   if(['post', 'put', 'patch', 'delete'].includes(config.method)) {
