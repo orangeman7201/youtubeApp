@@ -137,7 +137,7 @@ export default {
         axios
           .post('/movies', this.movie)
           .then(() => {
-            this.$router.push({name: 'HomeIndexPage'})
+            this.$router.push({name: 'Home'})
           })
           .catch()
       } else {

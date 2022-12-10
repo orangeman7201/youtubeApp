@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HomeIndexPage from './components/HomeIndexPage.vue';
+import Home from './components/Pages/Home.vue';
 import InputFormPage from './components/InputFormPage.vue';
 import SignUp from './components/Pages/signup/SignUp.vue';
 import SignUpLimit from './components/Pages/signup/steps/Limit.vue';
@@ -23,8 +23,8 @@ export default new Router ({
   routes: [
     {path: '/', component: About}, 
     { path: '/home',
-      name: 'HomeIndexPage',
-      component: HomeIndexPage,
+      name: 'Home',
+      component: Home,
       meta: {
         requireAuth: true,
         title: "ホーム",

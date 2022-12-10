@@ -45,7 +45,7 @@ export default {
         .post('/requests/create', this.user)
         .then(response => {
           let e = response.data
-          this.$router.push({name: 'HomeIndexPage' })
+          this.$router.push({name: 'Home' })
         })
         .catch(error => {
           console.error(error);

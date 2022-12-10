@@ -90,7 +90,7 @@ export default {
         .post("/sessions", this.loginInfo)
         .then(() => {
           this.$store.dispatch("getSelf");
-          this.$router.push({ name: "HomeIndexPage" });
+          this.$router.push({ name: "Home" });
         })
         .catch((error) => {
           console.error(error.response.data.errors);

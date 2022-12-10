@@ -46,7 +46,7 @@ export default {
         axios
         .post('/sign_up', this.users)
         .then(() => {
-          this.$router.push({name: 'HomeIndexPage' })
+          this.$router.push({name: 'Home' })
         })
         .catch(error => {
           if (error.response.data && error.response.data.errors) {
@@ -62,7 +62,7 @@ export default {
       axios
         .post('/gest/login')
         .then(() => {
-          this.$router.push({name: 'HomeIndexPage' })
+          this.$router.push({name: 'Home' })
         })
         .catch(error => {
           if (error.response.data && error.response.data.errors) {

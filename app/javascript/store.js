@@ -45,7 +45,7 @@ export default new Vuex.Store({
         .then(response => {
           context.dispatch('updateUserStatus', response.data)
           if (to) {
-            router.push({name: 'HomeIndexPage'}, () => {})
+            router.push({name: 'Home'}, () => {})
           }
         })
         .catch(() => {
