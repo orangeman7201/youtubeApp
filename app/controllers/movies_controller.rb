@@ -2,17 +2,6 @@ class MoviesController < ApplicationController
   include SessionCheck
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
-  before_action :set_movies, only: [:index]
-  before_action :nothing_return_session_check
-
-  def index
-    render json: {movies: movies, total: movies_total}
-  end
-
-  def show
-    @movie ||= Movie.find(params[:id])
-    render json: @movie
-  end
 
   def create
     movie = current_user.movies.build(movie_params)
@@ -23,15 +12,6 @@ class MoviesController < ApplicationController
     end
   end
 
-  def update
-    movie = Movie.find(params[:id])
-    movie.update(comment: params[:comment])
-  end
-
-  def destroy
-    movie = Movie.find(params[:id])
-    movie.destroy
-  end
 
   private
 

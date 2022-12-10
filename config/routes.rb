@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   root to: 'home#index'
 
-  resources :movies
+  resources :movies, only: [:create]
   resources :users do
     member do
       put 'update_image'
