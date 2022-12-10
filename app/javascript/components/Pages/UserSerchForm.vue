@@ -52,9 +52,9 @@
 
 <script>
 import axios from 'axios';
-import CardWithHeader from './modules/CardWithHeader.vue'
-import ButtonBase from './modules/ButtonBase.vue'
-import FriendInfoBox from './modules/FriendInfoBox.vue'
+import CardWithHeader from '../modules/CardWithHeader.vue'
+import ButtonBase from '../modules/ButtonBase.vue'
+import FriendInfoBox from '../modules/FriendInfoBox.vue'
 import moment from 'moment';
 
 axios.interceptors.request.use((config) => {
