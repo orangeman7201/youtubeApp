@@ -18,7 +18,7 @@ import Notification from './components/Pages/Notification';
 Vue.use(Router);
 
 export default new Router ({
-  // mode: 'history',
+  mode: 'history',
   routes: [
     {path: '/', component: About}, 
     { path: '/home',
