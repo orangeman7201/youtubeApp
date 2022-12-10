@@ -50,7 +50,7 @@ export default new Vuex.Store({
         })
         .catch(() => {
           context.commit('updateUserLoadStatus', false)
-          router.push({name: 'LoginForm'}, () => {})
+          router.push({name: 'Login'}, () => {})
         })
       }
     },

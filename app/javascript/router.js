@@ -8,7 +8,7 @@ import SignUpName from './components/Pages/signup/steps/Name.vue';
 import SignUpEmail from './components/Pages/signup/steps/Email.vue';
 import SignUpPassword from './components/Pages/signup/steps/Password.vue';
 import SignUpConfirm from './components/Pages/signup/steps/Confirm.vue';
-import LoginForm from './components/Pages/LoginForm.vue';
+import Login from './components/Pages/Login.vue';
 import Friend from './components/Pages/Friend.vue';
 import About from './components/Pages/About.vue';
 import Timeline from './components/Pages/Timeline.vue';
@@ -62,8 +62,8 @@ export default new Router ({
       ]
     }, 
     { path: '/login',
-      name: 'LoginForm',
-      component: LoginForm,
+      name: 'Login',
+      component: Login,
     }, 
     { path: '/users/serch',
       name: 'Friend',
