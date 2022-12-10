@@ -9,7 +9,7 @@ import SignUpEmail from './components/Pages/signup/steps/Email.vue';
 import SignUpPassword from './components/Pages/signup/steps/Password.vue';
 import SignUpConfirm from './components/Pages/signup/steps/Confirm.vue';
 import LoginForm from './components/Pages/LoginForm.vue';
-import UserSerchForm from './components/Pages/UserSerchForm.vue';
+import Friend from './components/Pages/Friend.vue';
 import About from './components/Pages/About.vue';
 import Timeline from './components/Pages/Timeline.vue';
 import Profile from './components/Pages/Profile.vue';
@@ -66,8 +66,8 @@ export default new Router ({
       component: LoginForm,
     }, 
     { path: '/users/serch',
-      name: 'UserSerchForm',
-      component: UserSerchForm,
+      name: 'Friend',
+      component: Friend,
       meta: {
         requireAuth: true,
         title: "フレンド"
