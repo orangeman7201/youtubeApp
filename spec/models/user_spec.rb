@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Movie', type: :model do
+RSpec.describe 'User', type: :model do
   describe 'today' do
     before do
       create :movie, user: user, created_at: Date.today

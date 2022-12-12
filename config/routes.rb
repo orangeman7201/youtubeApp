@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   root to: 'home#index'
 
-  resources :movies
+  resources :movies, only: [:create]
   resources :users do
     member do
       put 'update_image'
@@ -26,4 +26,7 @@ Rails.application.routes.draw do
   post "requests/destroy", to: "requests#destroy"
   get "self", to: "users#self"
   get "weekly_duration_sum", to: "durations#weekly_duration_sum"
+
+  ## vue router でエラーを呼ばないための記述
+  get  '*unmatched_route', to: 'home#index'
 end

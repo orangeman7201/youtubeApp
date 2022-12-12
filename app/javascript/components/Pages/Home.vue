@@ -30,11 +30,11 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import DurationTable from './DurationTable.vue';
-import Chart from './Chart.js';
-import ProgressBar from './modules/ProgressBar.vue';
-import ExcessText from './modules/ExcessText.vue';
-import CardWithHeader from './modules/CardWithHeader.vue';
+import DurationTable from '../modules/DurationTable.vue';
+import Chart from '../modules/Chart.js';
+import ProgressBar from '../modules/ProgressBar.vue';
+import ExcessText from '../modules/ExcessText.vue';
+import CardWithHeader from '../modules/CardWithHeader.vue';
 
 export default {
   components: { DurationTable, Chart, ProgressBar, ExcessText, CardWithHeader },

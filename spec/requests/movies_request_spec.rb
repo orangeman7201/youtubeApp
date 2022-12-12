@@ -1,24 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe "moviesコントローラーのテスト", type: :request do
-  describe 'ログイン済み' do
-    before do
-      @user = create(:user)
-      sign_in @user
+  describe 'create' do
+    subject { post movies_path, params: { title: "test", user: user } }
+    let(:user) { create :user }
+
+    context '未ログイン時' do
+      it 'movieが作成されないこと' do
+        expect{subject}.to change(Movie, :count).by(0)
+      end
     end
-    context "動画一覧ページが正しく表示される" do
-      let!(:movies) { create_list(:movie, 11, user: @user) }
+    
+    context "ログイン済みの時" do
       before do
-        get movies_path
+        sign_in user
       end
-      it 'リクエストは200 OKとなること' do
-        expect(response.status).to eq 200
+
+      it 'リクエストは201 OKとなること' do
+        subject
+        expect(response.status).to eq 201
       end
-      it '10件動画が返却されること' do
-        expect(JSON.parse(response.body).length).to eq 10
-      end
-      it '1responseが作成日時の新しい順にならんでいること' do
-        expect(JSON.parse(response.body)[0]["id"]).to eq movies.last.id
+  
+      it '動画が１件登録されること' do
+        expect{subject}.to change(Movie, :count).from(0).to(1)
       end
     end
   end

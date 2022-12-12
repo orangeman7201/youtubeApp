@@ -45,12 +45,12 @@ export default new Vuex.Store({
         .then(response => {
           context.dispatch('updateUserStatus', response.data)
           if (to) {
-            router.push({name: 'HomeIndexPage'}, () => {})
+            router.push({name: 'Home'}, () => {})
           }
         })
         .catch(() => {
           context.commit('updateUserLoadStatus', false)
-          router.push({name: 'LoginForm'}, () => {})
+          router.push({name: 'Login'}, () => {})
         })
       }
     },

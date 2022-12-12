@@ -59,7 +59,7 @@ export default {
           .post('/sessions/logout')
           .then(() => {
             this.$store.dispatch('lostUser')
-            this.$router.push({name: 'LoginForm' })
+            this.$router.push({name: 'Login' })
           })
           .catch(error => {
             console.error(error.response.data.errors);
