@@ -13,7 +13,6 @@ RSpec.describe "postsコントローラーのテスト", type: :request do
         get posts_path
       end
       it 'リクエストは200 OKとなること' do
-        debugger
         expect(response.status).to eq 200
       end
       it '3件postが返却されること' do
