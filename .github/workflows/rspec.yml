@@ -19,14 +19,15 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7.4
-      - name: Install dependencies
-        run: bundle install
-      - name: DB migrate
-        run: rails db:migrate RAILS_ENV=test
-      - name: Run RSpec
-        run: bundle exec rspec
+        env:
+          RAILS_ENV: test
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+          rails db:migrate
+          bundle exec rspec
