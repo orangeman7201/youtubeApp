@@ -1,11 +1,9 @@
 <template>
   <header class="header">
-    <div>
-      <button @click.prevent="drawer =!drawer" v-if="!isLoginPage" class="humbarger-button">
-        <img src="~menu.svg" art="" width="24px" height="24px">
-      </button>
-      <h4 class="d-flex justify-center header-title">{{$route.meta.title}}</h4>
-    </div>
+    <button @click.prevent="drawer =!drawer" v-if="!isLoginPage" class="humbarger-button">
+      <img src="~menu.svg" art="" width="24px" height="24px">
+    </button>
+    <h4 class="d-flex justify-center header-title">{{$route.meta.title}}</h4>
     <v-navigation-drawer app temporary v-model="drawer" color="#858585">
       <v-list class="mt-15">
         <v-list-item v-for="list in lists" :key="list.title" router :to="list.route"  class="list-item">
@@ -27,7 +25,6 @@
 
 <script>
 import axios from 'axios';
-import moment from 'moment'
 
 export default {
   data: function() {
@@ -35,9 +32,6 @@ export default {
       drawer: false,
       lists: [
         {icon: 'mdi-home', title: 'ホーム', route: '/home'},
-        // ↓path編集必要？？
-        // {icon: 'mdi-pencil', title: '記録', route: '/timeline'},
-        // ↓path編集必要??
         {icon: 'mdi-account-group ', title: 'フレンド', route: '/users/serch'},
         {icon: 'mdi-account', title: 'マイページ', route: '/profile'},
         {icon: 'mdi-bell', title: '通知', route: '/notification'},
@@ -83,19 +77,21 @@ export default {
 <style scoped>
 .header {
   background-color: #1995AD;
-  height: 86px;
+  height: 40px;
   width: 100%;
-  padding: 40px 0 10px ;
+  position: relative;
 }
 .humbarger-button {
   position: absolute;
-  top: 34px;
-  left: 26px;
+  top: 8px;
+  left: 16px;
 }
 .header-title {
   color: white;
   font-size: 16px;
   font-weight: 400;
   line-height: 16px;
+  align-items: center;
+  height: 100%;
 }
 </style>
