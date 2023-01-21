@@ -24,6 +24,6 @@ export default {
   font-size: 15px;
   width: 106px !important;
   height: 48px !important;
-  border-radius: 2px;
+  border-radius: 50%;
 }
 </style>
