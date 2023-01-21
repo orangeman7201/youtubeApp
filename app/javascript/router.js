@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './components/Pages/Home.vue';
-import MovieInput from './components/Pages/MovieInput.vue';
 import SignUp from './components/Pages/signup/SignUp.vue';
 import SignUpLimit from './components/Pages/signup/steps/Limit.vue';
 import SignUpName from './components/Pages/signup/steps/Name.vue';
@@ -28,13 +27,7 @@ export default new Router ({
         requireAuth: true,
         title: "ホーム",
       },
-    }, 
-    { path: '/movies/new',
-      component: MovieInput,
-      meta: {
-        requireAuth: true
-      },
-    }, 
+    },
     { 
       path: '/signup',
       component: SignUp,
