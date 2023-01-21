@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="white--text button-base" :color="color" :disabled="disabled">
+  <v-btn class="white--text button-base" :color="color" :disabled="disabled" rounded>
     <slot />
   </v-btn>
 </template>
@@ -22,8 +22,7 @@ export default {
 <style scoped>
 .button-base {
   font-size: 15px;
-  width: 106px !important;
-  height: 48px !important;
-  border-radius: 50%;
+  width: 118px !important;
+  height: 35px !important;
 }
 </style>

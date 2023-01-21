@@ -1,24 +1,32 @@
 <template>
   <v-app v-if="loaded" id="app">
     <div class="pa-5 home-backgound">
-      <v-card class="mt-6 mx-7 mb-8 pt-6 px-8 pb-3" flat>
-        <v-card-title class="d-flex justify-center home-header-title">今日の総再生時間</v-card-title>
-        <v-card-text class='d-flex justify-center home-header-body'>
-          {{ formattedTotalDuration }}<span class="text-minute">分</span>
-        </v-card-text>
-        <v-card-text v-if="storeUser" class='d-flex justify-end home-header-target-time'>目標 <span class="home-header-target-time-text">{{ storeUser.limit / 60 }}</span>分</v-card-text>
-        <div class='home-header-progress'>
-          <ProgressBar :total-duration="totalDuration" :limit="storeUser.limit"/>
+      <div class="circle-progressbar-area mt-5 mb-10">
+        <div class="circle-background">
+          <v-progress-circular
+            :rotate="-90"
+            :size="250"
+            :width="8"
+            :value="normalDurationParLimit"
+            :color="normalCircleColor"
+          >
+            <v-progress-circular
+            :rotate="-90"
+            :size="250"
+            :width="8"
+            :value="excessDurationParLimit"
+            color="#EB440C"
+            >
+              <div>
+                <div class="d-flex justify-center home-header-title">今日の総再生時間</div>
+                  <div class='d-flex justify-center home-header-body'>
+                    {{ formattedTotalDuration }}<span class="text-minute">分</span>
+                  </div>
+              </div>
+            </v-progress-circular>
+          </v-progress-circular>
         </div>
-        <div class="d-flex justify-center">
-          <div v-if="storeUser.limit > totalDuration" class="lessThanLimit">
-            達成中
-          </div>
-          <div v-else class="overLimit">
-            <ExcessText />{{ overLimitTime }}分
-          </div>
-        </div>
-      </v-card>
+      </div>
       <CardWithHeader headerText="週間サマリー">
         <Chart class="mt-5 mb-14 mx-4 chart" :chartData="chartItems" :options="chartOptions" />
         <DurationTable :items="weeklyDurationSum" :limit="storeUser.limit" />
@@ -32,12 +40,10 @@ import axios from 'axios';
 import moment from 'moment';
 import DurationTable from '../modules/DurationTable.vue';
 import Chart from '../modules/Chart.js';
-import ProgressBar from '../modules/ProgressBar.vue';
-import ExcessText from '../modules/ExcessText.vue';
 import CardWithHeader from '../modules/CardWithHeader.vue';
 
 export default {
-  components: { DurationTable, Chart, ProgressBar, ExcessText, CardWithHeader },
+  components: { DurationTable, Chart, CardWithHeader },
   mounted () {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
@@ -75,12 +81,6 @@ export default {
     }  
   },
   computed: {
-    chartheight: function() {
-      return window.innerHeight / 4
-    },
-    chartWidth: function() {
-      return window.innerWidth * 0.8
-    },
     storeUser: function() {
       return this.$store.getters.storeUser 
     },
@@ -109,8 +109,20 @@ export default {
         }]
       }
     },
-    overLimitTime: function() {
-      return  Math.floor(( this.totalDuration - this.storeUser.limit ) / 60)
+    isTotalDurationOverLimit: function() {
+      return this.totalDuration > this.storeUser.limit
+    },
+    normalDurationParLimit: function() {
+      return Math.floor(( this.totalDuration / this.storeUser.limit ) * 100)
+    },
+    normalCircleColor: function() {
+      return this.isTotalDurationOverLimit ? '#F59744' : '#1995AD'
+    },
+    excessDurationParLimit: function() {
+      if(!this.isTotalDurationOverLimit) {
+        return 0
+      }
+      return Math.floor(( (this.totalDuration - this.storeUser.limit) / this.storeUser.limit ) * 100)
     }
   },
   methods: {
@@ -140,8 +152,16 @@ export default {
   .flex-grow {
     flex-grow: 1;
   }
+  .circle-progressbar-area {
+    display: flex;
+    justify-content: center;
+  }
+  .circle-background {
+    background-color: #FFFFFF;
+    border-radius: 100%;
+  }
   .home-header-title {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 18px;
     color: #333333;
     padding: 0;
@@ -149,27 +169,12 @@ export default {
   }
   .home-header-body {
     padding: 0 0 0 20px;
-    font-size: 45px;
-    line-height: 54px;
-    max-height: 54px;
+    font-size: 32px;
+    line-height: 39px;
+    max-height: 39px;
     color: #333333;
     align-items: center;
     vertical-align: middle;
-  }
-  .home-header-progress {
-    padding: 0;
-    margin-bottom: 12px;
-  }
-  .home-header-target-time {
-    font-size: 9px;
-    padding: 0;
-    color: #1995AD !important;
-    align-items: flex-end;
-  }
-  .home-header-target-time-text {
-    font-size: 15px;
-    margin: 0 3px;
-    padding-bottom: 1px;
   }
   .home-backgound {
     display: block;
@@ -179,15 +184,6 @@ export default {
     font-size: 15px;
     margin-left: 4px;
     padding-top: 14px;
-  }
-  .lessThanLimit {
-    font-size: 15px;
-    color: #1995AD;
-    text-align: center;
-  }
-  .overLimit {
-    color: #EB440C;
-    font-size: 9px;
   }
   .excessText {
     border: 0.8px solid #EB440C;
