@@ -96,12 +96,12 @@ export default {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
     // 円グラフを２つ重ねたため色が汚くなるのだが、その対策のため２つ目円の背景(グレー)を消す
-    // もっといい方法ありそう
+    // もっといい方法ありそう $nextTickを使ったがうまくいかなかった。
     setTimeout(() => {
       const vuetifyCircle = document.getElementsByClassName('v-progress-circular__underlay')
       console.log(vuetifyCircle[1])
       vuetifyCircle[1].classList.remove('v-progress-circular__underlay')
-    }, 500)
+    }, 600)
   },
   data: function () {
     return {
