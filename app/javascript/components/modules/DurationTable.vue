@@ -5,7 +5,7 @@
         {{formatDate(item.date)}}
       </div>
       <div class="item-duration" :class="overTargetDuration(item.duration)">
-        <span v-if="item.duration > limit" class="excess-text">過剰</span><span class="mr-3 ml-4 d-flex justify-center">{{formatDuration(item.duration)}}</span><span class="minute-text">分</span>
+        <span class="mr-3 ml-4 d-flex justify-center">{{formatDuration(item.duration)}}</span><span class="minute-text">分</span>
       </div>
     </div>
   </div>
@@ -72,11 +72,6 @@ export default {
 }
 .minute-text {
   padding-top: 10px;
-  font-size: 15px;
-}
-.excess-text {
-  border: 0.8px solid #EB440C;
-  padding: 0 12px;
   font-size: 15px;
 }
 </style>

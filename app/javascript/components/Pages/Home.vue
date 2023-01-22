@@ -95,6 +95,13 @@ export default {
   mounted () {
     this.getWeeklyDurationSum();
     this.$store.dispatch('getTotalDuration');
+    // 円グラフを２つ重ねたため色が汚くなるのだが、その対策のため２つ目円の背景(グレー)を消す
+    // もっといい方法ありそう
+    setTimeout(() => {
+      const vuetifyCircle = document.getElementsByClassName('v-progress-circular__underlay')
+      console.log(vuetifyCircle[1])
+      vuetifyCircle[1].classList.remove('v-progress-circular__underlay')
+    }, 500)
   },
   data: function () {
     return {
@@ -331,25 +338,25 @@ export default {
   }
   .movie-thumbnail-area {
   position: relative;
-}
-.movie-thumbnail {
-  width: 100%;
-}
-.movie-duration {
-  position: absolute;
-  top: 120px;
-  right: 6px;
-  font-size: 13px;
-  background-color: #333333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.movie-title {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  font-size: 13px;
-}
+  }
+  .movie-thumbnail {
+    width: 100%;
+  }
+  .movie-duration {
+    position: absolute;
+    top: 120px;
+    right: 6px;
+    font-size: 13px;
+    background-color: #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .movie-title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 13px;
+  }
 </style>
