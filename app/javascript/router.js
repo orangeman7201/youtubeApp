@@ -58,7 +58,7 @@ export default new Router ({
       name: 'Login',
       component: Login,
     }, 
-    { path: '/users/serch',
+    { path: '/users/search',
       name: 'Friend',
       component: Friend,
       meta: {

@@ -32,7 +32,7 @@ export default {
       drawer: false,
       lists: [
         {icon: 'mdi-home', title: 'ホーム', route: '/home'},
-        {icon: 'mdi-account-group ', title: 'フレンド', route: '/users/serch'},
+        {icon: 'mdi-account-group ', title: 'フレンド', route: '/users/search'},
         {icon: 'mdi-account', title: 'マイページ', route: '/profile'},
         {icon: 'mdi-bell', title: '通知', route: '/notification'},
       ],

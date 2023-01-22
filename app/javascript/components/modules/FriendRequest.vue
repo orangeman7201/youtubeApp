@@ -45,8 +45,8 @@
     <div class="px-6">
       <FriendInfoBox :user="request" />
       <div class="d-flex justify-space-between">
-        <ButtonBase color="#949494" @click.native="rejectRequest">キャンセル</ButtonBase>
-        <ButtonBase color="#E8730E" @click.native="acceptRequest">承認</ButtonBase>
+        <ButtonBase color="#D9D9D9" @click.native="rejectRequest">キャンセル</ButtonBase>
+        <ButtonBase color="#1995AD" @click.native="acceptRequest">承認</ButtonBase>
       </div>
     </div>
   </div>

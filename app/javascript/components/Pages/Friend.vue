@@ -26,9 +26,9 @@
         </div>
         <FriendInfoBox v-if="serchedFriend" :user="serchedFriend"/>
         <div class="d-flex justify-center">
-          <ButtonBase color="#949494" @click.native="cancel" class="mr-7" >キャンセル</ButtonBase>
-          <ButtonBase color="#E8730E" @click.native="sendRequest" v-if="serchedFriend">申請</ButtonBase>
-          <ButtonBase color="#E8730E" @click.native="submitData" v-else>検索</ButtonBase>
+          <ButtonBase color="#D9D9D9" @click.native="cancel" class="mr-7" >キャンセル</ButtonBase>
+          <ButtonBase color="#1995AD" @click.native="sendRequest" v-if="serchedFriend">申請</ButtonBase>
+          <ButtonBase color="#1995AD" @click.native="submitData" v-else>検索</ButtonBase>
         </div>
       </div>
     </CardWithHeader>
