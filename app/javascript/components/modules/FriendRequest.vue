@@ -45,8 +45,8 @@
     <div class="px-6">
       <FriendInfoBox :user="request" />
       <div class="d-flex justify-space-between">
-        <ButtonBase color="#949494" @click.native="rejectRequest">キャンセル</ButtonBase>
-        <ButtonBase color="#E8730E" @click.native="acceptRequest">承認</ButtonBase>
+        <ButtonBase color="#D9D9D9" @click.native="rejectRequest">キャンセル</ButtonBase>
+        <ButtonBase color="#1995AD" @click.native="acceptRequest">承認</ButtonBase>
       </div>
     </div>
   </div>
@@ -88,7 +88,7 @@ export default {
   methods: {
     acceptRequest: function() {
       axios
-        .post('/friends', {
+        .post('/api/v1/friends', {
           id: this.request.id
         })
         .then(() => {
@@ -107,7 +107,7 @@ export default {
     },
     rejectRequest: function() {
       axios
-        .post('/requests/destroy', {
+        .post('/api/v1/requests/destroy', {
           id: this.request.id
         })
         .then(() => {

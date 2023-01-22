@@ -33,7 +33,7 @@ export default {
   methods: {
     getRequests: function() {
       axios
-        .get(`/requests.json`)
+        .get('/api/v1/requests.json')
         .then(response => (this.requests = response.data))
     },
   }

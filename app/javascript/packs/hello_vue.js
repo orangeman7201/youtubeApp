@@ -28,9 +28,7 @@ window.addEventListener("unhandledrejection", event => {
 });
 
 router.beforeEach(async (to, from, next) => {
-  if (to.meta.requireAuth) {
-    await store.dispatch('requireLogin');
-  }
+  await store.dispatch('sessionCheck', { to: to, from: from });
   next()
 });
 

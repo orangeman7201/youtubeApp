@@ -54,7 +54,7 @@
             @change="changeParamsLimit"
           ></v-select>
         </div>
-        <ButtonBase color="#E8730E" :disabled="!isReadyToSubmit"  @click.native="submit">保存</ButtonBase>
+        <ButtonBase color="#1995AD" :disabled="!isReadyToSubmit"  @click.native="submit">保存</ButtonBase>
       </div>
     </Card>
   </div>

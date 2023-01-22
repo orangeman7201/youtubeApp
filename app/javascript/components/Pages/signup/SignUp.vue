@@ -89,7 +89,7 @@ export default {
     },
     submitData: function() { 
       axios
-        .post('/sign_up', this.user)
+        .post('/api/v1/sign_up', this.user)
         .then(() => {
           this.$router.push({name: 'Home' })
         })

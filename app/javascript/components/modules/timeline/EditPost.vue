@@ -67,7 +67,7 @@ export default {
   methods: {
     submit() {
       axios
-      .patch(`/posts/${this.post.id}`, {
+      .patch(`/api/v1/posts/${this.post.id}`, {
         comment: this.post.comment
       })
       .then(() => {

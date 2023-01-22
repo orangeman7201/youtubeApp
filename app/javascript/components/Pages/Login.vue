@@ -87,9 +87,8 @@ export default {
   methods: {
     submitData: function() {
       axios
-        .post("/sessions", this.loginInfo)
+        .post("/api/v1/sessions", this.loginInfo)
         .then(() => {
-          this.$store.dispatch("getSelf");
           this.$router.push({ name: "Home" });
         })
         .catch((error) => {

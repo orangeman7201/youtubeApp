@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './components/Pages/Home.vue';
-import MovieInput from './components/Pages/MovieInput.vue';
 import SignUp from './components/Pages/signup/SignUp.vue';
 import SignUpLimit from './components/Pages/signup/steps/Limit.vue';
 import SignUpName from './components/Pages/signup/steps/Name.vue';
@@ -20,21 +19,16 @@ Vue.use(Router);
 export default new Router ({
   mode: 'history',
   routes: [
-    {path: '/', component: About}, 
+    { path: '/',
+      component: About,
+    }, 
     { path: '/home',
       name: 'Home',
       component: Home,
       meta: {
-        requireAuth: true,
         title: "ホーム",
       },
-    }, 
-    { path: '/movies/new',
-      component: MovieInput,
-      meta: {
-        requireAuth: true
-      },
-    }, 
+    },
     { 
       path: '/signup',
       component: SignUp,
@@ -65,34 +59,24 @@ export default new Router ({
       name: 'Login',
       component: Login,
     }, 
-    { path: '/users/serch',
+    { path: '/users/search',
       name: 'Friend',
       component: Friend,
       meta: {
-        requireAuth: true,
         title: "フレンド"
       },
     }, 
     { path: '/timeline',
       name: 'Timeline',
       component: Timeline,
-      meta: {
-        requireAuth: true
-      },
     }, 
     { path: '/profile',
       name: 'Profile',
       component: Profile,
-      meta: {
-        requireAuth: true
-      },
     }, 
     { path: '/notification',
       name: 'Notification',
       component: Notification,
-      meta: {
-        requireAuth: true
-      },
     }, 
   ]
 })

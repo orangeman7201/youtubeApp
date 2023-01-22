@@ -81,13 +81,13 @@ export default {
         formData.append("title", "title");
         formData.append("image", this.params.image);
         await axios
-        .put(`/users/${this.storeUser.id}/update_image`, formData)
+        .put(`/api/v1/users/${this.storeUser.id}/update_image`, formData)
         .catch(error => {
           console.log(error.message)
         })
       }
       axios
-      .patch(`/users/${this.storeUser.id}`, {
+      .patch(`/api/v1/users/${this.storeUser.id}`, {
         name: this.params.name,
         limit: this.params.limit,
         uuid: this.params.uuid

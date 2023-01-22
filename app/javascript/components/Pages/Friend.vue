@@ -26,9 +26,9 @@
         </div>
         <FriendInfoBox v-if="serchedFriend" :user="serchedFriend"/>
         <div class="d-flex justify-center">
-          <ButtonBase color="#949494" @click.native="cancel" class="mr-7" >キャンセル</ButtonBase>
-          <ButtonBase color="#E8730E" @click.native="sendRequest" v-if="serchedFriend">申請</ButtonBase>
-          <ButtonBase color="#E8730E" @click.native="submitData" v-else>検索</ButtonBase>
+          <ButtonBase color="#D9D9D9" @click.native="cancel" class="mr-7" >キャンセル</ButtonBase>
+          <ButtonBase color="#1995AD" @click.native="sendRequest" v-if="serchedFriend">申請</ButtonBase>
+          <ButtonBase color="#1995AD" @click.native="submitData" v-else>検索</ButtonBase>
         </div>
       </div>
     </CardWithHeader>
@@ -97,7 +97,7 @@ export default {
       } else {
         this.error = '';
         axios
-          .post('/requests/serch', {
+          .post('/api/v1/requests/serch', {
             uuid: this.uuid
           })
           .then(response => {
@@ -114,7 +114,7 @@ export default {
     },
     getFriends: function() {
       axios
-        .get(`/friends.json`)
+        .get(`/api/v1/friends.json`)
         .then(response => {
           response.data.forEach(element => {
             this.friends.push(element)
@@ -123,7 +123,7 @@ export default {
     },
     sendRequest: function() {
       axios
-        .post('/requests/create', {
+        .post('/api/v1/requests/create', {
             uuid: this.uuid
           })
         .then(() => {
