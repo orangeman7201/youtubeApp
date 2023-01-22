@@ -41,7 +41,7 @@ export default new Vuex.Store({
       context.commit('updateUserLoadStatus', true)
       if(context.state.user === null) {
         await axios
-        .get('/session_check')
+        .get('/api/v1/session_check')
         .then(response => {
           context.dispatch('updateUserStatus', response.data)
           if (to) {
@@ -71,7 +71,7 @@ export default new Vuex.Store({
     },
     getTotalDuration(context) {
       axios
-      .get('/durations')
+      .get('/api/v1/durations')
       .then(response => {
         context.commit('setTotalDuration', response.data.total_duration)
       })

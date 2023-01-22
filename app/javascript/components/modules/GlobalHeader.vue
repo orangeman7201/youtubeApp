@@ -50,7 +50,7 @@ export default {
     logout: function() { 
       if(confirm('ログアウトしますか')) {
         axios
-          .post('/sessions/logout')
+          .post('/api/v1/sessions/logout')
           .then(() => {
             this.$store.dispatch('lostUser')
             this.$router.push({name: 'Login' })

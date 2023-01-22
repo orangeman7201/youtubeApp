@@ -44,7 +44,7 @@ export default {
     submitData: function() {
       if(this.users.name !== '' && this.users.email !== '' && this.users.password !== '' && this.users.passwordConfirmation !== '' ) {
         axios
-        .post('/sign_up', this.users)
+        .post('/api/v1/sign_up', this.users)
         .then(() => {
           this.$router.push({name: 'Home' })
         })
@@ -60,7 +60,7 @@ export default {
     },
     gestlogin: function() {
       axios
-        .post('/gest/login')
+        .post('/api/v1/gest/login')
         .then(() => {
           this.$router.push({name: 'Home' })
         })

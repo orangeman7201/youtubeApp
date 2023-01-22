@@ -99,7 +99,6 @@ export default {
     // もっといい方法ありそう $nextTickを使ったがうまくいかなかった。
     setTimeout(() => {
       const vuetifyCircle = document.getElementsByClassName('v-progress-circular__underlay')
-      console.log(vuetifyCircle[1])
       vuetifyCircle[1].classList.remove('v-progress-circular__underlay')
     }, 600)
   },
@@ -214,7 +213,7 @@ export default {
     },
     getWeeklyDurationSum() {
       axios
-      .get('/weekly_duration_sum')
+      .get('/api/v1/weekly_duration_sum')
       .then(response => {
         this.weeklyDurationSum = response.data
         this.loaded = true
@@ -227,7 +226,7 @@ export default {
       this.$store.dispatch('requireLogin');
       if(this.error === null) {
         axios
-          .post('/movies', this.movie)
+          .post('/api/v1/movies', this.movie)
           .then(() => {
             this.$router.go({path: this.$router.currentRoute.path, force: true})
           })

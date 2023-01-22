@@ -97,7 +97,7 @@ export default {
       } else {
         this.error = '';
         axios
-          .post('/requests/serch', {
+          .post('/api/v1/requests/serch', {
             uuid: this.uuid
           })
           .then(response => {
@@ -114,7 +114,7 @@ export default {
     },
     getFriends: function() {
       axios
-        .get(`/friends.json`)
+        .get(`/api/v1/friends.json`)
         .then(response => {
           response.data.forEach(element => {
             this.friends.push(element)
@@ -123,7 +123,7 @@ export default {
     },
     sendRequest: function() {
       axios
-        .post('/requests/create', {
+        .post('/api/v1/requests/create', {
             uuid: this.uuid
           })
         .then(() => {

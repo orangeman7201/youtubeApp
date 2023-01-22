@@ -35,7 +35,7 @@ export default {
   methods: {
     getPosts() {
       axios
-      .get('/posts', {
+      .get('/api/v1/posts', {
         params: {
           friend: this.$route.query.friend
         }

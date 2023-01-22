@@ -88,7 +88,7 @@ export default {
   methods: {
     acceptRequest: function() {
       axios
-        .post('/friends', {
+        .post('/api/v1/friends', {
           id: this.request.id
         })
         .then(() => {
@@ -107,7 +107,7 @@ export default {
     },
     rejectRequest: function() {
       axios
-        .post('/requests/destroy', {
+        .post('/api/v1/requests/destroy', {
           id: this.request.id
         })
         .then(() => {
