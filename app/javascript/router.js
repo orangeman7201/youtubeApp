@@ -19,12 +19,13 @@ Vue.use(Router);
 export default new Router ({
   mode: 'history',
   routes: [
-    {path: '/', component: About}, 
+    { path: '/',
+      component: About,
+    }, 
     { path: '/home',
       name: 'Home',
       component: Home,
       meta: {
-        requireAuth: true,
         title: "ホーム",
       },
     },
@@ -62,30 +63,20 @@ export default new Router ({
       name: 'Friend',
       component: Friend,
       meta: {
-        requireAuth: true,
         title: "フレンド"
       },
     }, 
     { path: '/timeline',
       name: 'Timeline',
       component: Timeline,
-      meta: {
-        requireAuth: true
-      },
     }, 
     { path: '/profile',
       name: 'Profile',
       component: Profile,
-      meta: {
-        requireAuth: true
-      },
     }, 
     { path: '/notification',
       name: 'Notification',
       component: Notification,
-      meta: {
-        requireAuth: true
-      },
     }, 
   ]
 })

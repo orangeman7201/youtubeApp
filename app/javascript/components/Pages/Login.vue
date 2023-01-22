@@ -89,7 +89,6 @@ export default {
       axios
         .post("/api/v1/sessions", this.loginInfo)
         .then(() => {
-          this.$store.dispatch("getSelf");
           this.$router.push({ name: "Home" });
         })
         .catch((error) => {

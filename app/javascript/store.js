@@ -37,20 +37,25 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async requireLogin(context, to) {
+    async sessionCheck(context, route) {
       context.commit('updateUserLoadStatus', true)
       if(context.state.user === null) {
         await axios
         .get('/api/v1/session_check')
         .then(response => {
           context.dispatch('updateUserStatus', response.data)
-          if (to) {
+          // 行き先がログイン系のバスならHomeに飛ばす。
+          if (route.to.path === '/' || route.to.path === '/login') {
             router.push({name: 'Home'}, () => {})
           }
         })
         .catch(() => {
           context.commit('updateUserLoadStatus', false)
-          router.push({name: 'Login'}, () => {})
+          const forgetPath = ['/', '/login']
+          // 行き先がforgetPath以外ならLoginに飛ばす。
+          if(!forgetPath.includes(route.to.path)) {
+            router.push({name: 'Login'}, () => {})
+          }
         })
       }
     },

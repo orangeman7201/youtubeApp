@@ -223,14 +223,15 @@ export default {
       })
     },
     submitData: function() {
-      this.$store.dispatch('requireLogin');
       if(this.error === null) {
         axios
           .post('/api/v1/movies', this.movie)
           .then(() => {
             this.$router.go({path: this.$router.currentRoute.path, force: true})
           })
-          .catch()
+          .catch(() => {
+             this.unsavedError = '動画を保存できませんでした。リロードして再度お試しください'
+          })
       } else {
         this.error = null
         this.unsavedError = '動画を保存できませんでした。URLを見直してください'
