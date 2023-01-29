@@ -52,8 +52,8 @@ export default new Vuex.Store({
         .catch(() => {
           context.commit('updateUserLoadStatus', false)
           const forgetPath = ['/', '/login']
-          // 行き先がforgetPath以外ならLoginに飛ばす。
-          if(!forgetPath.includes(route.to.path)) {
+          // 行き先がforgetPathかsignup関連のpath以外ならLoginに飛ばす。
+          if(!forgetPath.includes(route.to.path) && !route.to.path.match('/signup')) {
             router.push({name: 'Login'}, () => {})
           }
         })
