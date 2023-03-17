@@ -55,6 +55,7 @@ export default new Router ({
         }, 
         {
           path: 'confirm',
+          name: 'SignUpConfirm',
           component: SignUpConfirm
         }, 
       ]
