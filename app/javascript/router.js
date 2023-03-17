@@ -45,6 +45,7 @@ export default new Router ({
         }, 
         {
           path: 'email',
+          name: 'SignUpEmail',
           component: SignUpEmail
         }, 
         {
