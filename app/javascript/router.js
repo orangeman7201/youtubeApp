@@ -50,6 +50,7 @@ export default new Router ({
         }, 
         {
           path: 'password',
+          name: 'SignUpPassword',
           component: SignUpPassword
         }, 
         {

@@ -13,9 +13,11 @@
         :value="email"
         @input="changeParentValueWithPath"
       >
+      <div class="error-message">{{ errorMessage }}</div>
     </div>
     <div class="d-flex justify-center">
-      <router-link  class="next-button" to="/signup/password"  :class="validEmail">次へ</router-link>
+      <div  v-if="invalidEmail" class="next-button disable-button" @click="showErrorMessage">次へ</div>
+      <div  v-else class="next-button active-button" @click="moveToNextPage">次へ</div>
     </div>
   </div>
 </template>
@@ -31,18 +33,28 @@ export default {
       default: "",
     },
   },
+  data() {
+    return {
+      errorMessage: ''
+    }
+  },
   computed: {
-    validEmail() {
-      if(this.email.length > 0) {
-        return "active-button"
-      }
-      return "disable-button"
+    invalidEmail() {
+      return !this.email.match(/.+@.+\..+/)
     }
   },
   methods: {
     changeParentValueWithPath(event) {
       this.$emit('change', event.target.value, this.$route.path)
     },
+
+    showErrorMessage() {
+      this.errorMessage = 'メールアドレスを正しい形式で入力してください(メール認証等はありません)'
+    },
+
+    moveToNextPage() {
+      this.$router.push({name: 'SignUpPassword' })
+    }
   }
 }
 </script>
@@ -57,7 +69,8 @@ export default {
 .input-area {
   margin-bottom: 144px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 .input-box {
   font-size: 16px;
@@ -85,5 +98,8 @@ export default {
 }
 .disable-button {
   background-color: #D9D9D9;
+}
+.error-message {
+  color: #EB440C;
 }
 </style>
