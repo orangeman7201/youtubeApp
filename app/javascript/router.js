@@ -35,10 +35,12 @@ export default new Router ({
       children: [
         {
           path: 'limit',
+          name: 'SignUpLimit',
           component: SignUpLimit
         }, 
         {
           path: 'name',
+          name: 'SignUpName',
           component: SignUpName
         }, 
         {
