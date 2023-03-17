@@ -14,9 +14,11 @@
         :value="nickname"
         @input="changeParentValueWithPath"
       >
+      <div class="error-message">{{ errorMessage }}</div>
     </div>
     <div class="d-flex justify-center">
-      <router-link  class="next-button" to="/signup/email" :class="validLimit">次へ</router-link>
+      <div  v-if="invalidName" class="next-button disable-button" @click="showErrorMessage">次へ</div>
+      <div  v-else class="next-button active-button" @click="moveToNextPage">次へ</div>
     </div>
   </div>
 </template>
@@ -32,17 +34,27 @@ export default {
       default: "",
     },
   },
+  data() {
+    return {
+      errorMessage: ''
+    }
+  },
   computed: {
-    validLimit() {
-      if(this.nickname.length > 0 && this.nickname.length <= 10) {
-        return "active-button"
-      }
-      return "disable-button"
+    invalidName() {
+      return this.nickname.length <= 0 || this.nickname.length > 10
     }
   },
   methods: {
     changeParentValueWithPath(event) {
       this.$emit('change', event.target.value, this.$route.path)
+    },
+
+    moveToNextPage() {
+      this.$router.push({name: 'SignUpEmail' })  
+    },
+
+    showErrorMessage() {
+      this.errorMessage = 'ニックネームを全角10文字以内で入力してください。'
     },
   }
 }
@@ -58,7 +70,8 @@ export default {
 .input-area {
   margin-bottom: 144px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 .input-box {
   font-size: 16px;
@@ -86,5 +99,8 @@ export default {
 }
 .disable-button {
   background-color: #D9D9D9;
+}
+.error-message {
+  color: #EB440C;
 }
 </style>

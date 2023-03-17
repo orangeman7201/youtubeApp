@@ -6,19 +6,22 @@
     </div>
     <div class="input-area">
       <div class="input-area2">
+        <!-- v-modelでscopedLimitを管理したいところだったが3桁までにしたかったので:と@inputで管理 -->
         <input
           class="input-box"
           type="number"
           autofocus
           placeholder="0"
-          :value="inputValue"
-          @input="changeParentValueWithPath"
+          :value="scopedLimit"
+          @input="inputScopedLimit"
         >
         <span class="minute-text" :style="minuteTextColor">分</span>
       </div>
+      <div class="error-message">{{ errorMessage }}</div>
     </div>
     <div class="d-flex justify-center">
-      <router-link  class="next-button" to="/signup/name" :class="validLimit">次へ</router-link>
+      <div  v-if="!scopedLimit || scopedLimit > 999" class="next-button disable-button" @click="showErrorMessage">次へ</div>
+      <div  v-else class="next-button active-button" @click="checkLimitAndMoveToNextPage">次へ</div>
     </div>
   </div>
 </template>
@@ -28,37 +31,50 @@ import RoundedButtonBase from '../../../modules/RoundedButtonBase.vue'
 
 export default {
   components: { RoundedButtonBase },
+  // limitの単位(second)
   props: {
     limit: {
       type: Number,
     },
   },
-  computed: {
-    inputValue() {
-      return this.limit === 0 ? null : this.limit / 60
-    },
-    minuteTextColor() {
-      return this.limit === 0 ? 'color: #8C8C8C' : 'color: #000000'
-    },
-    validLimit() {
-      if(this.limit > 0) {
-        return "active-button"
-      }
-      return "disable-button"
+  // limitの単位をminuteに戻すためにscopedLimitを60で割って初期化
+  data() {
+    return {
+      scopedLimit: this.limit === 0 ? null : this.limit / 60,
+      errorMessage: ''
     }
   },
+  computed: {
+    minuteTextColor() {
+      return this.scopedLimit === 0 ? 'color: #8C8C8C' : 'color: #000000'
+    },
+  },
   methods: {
-    changeParentValueWithPath(event) {
-      const threeDigitsLimit = this.sliceMaxLength(event, 3)
-      this.$emit('change', threeDigitsLimit, this.$route.path)
+    // 3桁までしか目標時間を入力させたくない。
+    inputScopedLimit(event) {
+      this.errorMessage = ''
+      const target = event.target.value
+      // nullを代入しないと正常に動作しない
+      // 例えば1234と入力されたとき scopedLimitは元々123が入っていており、
+      // 123を代入しなくても同じ値になるためサボる。結果inputが更新されない。
+      this.scopedLimit = null
+      this.scopedLimit = target.slice(0, 3)
+      if(String(target).length > 3) {
+        this.showErrorMessage()
+      }
     },
-    sliceMaxLength(event, maxLength) {  
-      const threeDigitsLimit = event.target.value = event.target.value.slice(0, maxLength)
-      return this.changeMinuteToSecond(threeDigitsLimit);  
-    }, 
-    changeMinuteToSecond(minute) {
-      return Number(minute) * 60
+
+    checkLimitAndMoveToNextPage() {
+      if(!this.scopedLimit || this.scopedLimit > 999) {
+        return
+      }
+      this.$emit('change', this.scopedLimit * 60, this.$route.path)
+      this.$router.push({name: 'SignUpName' })
     },
+
+    showErrorMessage() {
+      this.errorMessage = '目標時間を999分以内で入力してください。'
+    }
   }
 }
 </script>
@@ -73,14 +89,15 @@ export default {
 .input-area {
   margin-bottom: 144px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 .input-area2 {
-  width: 60px;
+  width: 70px;
   position: relative;
 }
 .input-box {
-  width: 60px;
+  width: 70px;
   font-size: 37px;
   text-align: center;
   outline: none;
@@ -119,5 +136,8 @@ input[type="number"]::-webkit-inner-spin-button {
 } 
 input[type="number"] { 
   -moz-appearance:textfield; 
+}
+.error-message {
+  color: #EB440C;
 }
 </style>
