@@ -8,29 +8,29 @@
     </ul>
     <div class="confirm-body px-4">
       <div class="mb-4">
-        <div class="confirm-detail-header">
-          <img src="~access_time_small.svg" art="" width="24px" height="24px" class="mr-2 mb-2">
+        <div class="confirm-detail-header mb-2">
+          <img src="~access_time_small.svg" art="" width="24px" height="24px" class="mr-2">
           <span>1日あたりの目標時間</span>
         </div>
         {{ limit / 60 }}分
       </div>
       <div class="mb-4">
-        <div class="confirm-detail-header">
-          <img src="~face_small.svg" art="" width="24px" height="24px" class="mr-2 mb-2">
+        <div class="confirm-detail-header mb-2">
+          <img src="~face_small.svg" art="" width="24px" height="24px" class="mr-2 ">
           <span>ニックネーム</span>
         </div>
         {{ nickname }}
       </div>
-      <div class="mb-4">
+      <div class="mb-4 mb-2">
         <div class="confirm-detail-header">
-          <img src="~email_small.svg" art="" width="24px" height="24px" class="mr-2 mb-2">
+          <img src="~email_small.svg" art="" width="24px" height="24px" class="mr-2">
           <span>メールアドレス</span>
         </div>
         {{ email }}
       </div>
-      <div class="mb-4">
+      <div class="mb-4 mb-2">
         <div class="confirm-detail-header">
-          <img src="~disabled_visible_small.svg" art="" width="24px" height="24px" class="mr-2 mb-2">
+          <img src="~disabled_visible_small.svg" art="" width="24px" height="24px" class="mr-2">
           <span>パスワード</span>
         </div>
         {{ password }}
