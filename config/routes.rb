@@ -32,5 +32,10 @@ Rails.application.routes.draw do
   end
 
   ## vue router でエラーを呼ばないための記述
-  get  '*unmatched_route', to: 'home#index'
+  get  '/signup/*path', to: 'home#index'
+  get  '/login', to: 'home#index'
+  get  '/users/search', to: 'home#index'
+  get  '/timeline', to: 'home#index'
+  get  '/profile', to: 'home#index'
+  get  '/notification', to: 'home#index'
 end
