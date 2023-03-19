@@ -1,29 +1,38 @@
 <template>
-  <v-app class="signin-background">
-    <div class="header">
-      <router-link :to="backButtonPath">
-        <v-btn
-          icon
-          color="gray"
-          width="24px"
-          height="24px"
-          class="back-button"
-        >
-          <v-icon size="24px">mdi-chevron-left</v-icon>
-        </v-btn>
-      </router-link>
-      <img :src="stepImages" alt=""  width="192px" height="16px">
+  <div>
+    <div class="loading-animation" v-if="loadingFlag">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
     </div>
-    <router-view
-      :limit="user.limit"
-      :nickname="user.name"
-      :email="user.email"
-      :password="user.password"
-      :passwordConfirmation="user.passwordConfirmation"
-      @change="handleChange"
-      @submit="submitData"
-    ></router-view>
-  </v-app>
+    <v-app class="signin-background">
+      <div class="header">
+        <router-link :to="backButtonPath">
+          <v-btn
+            icon
+            color="gray"
+            width="24px"
+            height="24px"
+            class="back-button"
+          >
+            <v-icon size="24px">mdi-chevron-left</v-icon>
+          </v-btn>
+        </router-link>
+        <img :src="stepImages" alt=""  width="192px" height="16px">
+      </div>
+      <router-view
+        :limit="user.limit"
+        :nickname="user.name"
+        :email="user.email"
+        :password="user.password"
+        :passwordConfirmation="user.passwordConfirmation"
+        :errors="errors"
+        @change="handleChange"
+        @submit="submitData"
+      ></router-view>
+    </v-app>
+  </div>
 </template>
 
 <script>
@@ -39,11 +48,12 @@ export default {
         password: '',
         passwordConfirmation: '',
       },
-      errors: '',
+      errors: [],
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
+      loadingFlag: false,
       show: false,
     }  
   },
@@ -87,16 +97,17 @@ export default {
       const element = path.split('/')[2]
       this.user[element] = event
     },
-    submitData: function() { 
+    submitData: function() {
+      this.loadingFlag = true
       axios
         .post('/api/v1/sign_up', this.user)
         .then(() => {
           this.$router.push({name: 'Home' })
+          this.loadingFlag = false
         })
         .catch(error => {
-          if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors;
-          }
+          this.loadingFlag = false
+          this.errors = error.response.data.errors;
         })
     },
   }
@@ -134,9 +145,5 @@ export default {
   background-color: #1995ad !important;
   max-width: 280px;
   font-size: 16px
-}
-.error-message {
-  font-size: 12px;
-  color: #EB440C;
 }
 </style>

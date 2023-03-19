@@ -25,10 +25,27 @@ export default {
 }
 </script>
 
-<style scoped>
-  #app {
-    font-family: Inter, 'Noto Sans JP';
-  }
+<style>
+#app {
+  font-family: Inter, 'Noto Sans JP';
+}
+
+.loading-animation{
+  position: absolute;
+  background-color: gray;
+  width: 100%;
+  z-index: 999;
+  opacity: 0.5;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  font-size: 12px;
+  color: #EB440C;
+}
 </style>
 
 

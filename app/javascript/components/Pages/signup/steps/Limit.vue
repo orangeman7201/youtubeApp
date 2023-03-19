@@ -137,7 +137,4 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] { 
   -moz-appearance:textfield; 
 }
-.error-message {
-  color: #EB440C;
-}
 </style>

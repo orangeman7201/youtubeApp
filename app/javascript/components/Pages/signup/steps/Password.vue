@@ -122,7 +122,4 @@ export default {
 .disable-button {
   background-color: #D9D9D9;
 }
-.error-message {
-  color: #EB440C;
-}
 </style>

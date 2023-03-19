@@ -3,6 +3,9 @@
     <div class="header">
       登録内容の確認
     </div>
+    <ul v-for="error in errors">
+      <li class="error-message">{{ error }}</li>
+    </ul>
     <div class="confirm-body px-4">
       <div class="mb-4">
         <div class="confirm-detail-header">
@@ -33,7 +36,8 @@
         {{ password }}
       </div>
     </div>
-    <button class="submit-button" @click.prevent="$emit('submit')">登録</button>
+    <button v-if="isValidInput" class="submit-button" @click.prevent="$emit('submit')">登録</button>
+    <button v-else class="submit-button disable-button">登録</button>
   </div>
 </template>
 
@@ -59,13 +63,26 @@ export default {
       type: String,
       default: "",
     },
+    errors: {
+      type: Array,
+      default: [],
+    }
   },
   computed: {
-    validPassword() {
-      if(this.password.length > 0 && this.password == this.passwordConfirmation) {
-        return "active-button"
+    isValidInput() {
+      if(!this.limit || this.limit / 60 > 999) {
+        return false
       }
-      return "disable-button"
+      if(this.nickname.length <= 0 || this.nickname.length > 10) {
+        return false
+      }
+      if(!this.email.match(/.+@.+\..+/)) {
+        return false
+      }
+      if(this.password.length < 6) {
+        return false
+      }
+      return true
     }
   },
   methods: {
@@ -108,6 +125,12 @@ export default {
   border-radius: 100px;
   margin: 0 auto 26px;
   background-color: #1995ad;
+}
+li {
+  list-style: none
+}
+.disable-button {
+  background-color: #D9D9D9;
 }
 </style>
 

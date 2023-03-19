@@ -1,40 +1,49 @@
 <template>
-  <div class="login-background">
-    <div class="header">
-      <router-link to="/">
-        <v-btn
-          icon
-          color="gray"
-          width="24px"
-          height="24px"
-          class="back-button"
-        >
-          <v-icon size="24px">mdi-chevron-left</v-icon>
-        </v-btn>
-      </router-link>
-      <h3 class="login-text">ログイン</h3>
+  <div>
+    <div class="loading-animation" v-if="loadingFlag">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
     </div>
-    <v-form @submit.prevent="submitData" class="login-form">
-      <v-text-field
-        v-model="loginInfo.email"
-        :rules="emailRules"
-        placeholder="メールアドレス"
-        required
-        autofocus
-        class="text-field"
-      ></v-text-field>
-      <v-text-field
-        v-model="loginInfo.password"
-        placeholder="パスワード"
-        required
-        autocomplete="on"
-        type="password"
-        class="mb-2"
-      ></v-text-field>
-      <div class="d-flex justify-center">
-        <v-btn type="submit" class="white--text login-button" rounded width="80%" height="44px">ログイン</v-btn>
+    <div class="login-background">
+      <div class="header">
+        <router-link to="/">
+          <v-btn
+            icon
+            color="gray"
+            width="24px"
+            height="24px"
+            class="back-button"
+          >
+            <v-icon size="24px">mdi-chevron-left</v-icon>
+          </v-btn>
+        </router-link>
+        <h3 class="lodfasfgin-text">ログイン</h3>
       </div>
-    </v-form>
+      <div class="error-message">{{ errors }}</div>
+      <v-form @submit.prevent="submitData" class="login-form">
+        <v-text-field
+          v-model="loginInfo.email"
+          :rules="emailRules"
+          placeholder="メールアドレス"
+          required
+          autofocus
+          class="text-field"
+        ></v-text-field>
+        <v-text-field
+          v-model="loginInfo.password"
+          placeholder="パスワード"
+          required
+          autocomplete="on"
+          type="password"
+          class="mb-2"
+        ></v-text-field>
+        <div class="d-flex justify-center">
+          <v-btn type="submit" class="white--text login-button" rounded width="80%" height="44px">ログイン</v-btn>
+        </div>
+      </v-form>
+    </div>
   </div>
 </template>
 
@@ -68,10 +77,11 @@ export default {
       },
       errors: "",
       emailRules: [
-        (v) => !!v || "E-mail is required",
-        (v) => /.+@.+/.test(v) || "E-mail must be valid",
+        (v) => !!v || "E-mailを入力してください。",
+        (v) => /.+@.+/.test(v) || "E-mailの形式が不正です。",
       ],
       show: false,
+      loadingFlag: false,
     };
   },
   computed: {
@@ -86,17 +96,16 @@ export default {
   },
   methods: {
     submitData: function() {
+      this.loadingFlag = true
       axios
         .post("/api/v1/sessions", this.loginInfo)
         .then(() => {
           this.$router.push({ name: "Home" });
+          this.loadingFlag = false
         })
         .catch((error) => {
-          console.error(error.response.data.errors);
-          if (error.response.data && error.response.data.errors) {
-            this.errors = "メールアドレスかパスワードに誤りがあります";
-          }
-          console.error("通信エラーです");
+          this.loadingFlag = false
+          this.errors = "メールアドレスかパスワードに誤りがあります";
         });
     },
   },
@@ -104,6 +113,9 @@ export default {
 </script>
 
 <style scoped>
+.loading-animation{
+  
+}
 .header {
   position: relative;
   height: 24px;
