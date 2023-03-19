@@ -19,7 +19,7 @@
             <v-icon size="24px">mdi-chevron-left</v-icon>
           </v-btn>
         </router-link>
-        <h3 class="lodfasfgin-text">ログイン</h3>
+        <h3 class="login-text">ログイン</h3>
       </div>
       <div class="error-message">{{ errors }}</div>
       <v-form @submit.prevent="submitData" class="login-form">
@@ -113,9 +113,6 @@ export default {
 </script>
 
 <style scoped>
-.loading-animation{
-  
-}
 .header {
   position: relative;
   height: 24px;
