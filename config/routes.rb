@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   ## vue router でエラーを呼ばないための記述
   get  '/signup/*path', to: 'home#index'
   get  '/login', to: 'home#index'
+  get  '/home', to: 'home#index'
   get  '/users/search', to: 'home#index'
   get  '/timeline', to: 'home#index'
   get  '/profile', to: 'home#index'
